@@ -15,6 +15,7 @@ export const Color = {
   colorDarkslateblue: "#774a7f",
   colorGray: "#171a1f",
   colorGainsboro: "#d9d9d9",
+  colorPaleovioletred: '#DB7093'
 };
 /* border radiuses */
 export const Border = {
