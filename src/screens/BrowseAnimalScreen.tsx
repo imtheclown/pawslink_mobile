@@ -6,6 +6,8 @@ import {
     Image,
     StyleSheet,
     TouchableOpacity,
+    Text,
+    FlatList
 } from "react-native";
 // package imports
 // icons
@@ -15,10 +17,12 @@ import { generalStyles } from "../assets/general/generalStyles";
 // custom values used for styling
 import { 
     Border, 
+    FontFamily
 } from "../assets/general/GlobalStyles";
 
 import BrowseAnimalSearchBar from "../components/BrowseAnimalSearchBar";
 import MultiFilterContainer from "../components/SortingDropDown";
+import AnimalProfileBox from "../components/AnimalProfileBox";
 import { filterObject } from "../components/SortingDropDown";
 
 // sample data
@@ -47,6 +51,21 @@ const color: filterObject ={
     item: sampleColor
 }
 
+const indivData ={
+    location: "CUB",
+    name: "Jose",
+    sex: "M"
+}
+
+const data = [indivData, indivData, indivData, indivData, indivData,indivData,indivData,indivData]
+
+const animalListEnd = () =>{
+    return (
+        <View style = {[styles.endTextContainer]}>
+            <Text>end of list</Text>
+        </View>
+    )
+}
 // main screen for the browse animal screen
 const BrowseAnimalContent = () =>{
     // searches animal and updates the list of animal objects
@@ -79,9 +98,17 @@ const BrowseAnimalContent = () =>{
                     <MaterialIcon name="people" color={"white"} size={25}/>
                 </TouchableOpacity>
             </View>
+            <Text style ={[styles.browseAnimalTextStyle]}>{`Browse Animal`}</Text>
             {/* sorting dropdown */}
             <MultiFilterContainer filterList={[color,type,status,location]} callbackFunction={filterAnimal}/>
-
+            <FlatList
+                contentContainerStyle = {[styles.flatListContentContainer]}
+                horizontal = {false}
+                numColumns={2}
+                data={data}
+                renderItem={({item}) => <AnimalProfileBox name={item.name} location={item.location} sex={item.sex}/>}
+                ListFooterComponent={animalListEnd}
+            />
         </View>
     )
 }
@@ -117,5 +144,19 @@ const styles = StyleSheet.create({
         height: 48,
         width: 48
     },
-    
+    browseAnimalTextStyle: {
+        fontSize: 24,
+        lineHeight: 32,
+        fontWeight: "700",
+        fontFamily: FontFamily.epilogueBold,
+        color: "#d2628a",
+    },
+    // flatlist
+    flatListContentContainer:{
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    endTextContainer:{
+        padding: 10,
+    },
 })

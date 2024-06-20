@@ -28,6 +28,12 @@ export const generalStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
+    // row flex and seperate each children in between
+    rowInBetweenContainer:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems:'center'
+    },
     // container with shadow and white background
     // with curved borders
     curvedContainerWithShadow:{
