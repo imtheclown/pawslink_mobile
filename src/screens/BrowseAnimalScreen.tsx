@@ -2,89 +2,65 @@
 import React from "react";
 import { 
     View,
-    Text,
     SafeAreaView,
     Image,
     StyleSheet,
-    TextInput,
     TouchableOpacity,
-    Keyboard
 } from "react-native";
-import  FontAwesome  from "react-native-vector-icons/FontAwesome";
+// package imports
+// icons
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
-import AntDesign from 'react-native-vector-icons/AntDesign'
+// custom styling
 import { generalStyles } from "../assets/general/generalStyles";
+// custom values used for styling
 import { 
-    Color, 
     Border, 
-    FontFamily 
 } from "../assets/general/GlobalStyles";
-import { useState } from "react";
 
-interface searchBarProps {
-    searchGivenString: (searchString:string) => void
+import BrowseAnimalSearchBar from "../components/BrowseAnimalSearchBar";
+import MultiFilterContainer from "../components/SortingDropDown";
+import { filterObject } from "../components/SortingDropDown";
+
+// sample data
+const sampleType = ['cat', 'dog']
+const sampleLocation = ['CUB', 'CAS']
+const sampleColor =['black', 'brown']
+const sampleStatus = ['alive', 'adopted']
+
+const location:filterObject = {
+    title: 'location',
+    item :sampleLocation
 }
 
-const BrowseAnimalSearchBar: React.FC<searchBarProps> = ({searchGivenString}) =>{
-    const [query, setQuery] = useState("");
-    const [isFocused, setIsfocused] = useState(false);
-
-    const toggleIsfocused = () =>{
-        setIsfocused(!isFocused);
-    }
-    const updateSearchQuery = (newString: string) =>{
-        setQuery(newString);
-    }
-
-    const handleOnEndEditing = () =>{
-        searchGivenString(query);
-    }
-    const clearSearchQuery = () =>{
-        setQuery("");
-        Keyboard.dismiss();
-    }
-    return (
-        <View style ={[styles.textInputContainer, generalStyles.rowContainer, generalStyles.curvedContainerWithShadow]}>
-            {
-                !query.length || !isFocused?
-                <FontAwesome 
-                    style={[{margin: 5}]} 
-                    name="search" 
-                    color={"black"} 
-                    size={25}
-                />
-                :
-                <></>
-            }
-            <TextInput
-                value={query}
-                onFocus={toggleIsfocused}
-                onBlur={toggleIsfocused}
-                style={[styles.textInputStyle]}
-                placeholder="search animal name"
-                onChangeText={updateSearchQuery}
-                onEndEditing={handleOnEndEditing}
-            />
-            {isFocused && query.length?
-                <TouchableOpacity 
-                    onPress={clearSearchQuery}
-                >
-                    <AntDesign 
-                    style={[{margin: 5}]} 
-                    name="close" 
-                    size={25} 
-                    color={"gray"}/>
-                </TouchableOpacity>
-                : <></>
-            }
-        </View>
-    )
+const status:filterObject ={
+    title: 'status',
+    item: sampleStatus
 }
+
+const type: filterObject ={
+    title: 'type',
+    item: sampleType
+}
+
+const color: filterObject ={
+    title: "color",
+    item: sampleColor
+}
+
+// main screen for the browse animal screen
 const BrowseAnimalContent = () =>{
-    const [searchQuery, setSearchQuery] = useState("");
+    // searches animal and updates the list of animal objects
+    const searchAnimal = (newSearchQuery: string) =>{
+        // TODO
+        // find animals given the newSearchQuery parameter
+        // update the list containing the animal objects
 
-    const updateSearchQuery = (newSearchQuery: string) =>{
-        setSearchQuery(newSearchQuery);
+        // temporary function
+        console.log(newSearchQuery)
+    }
+
+    const filterAnimal = (filterList: Array<filterObject>) =>{
+        console.log(filterList);
     }
     return(
         <View style ={[styles.mainContainer]}>
@@ -96,16 +72,23 @@ const BrowseAnimalContent = () =>{
                 style ={[styles.logoSize]}
                 />
             </View>
+            {/* search bar and the connect with admin button */}
             <View style = {[generalStyles.rowContainer]}>
-                <BrowseAnimalSearchBar searchGivenString={updateSearchQuery}/>
+                <BrowseAnimalSearchBar searchGivenString={searchAnimal}/>
                 <TouchableOpacity style = {[styles.messageButtonStyle, generalStyles.centerContainer]}>
                     <MaterialIcon name="people" color={"white"} size={25}/>
                 </TouchableOpacity>
             </View>
+            {/* sorting dropdown */}
+            <MultiFilterContainer filterList={[color,type,status,location]} callbackFunction={filterAnimal}/>
+
         </View>
     )
 }
 
+// wrapper of the content
+// performs query of animal list
+// prevents reloading/requery when the child component reloads
 const BrowseAnimal = () =>{
     return(
         <SafeAreaView style ={[generalStyles.flexContainer, generalStyles.centerContainer]}>
@@ -117,29 +100,22 @@ const BrowseAnimal = () =>{
 export default BrowseAnimal
 
 const styles = StyleSheet.create({
+    // top logo
     logoSize:{
         width: 129,
         height: 57,
     },
+    // the container that holds the main content
     mainContainer:{
         width: '95%',
         height: '100%'
     },
-    textInputStyle:{
-        height: 45,
-        width: 280,
-    },
-    textInputContainer:{
-        width:'auto',
-        height: 'auto',
-        fontFamily: FontFamily.interRegular,
-        minHeight: 45, 
-        marginRight: 10 
-    },
+    // connect to admin button
     messageButtonStyle:{
         backgroundColor: "#F6D25E",
         borderRadius: Border.br_5xs,
         height: 48,
         width: 48
-    }
+    },
+    
 })
