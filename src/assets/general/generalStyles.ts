@@ -40,7 +40,7 @@ export const generalStyles = StyleSheet.create({
         elevation: 2,
         shadowRadius: 2,
         borderRadius: Border.br_5xs,
-        shadowColor: "rgba(23, 26, 31, 0.12)",
+        shadowColor: "rgba(23, 26, 31, 1)",
         shadowOpacity: 1,
         shadowOffset: {
           width: 0,

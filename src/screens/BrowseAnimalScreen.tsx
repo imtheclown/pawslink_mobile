@@ -17,6 +17,7 @@ import { generalStyles } from "../assets/general/generalStyles";
 // custom values used for styling
 import { 
     Border, 
+    Color, 
     FontFamily
 } from "../assets/general/GlobalStyles";
 
@@ -58,11 +59,12 @@ const indivData ={
 }
 
 const data = [indivData, indivData, indivData, indivData, indivData,indivData,indivData,indivData]
-
+//sample data
+// end component of the list of animals
 const animalListEnd = () =>{
     return (
         <View style = {[styles.endTextContainer]}>
-            <Text>end of list</Text>
+            <Text style={[{fontFamily:FontFamily.interRegular}]}>end of list</Text>
         </View>
     )
 }
@@ -84,13 +86,6 @@ const BrowseAnimalContent = () =>{
     return(
         <View style ={[styles.mainContainer]}>
         {/* this is the top container */}
-            <View>
-                <Image
-                resizeMode="cover"
-                source={require("../assets/logo/pawslink_colored.png")}
-                style ={[styles.logoSize]}
-                />
-            </View>
             {/* search bar and the connect with admin button */}
             <View style = {[generalStyles.rowContainer]}>
                 <BrowseAnimalSearchBar searchGivenString={searchAnimal}/>
@@ -118,7 +113,7 @@ const BrowseAnimalContent = () =>{
 // prevents reloading/requery when the child component reloads
 const BrowseAnimal = () =>{
     return(
-        <SafeAreaView style ={[generalStyles.flexContainer, generalStyles.centerContainer]}>
+        <SafeAreaView style ={[generalStyles.flexContainer, generalStyles.centerContainer, styles.whiteBackground]}>
             <BrowseAnimalContent/>
         </SafeAreaView>
     )
@@ -127,10 +122,8 @@ const BrowseAnimal = () =>{
 export default BrowseAnimal
 
 const styles = StyleSheet.create({
-    // top logo
-    logoSize:{
-        width: 129,
-        height: 57,
+    whiteBackground:{
+        backgroundColor: Color.colorWhite
     },
     // the container that holds the main content
     mainContainer:{
