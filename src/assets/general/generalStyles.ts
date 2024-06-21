@@ -28,13 +28,19 @@ export const generalStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
+    // row flex and seperate each children in between
+    rowInBetweenContainer:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems:'center'
+    },
     // container with shadow and white background
     // with curved borders
     curvedContainerWithShadow:{
         elevation: 2,
         shadowRadius: 2,
         borderRadius: Border.br_5xs,
-        shadowColor: "rgba(23, 26, 31, 0.12)",
+        shadowColor: "rgba(23, 26, 31, 1)",
         shadowOpacity: 1,
         shadowOffset: {
           width: 0,

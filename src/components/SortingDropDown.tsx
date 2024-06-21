@@ -174,7 +174,7 @@ const MultiFilterContainer :React.FC<multilFilterContainerProps> = ({callbackFun
         return null
     }
     return(
-        <View style = {[styles.filterContainer, generalStyles.rowContainer]}>
+        <View style = {[styles.filterContainer, generalStyles.rowContainer, styles.mainContainer]}>
             {generateDropDowns()}
         </View>
     )
@@ -182,6 +182,9 @@ const MultiFilterContainer :React.FC<multilFilterContainerProps> = ({callbackFun
 
 export default MultiFilterContainer
 const styles = StyleSheet.create({
+    mainContainer:{
+        marginBottom: 10,
+    },
     // dropdown
     dropDownContentContainerStyle:{
         width: '95%',

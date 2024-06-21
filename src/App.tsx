@@ -5,10 +5,13 @@
  * @format
  */
 
-import BrowseAnimal from "./screens/BrowseAnimalScreen";
+import BottomTabs from "./navigation/BottomTabs";
+import { NavigationContainer } from '@react-navigation/native';
 function App(): React.JSX.Element {
   return (
-    <BrowseAnimal/>
+    <NavigationContainer>
+      <BottomTabs/>
+    </NavigationContainer>
   );
 }
 
