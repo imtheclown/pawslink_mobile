@@ -5,7 +5,10 @@ import {
     StyleSheet
  } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// browse animal screen
 import BrowseAnimal from '../screens/BrowseAnimalScreen';
+// qr code screen
+import QRCodeScanner from '../screens/QRCodeScannerScreen';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import IonIcons from 'react-native-vector-icons/Ionicons'
 import { Color } from '../assets/general/GlobalStyles';
@@ -31,7 +34,9 @@ const tabBarScreenOption = {
     tabBarInactiveTintColor: inactiveTabColor,
     // static image only
     // configure to have a dynamic header
-    header:  () => <TabBarHeader/>
+    header:  () => <TabBarHeader/>,
+    // hides the tab bar when the keyboard is opened
+    tabBarHideOnKeyboard: true
 }
 
 // add Tab.Screen here
@@ -55,7 +60,7 @@ const BottomTabs = () =>{
             />
             <Tab.Screen
                 name='Scan QR Code'
-                component={SampleTab}
+                component={QRCodeScanner}
                 options={{
                     ...tabBarScreenOption,
                     tabBarIcon: ({focused,color, size}) =>{
