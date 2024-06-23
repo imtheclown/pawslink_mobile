@@ -7,10 +7,10 @@ import {
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // browse animal screen
 import BrowseAnimal from '../screens/BrowseAnimalScreen';
+import BrowseAnimalWrapper from '../components/realm_wrappers/BrowseAnimalScreenWrapper';
 // qr code screen
 import QRCodeScanner from '../screens/QRCodeScannerScreen';
 // trial screen
-import AskForLoginScreen from '../screens/AskForLogInScreen';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import IonIcons from 'react-native-vector-icons/Ionicons'
 import { Color } from '../assets/general/GlobalStyles';
@@ -52,7 +52,7 @@ const BottomTabs = () =>{
         >
             <Tab.Screen 
                 name='Home'
-                component={BrowseAnimal}
+                component={BrowseAnimalWrapper}
                 options={{
                     ...tabBarScreenOption,
                     tabBarIcon: ({focused, color, size}) =>{
@@ -72,7 +72,7 @@ const BottomTabs = () =>{
             />
             <Tab.Screen
                 name='Events'
-                component={AskForLoginScreen}
+                component={SampleTab}
                 options={{
                     ...tabBarScreenOption,
                     tabBarIcon: ({focused, color, size}) =>{

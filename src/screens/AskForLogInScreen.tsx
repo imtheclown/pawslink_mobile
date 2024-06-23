@@ -6,16 +6,22 @@ import {
     View,
     Text,
     TouchableOpacity,
-    StyleSheet
+    StyleSheet, 
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { generalStyles } from '../assets/general/generalStyles';
 import { FontFamily } from "../assets/general/GlobalStyles";
+import LoadingModalScreen from "../components/LoadingModal";
+// props for the decision button component
 interface DecisionButtonProps{
     content: string,
     callBack: () => void,
     decision: decisions
 }
+// generates decison buttons
+// generates only three buttons, neutral, negative and positive
+// each has different styling
+// each button has a corresspoding decisions type
 const DecisionButton: React.FC<DecisionButtonProps> = ({content, callBack,decision}) =>{
     const handlePress = () =>{
         callBack();
@@ -55,19 +61,43 @@ const DecisionButton: React.FC<DecisionButtonProps> = ({content, callBack,decisi
         </TouchableOpacity>
     )
 }
+// defines the decisions
+// positive
+// negative
+// neutral
 enum decisions {
     negative = -1,
     neutral = 0,
     positive = 1
 }
+// screen that asks for user input in terms of what database to use
+// local database
+// sync database with cloud database
+// sign in 
+import { useAuth } from "@realm/react";
 const AskForLoginScreen = () =>{
+    const [loading, setLoading] = useState(false);
+    const [loadingTitle, setLoadingTitle] = useState("")
     const decisionList = [decisions.negative, decisions.neutral, decisions.positive];
-
+    const {logInWithAnonymous, result} =useAuth();
     const handleDecision = (decision:decisions) =>{
         console.log(decision)
     }
+    const updateOnly = () =>{
+        setLoadingTitle("signing in as anonymous")
+        logInWithAnonymous();
+    }
+    useEffect(() =>{
+        if(result.pending){
+            setLoading(true);
+        }
+        if(result.error){
+            console.log(result.error);
+        }
+    }, [])
     return(
         <SafeAreaView style ={[generalStyles.centerContainer, generalStyles.flexContainer]}>
+            <LoadingModalScreen title= {loadingTitle} isLoading= {loading}/>
             <Text style={[styles.notifTextStyle]}>{`you are connected to the internet`}</Text>
             {decisionList.map((decision, index) =>{
                 var content = "use offline content"

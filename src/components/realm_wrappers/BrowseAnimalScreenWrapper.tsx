@@ -4,23 +4,33 @@
 import { AnimalProvider } from "../../backend/realm/contexts";
 import { AppProvider, UserProvider } from "@realm/react";
 import Animal from "../../backend/realm/schemas/Animal";
-import NetInfo from '@react-native-community/netinfo';
+import { fetch } from "@react-native-community/netinfo";
 import { useState, useEffect } from "react";
-
+import { APP_ID } from "../../backend/realm/config";
 import BrowseAnimal from "../../screens/BrowseAnimalScreen";
+import AskForLoginScreen from "../../screens/AskForLogInScreen";
+import Realm from "realm"
+// the realm wrapper for the browse animal screen
 const BrowseAnimalWrapper = () =>{
+    // internet connection state
     const [isConnected, setIsConnected] = useState(false);
-
+    // realm configuration
+    // enables background sync by opeing the realm immediately
+    // does not wait for the whole realm to be downloaded before usage
     const realmAccessBehavior: Realm.OpenRealmBehaviorConfiguration = {
         type: Realm.OpenRealmBehaviorType.OpenImmediately,
     };
 
-    const checkInternetConnection = NetInfo.addEventListener(state => {
-        if(state.isConnected !== null){
-            setIsConnected(state.isConnected)
-        }
-    })
-
+    // checks the internet connection ONCE
+    // change if there is a need to check/listen to connection/disconnections
+    const checkInternetConnection = () =>{
+        fetch()
+        .then(state =>{
+            if(state.isConnected){
+                setIsConnected(state.isConnected);
+            }
+        })
+    }
     useEffect(() =>{
         checkInternetConnection();
     }, []);
@@ -28,9 +38,9 @@ const BrowseAnimalWrapper = () =>{
     if(isConnected){
         return (
             // provide application id from mongo db
-            <AppProvider id="app id here">
+            <AppProvider id={APP_ID}>
                 {/* allow user to login anonymously or with credentials */}
-                <UserProvider>
+                <UserProvider fallback={AskForLoginScreen}>
                     {/* provide sync configuration here */}
                     <AnimalProvider
                         sync={{
@@ -50,6 +60,7 @@ const BrowseAnimalWrapper = () =>{
             </AppProvider>
         )
     }
+    // add component here when the device is not connected to the internet
 }
 
 export default BrowseAnimalWrapper
