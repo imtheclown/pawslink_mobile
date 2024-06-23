@@ -107,7 +107,7 @@ const QRCodeScanner = () =>{
         )
     }
     // do not load the camera when expression is not granted
-    if(!hasPermission || !(permitted === PermissionsAndroid.RESULTS.GRANTED)){
+    if(!hasPermission && !(permitted === PermissionsAndroid.RESULTS.GRANTED)){
         return (
             <CameraCannotLoadComponent callBackFunction={getCameraPermission} errorType="permission" reason="Pawslink is not permitted to access camera"/>
         )
