@@ -9,6 +9,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BrowseAnimal from '../screens/BrowseAnimalScreen';
 // qr code screen
 import QRCodeScanner from '../screens/QRCodeScannerScreen';
+// trial screen
+import AskForLoginScreen from '../screens/AskForLogInScreen';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import IonIcons from 'react-native-vector-icons/Ionicons'
 import { Color } from '../assets/general/GlobalStyles';
@@ -70,7 +72,7 @@ const BottomTabs = () =>{
             />
             <Tab.Screen
                 name='Events'
-                component={SampleTab}
+                component={AskForLoginScreen}
                 options={{
                     ...tabBarScreenOption,
                     tabBarIcon: ({focused, color, size}) =>{

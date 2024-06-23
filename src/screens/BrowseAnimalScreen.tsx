@@ -1,5 +1,5 @@
 // screen for browsing animals
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { 
     View,
     SafeAreaView,
@@ -119,20 +119,6 @@ const BrowseAnimal = () =>{
     )
 }
 
-import { AnimalProvider } from "../backend/realm/contexts";
-import { AppProvider, UserProvider } from "@realm/react";
-// const BrowseAnimalWrapper = () =>{
-//     return(
-//         <AppProvider id="change here">
-//             {/* provide user with choice, login anonymous or signup /signin */}
-//             <UserProvider>
-//                 <AnimalProvider>
-//                     <BrowseAnimal/>
-//                 </AnimalProvider>
-//             </UserProvider>
-//         </AppProvider>
-//     )
-// }
 export default BrowseAnimal
 
 const styles = StyleSheet.create({
