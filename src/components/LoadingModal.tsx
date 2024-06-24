@@ -9,7 +9,7 @@ import {
  } from "react-native";
 import React from "react";
 import { generalStyles } from "../assets/general/generalStyles";
-import { Color } from "../assets/general/GlobalStyles";
+import { Border, Color, FontFamily } from "../assets/general/GlobalStyles";
 
 // inprogress
 // style the modal for better visuals
@@ -20,12 +20,13 @@ interface LoadingModalProps{
 const LoadingModalScreen:React.FC<LoadingModalProps> = ({title, isLoading}) =>{
     return(
         <Modal
-        animationType="slide"
+        animationType="fade"
         transparent = {true}
         visible ={isLoading}
         >
-            <View style = {[styles.mainContainer, generalStyles.centerContainer, generalStyles.curvedContainerWithShadow]}>
-                <Text>
+        <SafeAreaView style ={[generalStyles.centerContainer,generalStyles.flexContainer, styles.modalBackground]}>
+            <View style = {[generalStyles.centerContainer, generalStyles.curvedContainerWithShadow, styles.mainContainer, ]}>
+                <Text style = {[styles.titleStyle]}>
                     {title}
                 </Text>
                 <ActivityIndicator
@@ -34,6 +35,7 @@ const LoadingModalScreen:React.FC<LoadingModalProps> = ({title, isLoading}) =>{
                     color={Color.colorPaleovioletred}
                 />
             </View>
+        </SafeAreaView>
         </Modal>
     )
 }
@@ -43,6 +45,14 @@ export default LoadingModalScreen
 const styles = StyleSheet.create({
     mainContainer:{
         width:'70%',
-        aspectRatio: 1
+        aspectRatio: 1,
+        borderRadius: 25
+    },
+    modalBackground:{
+        backgroundColor: "rgba(128, 128, 128, 0.5)",
+    },
+    titleStyle :{
+        color: Color.colorGray,
+        fontFamily: FontFamily.epilogueBold
     }
 })

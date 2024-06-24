@@ -81,10 +81,13 @@ const AskForLoginScreen = () =>{
     const decisionList = [decisions.negative, decisions.neutral, decisions.positive];
     const {logInWithAnonymous, result} =useAuth();
     const handleDecision = (decision:decisions) =>{
-        console.log(decision)
+        if(decision === decisions.neutral){
+            updateOnly();
+        }
     }
     const updateOnly = () =>{
-        setLoadingTitle("signing in as anonymous")
+        setLoadingTitle("signing in as anonymous");
+        setLoading(true)
         logInWithAnonymous();
     }
     useEffect(() =>{
@@ -97,7 +100,7 @@ const AskForLoginScreen = () =>{
     }, [])
     return(
         <SafeAreaView style ={[generalStyles.centerContainer, generalStyles.flexContainer]}>
-            <LoadingModalScreen title= {loadingTitle} isLoading= {loading}/>
+            {result.pending && <LoadingModalScreen title= {loadingTitle} isLoading= {loading}/>}
             <Text style={[styles.notifTextStyle]}>{`you are connected to the internet`}</Text>
             {decisionList.map((decision, index) =>{
                 var content = "use offline content"

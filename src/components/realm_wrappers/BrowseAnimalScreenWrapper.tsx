@@ -1,7 +1,7 @@
 // realm wrapper for the browse animal screen
 // allows the component to access the realm database online or offline
 // allows auto sync
-import { AnimalProvider } from "../../backend/realm/contexts";
+import { OfflineAnimalProvider, OnlineAnimalProvider } from "../../backend/realm/contexts";
 import { AppProvider, UserProvider } from "@realm/react";
 import Animal from "../../backend/realm/schemas/Animal";
 import { fetch } from "@react-native-community/netinfo";
@@ -42,22 +42,32 @@ const BrowseAnimalWrapper = () =>{
                 {/* allow user to login anonymously or with credentials */}
                 <UserProvider fallback={AskForLoginScreen}>
                     {/* provide sync configuration here */}
-                    <AnimalProvider
+                    <OnlineAnimalProvider                        
                         sync={{
-                            flexible: true,
-                            initialSubscriptions:{
-                                update(subs, realm) {
-                                    subs.add(realm.objects(Animal));
-                                }
-                            },
-                            newRealmFileBehavior: realmAccessBehavior,
-                            existingRealmFileBehavior: realmAccessBehavior
-                        }}
+                        flexible: true,
+                        initialSubscriptions:{
+                            update(subs, realm) {
+                                subs.add(realm.objects(Animal));
+                            }
+                        },
+                        newRealmFileBehavior: realmAccessBehavior,
+                        existingRealmFileBehavior: realmAccessBehavior,
+                        onError: (_session, error) => {
+                            // maybe return a local version
+                            console.log(error);
+                        },
+                    }}
                     >
                         <BrowseAnimal/>
-                    </AnimalProvider>
+                    </OnlineAnimalProvider>    
                 </UserProvider>
             </AppProvider>
+        )
+    }else {
+        return (
+            <OfflineAnimalProvider>
+                <BrowseAnimal/>
+            </OfflineAnimalProvider>
         )
     }
     // add component here when the device is not connected to the internet
