@@ -1,5 +1,5 @@
 // screen for browsing animals
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { 
     View,
     SafeAreaView,
