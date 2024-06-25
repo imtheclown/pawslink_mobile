@@ -17,11 +17,24 @@ import { Color } from '../assets/general/GlobalStyles';
 import TabBarHeader from '../components/TabBarHeader';
 const Tab = createBottomTabNavigator();
 
+const imageURL = "https://st.depositphotos.com/2274151/4841/i/450/depositphotos_48410095-stock-photo-sample-blue-square-grungy-stamp.jpg"
+import { saveImageToLocalStorage } from '../utils/FileBasedUtilitilityFunctions';
+import { useEffect } from 'react';
+import { Image } from 'react-native';
+import ReactNativeBlobUtil from 'react-native-blob-util'
 // placeholder screen
 const SampleTab = () =>{
+    const directory = ReactNativeBlobUtil.fs.dirs.DocumentDir
+    // request permission to show image
+    useEffect(() =>{
+        saveImageToLocalStorage(imageURL, "trial", "trial.jpeg");
+    })
     return(
         <View>
             <Text>{`sample tab`}</Text>
+            <Image
+            resizeMode='cover'
+            source={{uri:`file:///${directory}/trial/trial.jpeg`}}/>
         </View>
     )
 }
