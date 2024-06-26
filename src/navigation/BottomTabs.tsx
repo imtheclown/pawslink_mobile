@@ -6,26 +6,36 @@ import {
  } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // browse animal screen
-import BrowseAnimal from '../screens/BrowseAnimalScreen';
 import BrowseAnimalWrapper from '../components/realm_wrappers/BrowseAnimalScreenWrapper';
 // qr code screen
 import QRCodeScanner from '../screens/QRCodeScannerScreen';
-// trial screen
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import IonIcons from 'react-native-vector-icons/Ionicons'
 import { Color } from '../assets/general/GlobalStyles';
 import TabBarHeader from '../components/TabBarHeader';
+// create the bottom tab navigator
 const Tab = createBottomTabNavigator();
-
+// trial screen
+const imageURL = "https://st.depositphotos.com/2274151/4841/i/450/depositphotos_48410095-stock-photo-sample-blue-square-grungy-stamp.jpg"
+import { saveImageToLocalStorage } from '../utils/FileBasedUtilitilityFunctions';
+import { useEffect } from 'react';
+import { Image } from 'react-native';
+import ReactNativeBlobUtil from 'react-native-blob-util'
 // placeholder screen
 const SampleTab = () =>{
+    const directory = ReactNativeBlobUtil.fs.dirs.DocumentDir
     return(
         <View>
             <Text>{`sample tab`}</Text>
+            <Image
+            resizeMode='cover'
+            source={{uri:`file:///${directory}/trial/trial.jpeg`}}
+            style = {{width: 200, aspectRatio: 1, backgroundColor: "green"}}
+            />
         </View>
     )
 }
-// determines the state of the navigation tab icon
+// determines the state of the navigation tab icon3
 const activeTabColor = Color.colorDarkslateblue;
 const inactiveTabColor= 'black'
 
