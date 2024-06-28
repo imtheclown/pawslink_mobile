@@ -14,6 +14,7 @@ import { generalStyles } from "../assets/general/generalStyles"
 import { FontFamily, FontSize, Color, Border } from '../assets/general/GlobalStyles';
 import { useCodeScanner } from "react-native-vision-camera"
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import QRCodeCamera from "../components/QRCodeCamera"
 
 // parameters of the component loaded when camera cannot be opened
 // reason is the cause why camera cannot be loaded
@@ -115,11 +116,8 @@ const QRCodeScanner = () =>{
     return (
         // qr code scanner
         // in progress
-        <Camera
+        <QRCodeCamera
             device={device}
-            codeScanner={codeScanner}
-            style={StyleSheet.absoluteFill}
-            isActive={true}
         />
     )
 }
