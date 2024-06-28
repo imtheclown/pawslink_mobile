@@ -7,11 +7,14 @@
 
 import BottomTabs from "./navigation/BottomTabs";
 import { NavigationContainer } from '@react-navigation/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 function App(): React.JSX.Element {
   return (
-    <NavigationContainer>
-      <BottomTabs/>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <BottomTabs/>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
 
