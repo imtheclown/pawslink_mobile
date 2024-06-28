@@ -64,7 +64,8 @@ const QRCodeCamera:React.FC<QRCodeCameraProps> = ({device}) =>{
         // defines the type of code to scan, in this case, qr for QR code
         codeTypes: ['qr', 'ean-13'],
         // calls the callback function once a code was scanned
-        onCodeScanned: handleScan
+        onCodeScanned: handleScan,
+        
     })
     // props for the camera zoom
     const animatedProps = useAnimatedProps<CameraProps>(
