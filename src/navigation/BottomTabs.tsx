@@ -5,10 +5,6 @@ import {
     StyleSheet
  } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// browse animal screen
-import BrowseAnimalWrapper from '../components/realm_wrappers/BrowseAnimalScreenWrapper';
-// qr code screen
-import QRCodeScanner from '../screens/QRCodeScannerScreen';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import IonIcons from 'react-native-vector-icons/Ionicons'
 import { Color } from '../assets/general/GlobalStyles';
@@ -16,9 +12,6 @@ import TabBarHeader from '../components/TabBarHeader';
 // create the bottom tab navigator
 const Tab = createBottomTabNavigator();
 // trial screen
-const imageURL = "https://st.depositphotos.com/2274151/4841/i/450/depositphotos_48410095-stock-photo-sample-blue-square-grungy-stamp.jpg"
-import { saveImageToLocalStorage } from '../utils/FileBasedUtilitilityFunctions';
-import { useEffect } from 'react';
 import { Image } from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util'
 // placeholder screen
@@ -51,6 +44,15 @@ const tabBarScreenOption = {
     tabBarHideOnKeyboard: true
 }
 
+
+// import components here
+// browse animal screen
+import BrowseAnimalWrapper from '../components/realm_wrappers/BrowseAnimalScreenWrapper';
+// qr code screen
+import QRCodeScanner from '../screens/QRCodeScannerScreen';
+// temporary
+// view animal screen
+import ViewAnimalScreen from '../screens/ViewAnimalScreen';
 // add Tab.Screen here
 // provide name, component and the icon for the tab bar
 const BottomTabs = () =>{
@@ -82,7 +84,8 @@ const BottomTabs = () =>{
             />
             <Tab.Screen
                 name='Events'
-                component={SampleTab}
+                // temporary
+                component={ViewAnimalScreen}
                 options={{
                     ...tabBarScreenOption,
                     tabBarIcon: ({focused, color, size}) =>{
