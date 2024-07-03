@@ -9,7 +9,8 @@ enum AnimalStatus {
     RAINBOW_BRIDGE = "rainbow_bridge",
     OWNED = "owned",
     TRANSIENT = "transient",
-    CAMPUS_DOG = "campus_dog"
+    ON_CAMPUS = "on_campus",
+    ADOPTED = "adopted"
 }
 
 // accepted values for animal species
