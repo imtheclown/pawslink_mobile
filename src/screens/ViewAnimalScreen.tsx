@@ -19,13 +19,28 @@ import { generalStyles } from "../assets/general/generalStyles"
 import IonIcon from "react-native-vector-icons/Ionicons"
 import { AnimalSex, AnimalStatus } from "../backend/realm/schemas/Animal";
 import { useState, useEffect } from "react";
+// function that processes database data to view data
+import { replaceUnderScoreWithSpace } from "../utils/TextBasedUtilityFunctions";
+// general purpose button
+import RoundButton from "../components/RoundButton";
 
+interface ParagraphProps {
+    title: string,
+    content: string
+}
+// maybe add margin vertical in the view
+const Paragraph:React.FC<ParagraphProps> = ({title, content}) =>{
+    return (
+        <View style = {[{marginVertical: 10}]}>
+            <Text style = {[styles.infoBoxTitleText]}>{title}</Text>
+            <Text style ={[styles.infoBoxValueText]}>{content}</Text>
+        </View>
+    )
+}
 // props for the status box
 interface StatusBoxProps {
     value: string
 }
-// function that processes database data to view data
-import { replaceUnderScoreWithSpace } from "../utils/TextBasedUtilityFunctions";
 
 // box that covers the status
 // differenct color (background and font) for each of the animal status
@@ -102,6 +117,13 @@ const InfoBox:React.FC<InfoBoxProps> = ({title, value}) => {
         </View>
     )
 }
+
+// trial data
+
+const myTitle = "TRAITS AND PERSONALITY"
+const data = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+// trial data
+
 interface animalInterface {
     sex: AnimalSex
 }
@@ -109,7 +131,7 @@ interface animalInterface {
 // in progress
 // should display all the data for the specified animal
 // pass animal object or sort of
-const ViewAnimalScreen: React.FC<animalInterface> = () =>{
+const ViewAnimalScreen = () =>{
     // temporary
     const sex = AnimalSex.MALE;
     // determines what sex icon to display
@@ -137,14 +159,14 @@ const ViewAnimalScreen: React.FC<animalInterface> = () =>{
                 <Text style = {[styles.usualLocationTextStyle]}>
                     {`Usual location`}
                 </Text>
-                <View style={[styles.infoBoxWrapper, generalStyles.rowStartContainer]}>
+                <View style={[styles.infoBoxWrapper]}>
                     <InfoBox
                         title={"age"}
                         value={"NA"}
                     />
                     <InfoBox
                         title={"status"}
-                        value={[AnimalStatus.ON_CAMPUS, AnimalStatus.OWNED, AnimalStatus.ADOPTED, AnimalStatus.RAINBOW_BRIDGE, AnimalStatus.TRANSIENT]}
+                        value={[AnimalStatus.ON_CAMPUS, AnimalStatus.ADOPTED]}
                     />
                     <InfoBox
                         title={"vaccinated last"}
@@ -155,11 +177,20 @@ const ViewAnimalScreen: React.FC<animalInterface> = () =>{
                         value={"NA"}
                     />
                 </View>
+                <Paragraph title= {myTitle} content={data}/>
+                <Paragraph title= {myTitle} content={data}/>
+                <RoundButton 
+                backgroundColor="#f6d25e"
+                callBack={() =>{
+                    console.log("pressed")
+                }}
+                title="adopt me"
+                />
             </ScrollView>
         </SafeAreaView>
     )
 }
-
+export default ViewAnimalScreen
 const styles = StyleSheet.create({
     mainContainer:{
         backgroundColor: Color.colorWhite,
@@ -191,9 +222,11 @@ const styles = StyleSheet.create({
     },
     // infobox wrapper
     infoBoxWrapper:{
-        width: '100%',
+        width: '100%', 
         height: 'auto',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        alignItems:'flex-start'
     },
     // info box
     infoBoxContainer : {
@@ -206,7 +239,7 @@ const styles = StyleSheet.create({
         fontFamily: FontFamily.interRegular,
         lineHeight: 20,
         textAlign: "left",
-        textTransform: 'uppercase',
+        textTransform: 'uppercase'
     },
     infoBoxValueText:{
         color: Color.colorDimgray,
@@ -214,7 +247,6 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         fontSize: FontSize.size_sm,
         textAlign: "left",
-        textTransform: 'uppercase'
     },
     infoBoxList:{
         flexWrap: 'wrap',
@@ -228,7 +260,8 @@ const styles = StyleSheet.create({
         height: 'auto',
         paddingHorizontal: 5,
         borderRadius: Border.br_4xs,
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
+        elevation: 2
     },
     statusBoxText:{
         alignSelf: 'flex-start',
@@ -240,4 +273,3 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ViewAnimalScreen
