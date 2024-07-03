@@ -26,7 +26,6 @@ const ResponsiveImage : React.FC<responsiveImageProps> = ({source}) =>{
           const resolvedSource = Image.resolveAssetSource(source);
           setWidth(containerWidth);
           setHeight(containerWidth * resolvedSource.height / resolvedSource.width);
-          console.log(resolvedSource)
         } else if (typeof source === "object") {
           Image.getSize(source.uri, (w, h) => {
             setWidth(containerWidth);
@@ -48,13 +47,4 @@ const ResponsiveImage : React.FC<responsiveImageProps> = ({source}) =>{
 export default ResponsiveImage
 
 const styles = StyleSheet.create({
-    imageContainer: {
-        width: '100%',
-        height: 'auto'
-    },
-    imageSize: {
-        width: '100%',
-        backgroundColor: 'green',
-    }
-
 })
