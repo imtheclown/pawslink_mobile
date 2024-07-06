@@ -27,8 +27,10 @@ const AnimalDataScreen = () =>{
     };
 
     return (
-        <SafeAreaView style ={[generalStyles.flexContainer, generalStyles.centerContainer, styles.mainContainer]}>
-            <Text style = {[styles.titleText]}>{`animal database`}</Text>
+        <SafeAreaView style ={[generalStyles.flexContainer, styles.mainContainer]}>
+            <View style ={[styles.textContainer, generalStyles.centerContainer]}>
+                <Text style = {[styles.titleText]}>{`animal database`}</Text>
+            </View>
             <View style = {[styles.buttonContainer, generalStyles.centerContainer]}>
                 <FlexibleButton
                     fontColor={Color.colorWhite}
@@ -56,7 +58,8 @@ const AnimalDataScreen = () =>{
 export default AnimalDataScreen;
 const styles = StyleSheet.create({
     mainContainer:{
-        backgroundColor: Color.colorWhite
+        backgroundColor: Color.colorWhite,
+        alignItems: 'center',
     },
     buttonContainer: {
         width: '70%',
@@ -69,6 +72,9 @@ const styles = StyleSheet.create({
         fontFamily: FontFamily.epilogueBold,
         color: "#774a7f",
         textTransform: 'capitalize',
-        marginBottom: 30
+    },
+    textContainer:{
+        width: '100%',
+        height: '30%'
     },
 })
