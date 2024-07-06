@@ -29,8 +29,8 @@ const SampleTab = () =>{
     )
 }
 // determines the state of the navigation tab icon3
-const activeTabColor = Color.colorDarkslateblue;
-const inactiveTabColor= 'black'
+export const activeTabColor = Color.colorDarkslateblue;
+export const inactiveTabColor= 'black'
 
 // tab bar item configuration
 // applicable to all of the tab bars

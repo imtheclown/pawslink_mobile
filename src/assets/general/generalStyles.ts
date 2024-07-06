@@ -34,18 +34,16 @@ export const generalStyles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems:'center'
     },
-    // container with shadow and white background
-    // with curved borders
-    curvedContainerWithShadow:{
+    // add shadows to the container
+    // for both ios and android
+    containerWithShadow:{
         elevation: 2,
         shadowRadius: 2,
-        borderRadius: Border.br_5xs,
         shadowColor: "rgba(23, 26, 31, 1)",
         shadowOpacity: 1,
         shadowOffset: {
           width: 0,
           height: 3,
         },
-        backgroundColor: Color.colorWhite,
     },
 })
