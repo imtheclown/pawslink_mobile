@@ -10,6 +10,7 @@ export const FontSize = {
   size_xs: 12,
   size_2xs: 11,
   size_sm: 14,
+  size_xl: 20,
 };
 /* Colors */
 export const Color = {
@@ -25,4 +26,5 @@ export const Color = {
 export const Border = {
   br_5xs: 8,
   br_4xs: 9,
+  br_9xs: 4,
 };
