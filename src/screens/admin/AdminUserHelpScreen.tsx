@@ -11,39 +11,50 @@ import {
      Color,
      FontFamily
  } from "../../assets/general/GlobalStyles";
-const AdminEventScreen = () =>{
-    // navigates to the current list of active events
-    const gotoEvents = () => {
-         console.log("events");
+const AdminUserHelpScreen = () =>{
+    // go to messages screens
+    const gotoMessages = () =>{
+        console.log('messages');
     };
-    // navigates to the screen where we can add events
-    const gotoAddEvents = () => {
-        console.log("add events");
+
+    // go to the forum
+    const gotoForum = () =>{
+        console.log('forum');
     };
+
+    const gotoUserList = () => {
+        console.log("user list")
+    }
     return (
         <SafeAreaView style ={[generalStyles.flexContainer, styles.mainContainer]}>
             <View style ={[styles.textContainer, generalStyles.centerContainer]}>
-                <Text style ={[styles.titleText]}>{`events`}</Text>
+                <Text style ={[styles.titleText]}>{`user help`}</Text>
             </View>
             <View style={[styles.buttonContainer]}>
                 <FlexibleButton
-                    title="view events"
-                    callback={gotoEvents}
+                    title="messages"
+                    callback={gotoMessages}
                     backgroundColor={Color.colorPaleovioletred}
                     fontColor={Color.colorWhite}
                 />
                 <FlexibleButton
-                    title="+ add an event"
-                    callback={gotoAddEvents}
-                    backgroundColor={Color.colorWhite}
-                    fontColor={Color.colorPaleovioletred}
+                    title="forum"
+                    callback={gotoForum}
+                    backgroundColor={Color.colorPaleovioletred}
+                    fontColor={Color.colorWhite}
+                />
+                <FlexibleButton
+                    title="user list"
+                    callback={gotoUserList}
+                    backgroundColor={Color.colorPaleovioletred}
+                    fontColor={Color.colorWhite}
                 />
             </View>
         </SafeAreaView>
     )
 }
 
-export default AdminEventScreen;
+export default AdminUserHelpScreen;
 
 const styles = StyleSheet.create({
     textContainer:{

@@ -1,6 +1,8 @@
 // navigation routes for the admin version of the application
 import IonIcons from 'react-native-vector-icons/Ionicons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { activeTabColor, inactiveTabColor } from './BottomTabs';
 import TabBarHeader from '../components/TabBarHeader';
@@ -11,6 +13,13 @@ import { StyleSheet } from 'react-native';
 import AnimalDataScreen from "../screens/admin/AnimalDatabaseScreen";
 // admin event screen
 import AdminEventScreen from '../screens/admin/AdminEventScreen';
+// admin adoptions screen
+import AdminAdoptionScreen from '../screens/admin/AdminAdoptionScreen';
+// admin user help screen
+import AdminUserHelpScreen from '../screens/admin/AdminUserHelpScreen';
+// admin help
+import AdminHelpScreen from '../screens/admin/AdminHelpScreen';
+
 // bottom tab configuration
 
 const Tab = createBottomTabNavigator();
@@ -50,6 +59,41 @@ const AdminBottomTabNavigation = () =>{
                     headerStyle: styles.headerStyle
                 }}
 
+            />
+            <Tab.Screen
+                name='Adoption'
+                component={AdminAdoptionScreen}
+                options={{
+                    ...tabBarScreenOptions,
+                    tabBarIcon: ({focused, color, size}) =>{
+                        return <SimpleLineIcons name='home' color={color} size={focused? size + 10: size}/>
+                    },
+                    headerStyle: styles.headerStyle
+                }}
+
+            />
+            <Tab.Screen
+                name='User Help'
+                component={AdminUserHelpScreen}
+                options={{
+                    ...tabBarScreenOptions,
+                    tabBarIcon: ({focused, color, size}) =>{
+                        return <MaterialIcons name='people-outline' color={color} size={focused? size + 10: size}/>
+                    },
+                    headerStyle: styles.headerStyle
+                }}
+
+            />
+            <Tab.Screen
+                name="Admin Help"
+                component={AdminHelpScreen}
+                options={{
+                    ...tabBarScreenOptions,
+                    tabBarIcon: ({focused, color, size}) =>{
+                        return <IonIcons name='settings-outline' color={color} size={focused? size + 10: size}/>
+                    },
+                    headerStyle: styles.headerStyle
+                }}
             />
         </Tab.Navigator>
     )

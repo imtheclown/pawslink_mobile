@@ -1,5 +1,4 @@
 // screen for the admin's animal database
-
 import { 
     SafeAreaView,
     Text,
@@ -13,15 +12,15 @@ import {
 import { generalStyles } from "../../assets/general/generalStyles";
 import FlexibleButton from "../../components/admin/FlexibleButton";
 const AnimalDataScreen = () =>{
-
+    // function that navigates to list of cats
     const gotoCatsDatabase = () =>{
         console.log("cats");
     };
-
+    // function that navigates to list of dogs screen
     const gotoDogsDatabase = () =>{
         console.log("dogs");
     };
-    
+    // navigates to the screen where you can add animals
     const gotoAddAnimalScreen = () =>{
         console.log("add animal")
     };

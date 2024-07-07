@@ -11,30 +11,39 @@ import {
      Color,
      FontFamily
  } from "../../assets/general/GlobalStyles";
-const AdminEventScreen = () =>{
-    // navigates to the current list of active events
-    const gotoEvents = () => {
-         console.log("events");
+const AdminHelpScreen = () =>{
+    const gotoEditPassword = () =>{
+        console.log("edit password");
     };
-    // navigates to the screen where we can add events
-    const gotoAddEvents = () => {
-        console.log("add events");
+
+    const gotoAdminLog = () =>{
+        console.log("admin log");
+    };
+
+    const handleLogOut = () =>{
+        console.log("log out");
     };
     return (
         <SafeAreaView style ={[generalStyles.flexContainer, styles.mainContainer]}>
             <View style ={[styles.textContainer, generalStyles.centerContainer]}>
-                <Text style ={[styles.titleText]}>{`events`}</Text>
+                <Text style ={[styles.titleText]}>{`admin help`}</Text>
             </View>
             <View style={[styles.buttonContainer]}>
                 <FlexibleButton
-                    title="view events"
-                    callback={gotoEvents}
+                    title="edit password"
+                    callback={gotoEditPassword}
                     backgroundColor={Color.colorPaleovioletred}
                     fontColor={Color.colorWhite}
                 />
                 <FlexibleButton
-                    title="+ add an event"
-                    callback={gotoAddEvents}
+                    title="admin log"
+                    callback={gotoAdminLog}
+                    backgroundColor={Color.colorPaleovioletred}
+                    fontColor={Color.colorWhite}
+                />
+                <FlexibleButton
+                    title="log out"
+                    callback={handleLogOut}
                     backgroundColor={Color.colorWhite}
                     fontColor={Color.colorPaleovioletred}
                 />
@@ -43,7 +52,7 @@ const AdminEventScreen = () =>{
     )
 }
 
-export default AdminEventScreen;
+export default AdminHelpScreen;
 
 const styles = StyleSheet.create({
     textContainer:{
