@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         fontFamily: FontFamily.interBold,
         fontWeight: "700",
         textTransform: 'capitalize',
-        left: 6
+        left: 6,
     },
     outerContainer:{
         padding: 5,
@@ -71,7 +71,9 @@ const styles = StyleSheet.create({
         borderRadius: Border.br_9xs,
         borderWidth: 1,
         borderStyle: "solid",
-        backgroundColor: Color.colorWhite
+        backgroundColor: Color.colorWhite,
+        height: 55,
+        color: Color.colorDarkslategray
     },
     onFocusTextInputBox:{
         borderColor: Color.colorPaleovioletred,

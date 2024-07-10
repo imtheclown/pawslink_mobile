@@ -9,7 +9,12 @@ import {
     Keyboard
 } from "react-native";
 import { generalStyles } from "../../assets/general/generalStyles";
+import { Color } from "../../assets/general/GlobalStyles";
 import FlexibleTextInput from "../../components/admin/FlexibleTextnput";
+import FlexibleDropDown from "../../components/admin/FlexibleDropDown";
+
+// temp data
+const tempData = ["male", "female"]
 const AddAnimalScreen = () => {
 
     const getAnimalName = () =>{
@@ -34,6 +39,20 @@ const AddAnimalScreen = () => {
                             size={70}
                             callback={getAnimalName}
                         />
+                        <FlexibleDropDown
+                            size={85}
+                            title="sex"
+                            data={tempData}
+                            callBack={getAnimalName}
+
+                        />
+                        <FlexibleDropDown
+                            size={180}
+                            title="status"
+                            data={tempData}
+                            callBack={getAnimalName}
+
+                        />
                     </View>
                 </View>
             </SafeAreaView>
@@ -46,7 +65,8 @@ export default AddAnimalScreen;
 
 const styles = StyleSheet.create({
     mainContainer:{
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: Color.colorWhite
     },
     contentContainer:{
         width: '90%'
