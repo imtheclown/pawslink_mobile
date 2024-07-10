@@ -9,14 +9,17 @@ import AppNavigation from './navigation/AppNavigation';
 import AdminBottomTabNavigation from './navigation/AdminNavigation';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import AddAnimalScreen from './screens/admin/AddAnimalScreen';
 function App(): React.JSX.Element {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        {/* <AppNavigation/> */}
-        <AdminBottomTabNavigation/>
-      </NavigationContainer>
-    </GestureHandlerRootView>
+    // <GestureHandlerRootView style={{ flex: 1 }}>
+    //   <NavigationContainer>
+    //     {/* <AppNavigation/> */}
+    //     <AdminBottomTabNavigation/>
+    //   </NavigationContainer>
+    // </GestureHandlerRootView>
+
+    <AddAnimalScreen/>
   );
 }
 
