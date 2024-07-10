@@ -21,8 +21,9 @@ interface FlexibleTextInputProps {
     callback: () => void
 }
 import { useState } from "react";
-
 const FlexibleTextInput: React.FC<FlexibleTextInputProps> = ({title, size, callback}) =>{
+    // lacks callback functions, add functions
+    // controls the state of the component
     const [isFocused, setIsFocused] = useState(false);
 
     const setFocusedOn = () =>{
