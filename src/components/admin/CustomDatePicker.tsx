@@ -91,7 +91,7 @@ const CustomDatePicker:React.FC<CustomDatePickerProps> = ({title, size}) => {
              visible = {isFocused}
              transparent = {true}
         >
-            <SafeAreaView style ={[generalStyles.centerContainer, generalStyles.flexContainer]}>
+            <SafeAreaView style ={[generalStyles.centerContainer, generalStyles.flexContainer, styles.modalBackground]}>
                 <View style ={[generalStyles.containerWithShadow, styles.modalContentContainer]}>
                     <DateTimePicker
                         selectedItemColor={Color.colorPalevioletred_200}
@@ -104,9 +104,9 @@ const CustomDatePicker:React.FC<CustomDatePickerProps> = ({title, size}) => {
                     {/* add confirm and close button here */}
                     {/* button that closes the datepicker when the user will not choose a date  */}
                     <FlexibleButton
+                        buttonStyle={styles.cancelButton}
+                        fontStyle={styles.cancelButtonText}
                         title='cancel'
-                        backgroundColor={Color.colorWhite}
-                        fontColor={Color.colorPaleovioletred}
                         callback={exitFocus}
                     />
                 </View>
@@ -156,7 +156,25 @@ const styles = StyleSheet.create({
         marginHorizontal: 10
     },
     modalContentContainer:{
+        borderRadius: Border.br_4xs,
+        width: '90%',
         backgroundColor: Color.colorWhite,
         alignItems: 'center'
-    }
+    },
+    modalBackground: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    },
+    // button styles
+    cancelButton:{
+        width: 150,
+        height: 40,
+        backgroundColor: Color.colorWhite,
+        borderColor: Color.colorPaleovioletred,
+        marginBottom: 10
+    },
+    cancelButtonText:{
+        fontSize: 14,
+        lineHeight: 22,
+        color: Color.colorPaleovioletred
+    },
 })

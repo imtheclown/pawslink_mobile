@@ -10,6 +10,7 @@ import {
 import React from "react";
 import { useMemo, useState } from "react";
 import { Border, Color, FontSize, FontFamily } from '../../assets/general/GlobalStyles';
+import { generalStyles } from "../../assets/general/generalStyles";
 
 // props structure for the component
 interface FlexibleDropDownProps {
@@ -56,8 +57,8 @@ const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBac
     const processedData: Array<DatalistStructure> = useMemo(generateData, [data])
     return (
         <View>
-            <Text style ={[styles.textTitle]}>{title}</Text>
-            <View style = {[styles.outerContainer, isFocused? styles.onFocusOuterContainer: {}]}>
+            <Text style ={[generalStyles.TextInputTitle]}>{title}</Text>
+            <View style = {[generalStyles.outerTextInputBox, isFocused? generalStyles.onFocusOuterTextInputBox: {}]}>
                 <Dropdown
                     onFocus={() => {
                         handleOnfocus()
@@ -78,7 +79,7 @@ const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBac
                     selectedTextStyle ={{marginHorizontal: 5}}
                     selectedTextProps={{numberOfLines: 1}}
                     containerStyle = {{marginTop: 5}}
-                    style = {[{width: size}, styles.contentContainer, isFocused? styles.onFocusTextInputBox: styles.normalTextInputBox]}
+                    style = {[{width: size}, generalStyles.innerTextInputBox, isFocused? generalStyles.onFocusInnnerTextInputBox: generalStyles.normalInnerTextInputBox]}
                     itemContainerStyle ={{width:300}}
                     iconStyle = {[isFocused?styles.rotatedIcon:styles.normalIcon, styles.iconStyle]}
                     iconColor={isFocused? Color.colorPaleovioletred: Color.colorSilver}
@@ -92,38 +93,6 @@ const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBac
 export default FlexibleDropDown;
 
 const styles = StyleSheet.create({
-    textTitle:{
-        textAlign: "left",
-        lineHeight: 22,
-        fontSize: FontSize.size_sm,
-        color: Color.colorDarkslategray,
-        fontFamily: FontFamily.interBold,
-        fontWeight: "700",
-        textTransform: 'capitalize',
-        left: 6,
-    },
-
-    contentContainer:{
-        borderRadius: Border.br_9xs,
-        borderWidth: 1,
-        borderStyle: "solid",
-        backgroundColor: Color.colorWhite,
-        height: 55
-    },
-    outerContainer:{
-        padding: 5,
-        alignSelf: "flex-start"
-    },
-    onFocusTextInputBox:{
-        borderColor: Color.colorPaleovioletred,
-    },
-    normalTextInputBox:{
-        borderColor: Color.colorSilver
-    },
-    onFocusOuterContainer:{
-        backgroundColor: Color.colorPalevioletred_200,
-        borderRadius: Border.br_5xs,
-    },
     iconStyle : {
         margin: 5
     },

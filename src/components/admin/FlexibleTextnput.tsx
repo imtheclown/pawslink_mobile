@@ -4,86 +4,70 @@ import {
     Text, 
     View,
     StyleSheet,
+    KeyboardAvoidingView,
+    Keyboard,
 } from "react-native";
 
 import React from "react";
 
-import { 
-    FontSize,
-    Color,
-    FontFamily,
-    Border
- } from "../../assets/general/GlobalStyles";
 
 interface FlexibleTextInputProps {
     title:string,
-    size: number,
+    size?: number,
+    numberOfLines? : number,
     callback: () => void
 }
 import { useState } from "react";
-const FlexibleTextInput: React.FC<FlexibleTextInputProps> = ({title, size, callback}) =>{
+import { generalStyles } from "../../assets/general/generalStyles";
+const FlexibleTextInput: React.FC<FlexibleTextInputProps> = ({title, size, numberOfLines, callback}) =>{
     // lacks callback functions, add functions
     // controls the state of the component
     const [isFocused, setIsFocused] = useState(false);
 
     const setFocusedOn = () =>{
-        setIsFocused(true);
+        if(!isFocused){
+            setIsFocused(true);
+        }else{
+            Keyboard.dismiss();
+        }
     }
 
     const setFocusedOff = () =>{
         setIsFocused(false);
     }
     return (
-        <View>
-            <Text style = {[styles.textTitle, ]}>
-                {
-                    title
-                }
-            </Text >
-            <View style = {[styles.outerContainer, isFocused?styles.onFocusOuterContainer: {}]}>
-                <TextInput
-                onFocus={() => setFocusedOn()}
-                onBlur={() => setFocusedOff()}
-                style = {[styles.textInputBox, isFocused?styles.onFocusTextInputBox: styles.normalTextInputBox, {width: size}]}
-                />
-            </View>
-        </View>
+        <KeyboardAvoidingView style = {[size? {}:{width: '100%'}]}>
+            <Text style = {[generalStyles.TextInputTitle, ]}>
+                    {
+                        title
+                    }
+                </Text >
+                <View style = {[!size?styles.fullWidthTextInput : {},generalStyles.outerTextInputBox, 
+                        isFocused?generalStyles.onFocusOuterTextInputBox: {}]}>
+                    <TextInput
+                    multiline = {numberOfLines? true: false}
+                    numberOfLines={numberOfLines}
+                    onFocus={() => setFocusedOn()}
+                    onBlur={() => setFocusedOff()}
+                    style = {[generalStyles.innerTextInputBox, 
+                        isFocused?generalStyles.onFocusInnnerTextInputBox: generalStyles.normalInnerTextInputBox, 
+                        size?{width: size}:styles.fullWidthTextInput, numberOfLines? styles.multilineStart: styles.singleLineStart]}
+                    />
+                </View>
+        </KeyboardAvoidingView>
     )
 }
 
 export default FlexibleTextInput
 
 const styles = StyleSheet.create({
-    textTitle:{
-        textAlign: "left",
-        lineHeight: 22,
-        fontSize: FontSize.size_sm,
-        color: Color.colorDarkslategray,
-        fontFamily: FontFamily.interBold,
-        fontWeight: "700",
-        textTransform: 'capitalize',
-        left: 6,
+    fullWidthTextInput : {
+        width: '100%',
     },
-    outerContainer:{
-        padding: 5,
-        alignSelf: "flex-start"
+    multilineStart:{
+        textAlignVertical: 'top',
     },
-    textInputBox: {
-        borderRadius: Border.br_9xs,
-        borderWidth: 1,
-        borderStyle: "solid",
-        backgroundColor: Color.colorWhite,
-        height: 55,
-        color: Color.colorDarkslategray
-    },
-    onFocusTextInputBox:{
-        borderColor: Color.colorPaleovioletred,
-    },
-    normalTextInputBox:{
-        borderColor: Color.colorSilver
-    },
-    onFocusOuterContainer:{
-        backgroundColor: Color.colorPalevioletred_200,
-        borderRadius: Border.br_5xs,
-    },
+    singleLineStart:{
+        textAlignVertical: 'center',
+    }
 })
