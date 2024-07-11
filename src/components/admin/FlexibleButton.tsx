@@ -40,7 +40,7 @@ const FlexibleButton : React.FC<FlexibleButtonProps> = ({title, callback,fontSty
     )
 }
 
-export default FlexibleButton;
+export default React.memo(FlexibleButton);
 
 const styles = StyleSheet.create({
     buttonStyle:{

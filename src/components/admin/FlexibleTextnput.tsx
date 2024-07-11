@@ -10,7 +10,6 @@ import {
 
 import React from "react";
 
-
 interface FlexibleTextInputProps {
     title:string,
     size?: number,
@@ -19,7 +18,7 @@ interface FlexibleTextInputProps {
 }
 import { useState } from "react";
 import { generalStyles } from "../../assets/general/generalStyles";
-const FlexibleTextInput: React.FC<FlexibleTextInputProps> = ({title, size, numberOfLines, callback}) =>{
+const FlexibleTextInput: React.FC<FlexibleTextInputProps> =({title, size, numberOfLines, callback}) =>{
     // lacks callback functions, add functions
     // controls the state of the component
     const [isFocused, setIsFocused] = useState(false);
@@ -56,9 +55,9 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = ({title, size, numbe
                 </View>
         </KeyboardAvoidingView>
     )
-}
+};
 
-export default FlexibleTextInput
+export default React.memo(FlexibleTextInput)
 
 const styles = StyleSheet.create({
     fullWidthTextInput : {

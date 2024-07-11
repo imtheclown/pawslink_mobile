@@ -9,6 +9,10 @@ import {
     Keyboard, 
     ScrollView
 } from "react-native";
+import { useState } from "react";
+import AntDesign from 'react-native-vector-icons/AntDesign';
+
+import { pickImageFromDir } from "../../utils/FileBasedUtilitilityFunctions";
 import { generalStyles } from "../../assets/general/generalStyles";
 import { Border, Color, FontFamily, FontSize } from "../../assets/general/GlobalStyles";
 import FlexibleTextInput from "../../components/admin/FlexibleTextnput";
@@ -16,17 +20,15 @@ import FlexibleDropDown from "../../components/admin/FlexibleDropDown";
 import CustomDatePicker from "../../components/admin/CustomDatePicker";
 import ResponsiveImage from "../../components/ResponsiveImage";
 import { TouchableOpacity } from "react-native";
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import FlexibleButton from "../../components/admin/FlexibleButton";
+
 
 // temp data
 // ---to do----
-// fetch data from the local or online database
-// will be able to recieve props/data from the previous screeen
-//  allows edit , pass data to the component and set them as the default value
+// create a function that saves this information in the local or online database1
 const tempData = ["male", "female"]
 const AddAnimalScreen = () => {
-
+    const [imgUrl, setImageUrl] = useState<string|null>(null);
     const getAnimalName = () =>{
         console.log("animal name");
     }
@@ -34,16 +36,27 @@ const AddAnimalScreen = () => {
     const handleKeyBoardDismiss = () => {
         Keyboard.dismiss()
     }
+    const handlePickImagePress = () =>{
+        pickImageFromDir()
+        .then(res => {
+            console.log(res);
+            if(res[0].uri){
+                setImageUrl(res[0].uri)
+            }
+        }).catch(err =>{
+            console.log(err)
+        })
+    }
     return (
         <TouchableWithoutFeedback onPress={handleKeyBoardDismiss}>
             <SafeAreaView style = {[generalStyles.flexContainer, styles.mainContainer]}>
                 <ScrollView contentContainerStyle = {[styles.contentContainer]}>
                     <View style = {[styles.imageContainer]}>
                         <ResponsiveImage
-                            source={require("../../assets/images/no_image.png")}
+                            source={imgUrl === null? require("../../assets/images/no_image.png"): {uri: imgUrl}}
                         />
                     </View>
-                    <TouchableOpacity style ={[styles.uploadPhotoButton, generalStyles.centerContainer]}>
+                    <TouchableOpacity style ={[styles.uploadPhotoButton, generalStyles.centerContainer]} onPress={handlePickImagePress}>
                         <AntDesign style ={[styles.buttonIcon]} name="upload" color={Color.colorWhite} size={16}/>
                         <Text style = {[styles.buttonTitleText]}>
                             {`upload photo`}

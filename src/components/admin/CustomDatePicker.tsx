@@ -115,7 +115,7 @@ const CustomDatePicker:React.FC<CustomDatePickerProps> = ({title, size}) => {
         </>
     )
 }
-export default CustomDatePicker;
+export default React.memo(CustomDatePicker);
 
 const styles = StyleSheet.create({
     textTitle:{

@@ -90,7 +90,7 @@ const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBac
     )
 }
 
-export default FlexibleDropDown;
+export default React.memo(FlexibleDropDown);
 
 const styles = StyleSheet.create({
     iconStyle : {
