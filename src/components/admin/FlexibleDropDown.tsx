@@ -48,9 +48,7 @@ const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBac
     }
 
     const handleOnfocus = () =>{
-        if(!isFocused){
-            setIsFocused(true);
-        }
+        setIsFocused(true);
         Keyboard.dismiss();
     }
     // memoizes the data produced by the generateData

@@ -4,21 +4,21 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { activeTabColor, inactiveTabColor } from './BottomTabs';
-import TabBarHeader from '../components/TabBarHeader';
-import { Color } from '../assets/general/GlobalStyles';
+import { activeTabColor, inactiveTabColor } from '../BottomTabs';
+import TabBarHeader from '../../components/TabBarHeader';
+import { Color } from '../../assets/general/GlobalStyles';
 import { StyleSheet } from 'react-native';
 // import screens here
-// animal database screeen
-import AnimalDataScreen from "../screens/admin/AnimalDatabaseScreen";
+// import add animal stack
+import AnimalDBNavigationStack from './AnimalDBNavigation';
 // admin event screen
-import AdminEventScreen from '../screens/admin/AdminEventScreen';
+import AdminEventScreen from '../../screens/admin/AdminEventScreen';
 // admin adoptions screen
-import AdminAdoptionScreen from '../screens/admin/AdminAdoptionScreen';
+import AdminAdoptionScreen from '../../screens/admin/AdminAdoptionScreen';
 // admin user help screen
-import AdminUserHelpScreen from '../screens/admin/AdminUserHelpScreen';
+import AdminUserHelpScreen from '../../screens/admin/AdminUserHelpScreen';
 // admin help
-import AdminHelpScreen from '../screens/admin/AdminHelpScreen';
+import AdminHelpScreen from '../../screens/admin/AdminHelpScreen';
 
 // bottom tab configuration
 
@@ -28,7 +28,7 @@ const tabBarScreenOptions ={
     tabBarActiveTintColor: activeTabColor,
     tabBarInactiveTintColor: inactiveTabColor,
     tabBarHideOnKeyboard: true,
-    header: () => <TabBarHeader/>,
+    headerShown: false,
 }
 const AdminBottomTabNavigation = () =>{
     return (
@@ -39,7 +39,7 @@ const AdminBottomTabNavigation = () =>{
         >
             <Tab.Screen
                 name="Animal Database"
-                component={AnimalDataScreen}
+                component={AnimalDBNavigationStack}
                 options={{
                     ...tabBarScreenOptions,
                     tabBarIcon: ({focused, color, size}) =>{
@@ -109,5 +109,8 @@ const styles = StyleSheet.create({
     },
     tabBarStyle:{
         height:80
+    },
+    tabBarPosition :{
+        justifyContent: 'center'
     }
 })

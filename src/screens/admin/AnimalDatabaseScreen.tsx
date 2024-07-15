@@ -11,7 +11,8 @@ import {
  } from "../../assets/general/GlobalStyles";
 import { generalStyles } from "../../assets/general/generalStyles";
 import FlexibleButton from "../../components/admin/FlexibleButton";
-const AnimalDataScreen = () =>{
+import { AnimalDBScreenProps } from "../../navigation/admin/AnimalDBNavigation";
+const AnimalDataScreen = ({route, navigation}: AnimalDBScreenProps) =>{
     // function that navigates to list of cats
     const gotoCatsDatabase = () =>{
         console.log("cats");
@@ -22,7 +23,7 @@ const AnimalDataScreen = () =>{
     };
     // navigates to the screen where you can add animals
     const gotoAddAnimalScreen = () =>{
-        console.log("add animal")
+        navigation.navigate('add_animal');
     };
 
     return (
@@ -30,24 +31,24 @@ const AnimalDataScreen = () =>{
             <View style ={[styles.textContainer, generalStyles.centerContainer]}>
                 <Text style = {[styles.titleText]}>{`animal database`}</Text>
             </View>
-            <View style = {[styles.buttonContainer, generalStyles.centerContainer]}>
+            <View style = {[styles.buttonContainer]}>
                 <FlexibleButton
-                    fontColor={Color.colorWhite}
                     title="dogs"
-                    backgroundColor={Color.colorPaleovioletred}
                     callback={gotoDogsDatabase}
+                    buttonStyle={styles.pinkButton}
+                    fontStyle={styles.whiteFont}
                 />
                 <FlexibleButton
-                    fontColor={Color.colorWhite}
                     title="cats"
-                    backgroundColor={Color.colorPaleovioletred}
                     callback={gotoCatsDatabase}
+                    buttonStyle={styles.pinkButton}
+                    fontStyle={styles.whiteFont}
                 />
                 <FlexibleButton
-                    fontColor={Color.colorPaleovioletred}
                     title= '+ add animal'
-                    backgroundColor="#FCF3F6"
                     callback={gotoAddAnimalScreen}
+                    buttonStyle={styles.whiteButton}
+                    fontStyle={styles.pinkFont}
                 />
             </View>
         </SafeAreaView>
@@ -76,4 +77,20 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '30%'
     },
+    pinkButton: {
+        backgroundColor: Color.colorPaleovioletred,
+        borderColor: Color.colorPaleovioletred,
+        height: 55
+    },
+    whiteButton:{
+        backgroundColor: Color.colorWhite,
+        borderColor: Color.colorPaleovioletred,
+        height: 55
+    },
+    whiteFont:{
+        color: Color.colorWhite
+    },
+    pinkFont:{
+        color: Color.colorPaleovioletred
+    }
 })
