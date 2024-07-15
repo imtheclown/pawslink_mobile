@@ -32,20 +32,20 @@ const AdminAdoptionScreen = () =>{
                 <FlexibleButton
                     title="adoption requests"
                     callback={gotoAdoptionRequests}
-                    backgroundColor={Color.colorPaleovioletred}
-                    fontColor={Color.colorWhite}
+                    buttonStyle={styles.pinkButton}
+                    fontStyle={styles.whiteFont}
                 />
                 <FlexibleButton
                     title="adopted animals"
                     callback={gotoAdoptedAnimals}
-                    backgroundColor={Color.colorPaleovioletred}
-                    fontColor={Color.colorWhite}
+                    buttonStyle={styles.pinkButton}
+                    fontStyle={styles.whiteFont}
                 />
                 <FlexibleButton
                     title="see forms"
                     callback={gotoForms}
-                    backgroundColor={Color.colorPaleovioletred}
-                    fontColor={Color.colorWhite}
+                    buttonStyle={styles.pinkButton}
+                    fontStyle={styles.whiteFont}
                 />
             </View>
         </SafeAreaView>
@@ -75,4 +75,19 @@ const styles = StyleSheet.create({
         width: '70%',
         height: 'auto',
     },
+    pinkButton: {
+        backgroundColor: Color.colorPaleovioletred,
+        borderColor: Color.colorPaleovioletred,
+        height: 55
+    },
+    whiteButton:{
+        backgroundColor: Color.colorWhite,
+        borderColor: Color.colorPaleovioletred
+    },
+    whiteFont:{
+        color: Color.colorWhite
+    },
+    pinkFont:{
+        color: Color.colorPaleovioletred
+    }
 })

@@ -1,4 +1,7 @@
+// import necessary packages before the component
 
+// import package
+// function here
 import ReactNativeBlobUtil from 'react-native-blob-util'
 import { Alert } from 'react-native';
 const saveImageToLocalStorage = async (imgSource: string, imgFolder: string, imgFilename: string) =>{
@@ -37,4 +40,14 @@ const saveImageToLocalStorage = async (imgSource: string, imgFolder: string, img
     return
 }
 
-export {saveImageToLocalStorage}
+// pick images from the gallery/file system
+
+import { pick, types } from 'react-native-document-picker';
+
+const pickImageFromDir = async () =>{
+    // picks a single image only
+    const file = await pick({type:[types.images]})
+    return file
+}
+// export here
+export {saveImageToLocalStorage, pickImageFromDir}

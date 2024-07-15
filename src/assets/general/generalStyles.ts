@@ -3,7 +3,9 @@
 import { StyleSheet } from "react-native";
 import { 
     Border, 
-    Color 
+    Color,
+    FontSize,
+    FontFamily
 } from "./GlobalStyles";
 
 export const generalStyles = StyleSheet.create({
@@ -46,4 +48,42 @@ export const generalStyles = StyleSheet.create({
           height: 3,
         },
     },
+    // designs for the text inputs in the admin page
+    // includes styles for the text input boxes, titles and etc
+    TextInputTitle:{
+        textAlign: "left",
+        lineHeight: 22,
+        fontSize: FontSize.size_sm,
+        color: Color.colorDarkslategray,
+        fontFamily: FontFamily.interBold,
+        fontWeight: "700",
+        textTransform: 'capitalize',
+        left: 6,
+    },
+    outerTextInputBox:{
+        padding: 5,
+        alignSelf: "flex-start"
+    },
+    innerTextInputBox: {
+        borderRadius: Border.br_9xs,
+        borderWidth: 1,
+        borderStyle: "solid",
+        backgroundColor: Color.colorWhite,
+        minHeight: 55,
+        height: 'auto',
+        color: Color.colorDarkslategray,
+        lineHeight: 55,
+    },
+    onFocusInnnerTextInputBox:{
+        borderColor: Color.colorPaleovioletred,
+    },
+    normalInnerTextInputBox:{
+        borderColor: Color.colorSilver
+    },
+    onFocusOuterTextInputBox:{
+        backgroundColor: Color.colorPalevioletred_200,
+        borderRadius: Border.br_5xs,
+    },
+
+
 })

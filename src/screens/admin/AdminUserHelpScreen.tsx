@@ -34,20 +34,20 @@ const AdminUserHelpScreen = () =>{
                 <FlexibleButton
                     title="messages"
                     callback={gotoMessages}
-                    backgroundColor={Color.colorPaleovioletred}
-                    fontColor={Color.colorWhite}
+                    buttonStyle={styles.pinkButton}
+                    fontStyle={styles.whiteFont}
                 />
                 <FlexibleButton
                     title="forum"
                     callback={gotoForum}
-                    backgroundColor={Color.colorPaleovioletred}
-                    fontColor={Color.colorWhite}
+                    buttonStyle={styles.pinkButton}
+                    fontStyle={styles.whiteFont}
                 />
                 <FlexibleButton
                     title="user list"
                     callback={gotoUserList}
-                    backgroundColor={Color.colorPaleovioletred}
-                    fontColor={Color.colorWhite}
+                    buttonStyle={styles.pinkButton}
+                    fontStyle={styles.whiteFont}
                 />
             </View>
         </SafeAreaView>
@@ -77,4 +77,21 @@ const styles = StyleSheet.create({
         width: '70%',
         height: 'auto',
     },
+    // buttons
+    pinkButton: {
+        backgroundColor: Color.colorPaleovioletred,
+        borderColor: Color.colorPaleovioletred,
+        height: 55
+    },
+    whiteButton:{
+        backgroundColor: Color.colorWhite,
+        borderColor: Color.colorPaleovioletred,
+        height: 55
+    },
+    whiteFont:{
+        color: Color.colorWhite
+    },
+    pinkFont:{
+        color: Color.colorPaleovioletred
+    }
 })

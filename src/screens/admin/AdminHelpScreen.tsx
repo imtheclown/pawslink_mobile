@@ -32,20 +32,20 @@ const AdminHelpScreen = () =>{
                 <FlexibleButton
                     title="edit password"
                     callback={gotoEditPassword}
-                    backgroundColor={Color.colorPaleovioletred}
-                    fontColor={Color.colorWhite}
+                    buttonStyle={styles.pinkButton}
+                    fontStyle={styles.whiteFont}
                 />
                 <FlexibleButton
                     title="admin log"
                     callback={gotoAdminLog}
-                    backgroundColor={Color.colorPaleovioletred}
-                    fontColor={Color.colorWhite}
+                    buttonStyle={styles.pinkButton}
+                    fontStyle={styles.whiteFont}
                 />
                 <FlexibleButton
                     title="log out"
                     callback={handleLogOut}
-                    backgroundColor={Color.colorWhite}
-                    fontColor={Color.colorPaleovioletred}
+                    buttonStyle={styles.whiteButton}
+                    fontStyle={styles.pinkFont}
                 />
             </View>
         </SafeAreaView>
@@ -75,4 +75,21 @@ const styles = StyleSheet.create({
         width: '70%',
         height: 'auto',
     },
+    // buttons
+    pinkButton: {
+        backgroundColor: Color.colorPaleovioletred,
+        borderColor: Color.colorPaleovioletred,
+        height: 55
+    },
+    whiteButton:{
+        backgroundColor: Color.colorWhite,
+        borderColor: Color.colorPaleovioletred,
+        height: 55
+    },
+    whiteFont:{
+        color: Color.colorWhite
+    },
+    pinkFont:{
+        color: Color.colorPaleovioletred
+    }
 })

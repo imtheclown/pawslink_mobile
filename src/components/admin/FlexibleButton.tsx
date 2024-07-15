@@ -3,47 +3,54 @@ import React from "react";
 import {
     TouchableOpacity,
     Text,
-    StyleSheet
+    StyleSheet,
+    TextStyle,
+    ViewStyle
+
 } from "react-native";
 import { generalStyles } from "../../assets/general/generalStyles";
 import {
     Border,
     FontFamily,
-    FontSize
+    FontSize,
+
 } from "../../assets/general/GlobalStyles";
 interface FlexibleButtonProps {
     title: string,
-    backgroundColor: string,
-    fontColor: string,
+    fontStyle: TextStyle,
+    buttonStyle: ViewStyle,
     callback: () => void,
 }
 
-const FlexibleButton : React.FC<FlexibleButtonProps> = ({title, callback, backgroundColor, fontColor}) => {
+const FlexibleButton : React.FC<FlexibleButtonProps> = ({title, callback,fontStyle, buttonStyle}) => {
     const handleClick = () =>{
         callback();
     }
     return (
-        <TouchableOpacity style = {[styles.buttonStyle, generalStyles.centerContainer, generalStyles.containerWithShadow,{backgroundColor: backgroundColor}]}
+        <TouchableOpacity 
+            style = {[styles.buttonStyle, 
+            generalStyles.centerContainer, 
+            generalStyles.containerWithShadow,
+            buttonStyle,
+            ]}
             onPress={handleClick}
         >
-            <Text style = {[styles.buttonTextStyle, {color: fontColor}]}> {title} </Text>
+            <Text style = {[styles.buttonTextStyle, fontStyle]}> {title} </Text>
         </TouchableOpacity>
     )
 }
 
-export default FlexibleButton;
+export default React.memo(FlexibleButton);
 
 const styles = StyleSheet.create({
     buttonStyle:{
-        width: '100%',
-        minHeight: 65,
-        height: 'auto',
         borderRadius: Border.br_9xs,
         marginTop: 10,
+        borderWidth: 1,
+        marginHorizontal: 5,
     },
     buttonTextStyle: {
         fontFamily: FontFamily.interRegular,
-        lineHeight: 30,
         fontSize: FontSize.size_xl,
         textTransform: 'capitalize',
     }

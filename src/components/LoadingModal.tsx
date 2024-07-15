@@ -25,7 +25,7 @@ const LoadingModalScreen:React.FC<LoadingModalProps> = ({title, isLoading}) =>{
         visible ={isLoading}
         >
         <SafeAreaView style ={[generalStyles.centerContainer,generalStyles.flexContainer, styles.modalBackground]}>
-            <View style = {[generalStyles.centerContainer, generalStyles.curvedContainerWithShadow, styles.mainContainer, ]}>
+            <View style = {[generalStyles.centerContainer, generalStyles.containerWithShadow, styles.mainContainer, ]}>
                 <Text style = {[styles.titleStyle]}>
                     {title}
                 </Text>
