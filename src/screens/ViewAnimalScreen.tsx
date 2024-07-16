@@ -44,7 +44,7 @@ interface StatusBoxProps {
 
 // box that covers the status
 // differenct color (background and font) for each of the animal status
-const StatusBox: React.FC<StatusBoxProps> = ({value}) =>{
+export const StatusBox: React.FC<StatusBoxProps> = React.memo(({value}) =>{
     // can be optimized by creating a function and directly initialize the variables instead of using states
     // default is blue background with dark blue font color
     const [fontColor, setFontColor] = useState("#0F4C81");
@@ -76,7 +76,7 @@ const StatusBox: React.FC<StatusBoxProps> = ({value}) =>{
             </Text>
         </View>
     )
-}
+})
 
 // props for the information box
 // title is the string that describes what the underlying data represents

@@ -3,6 +3,7 @@ export const FontFamily = {
   interRegular: "Inter-Regular",
   epilogueBold: "Epilogue-Bold",
   interBold: "Inter-Bold",
+  epilogueRegular: "Epilogue-Regular"
 };
 /* font sizes */
 export const FontSize = {
