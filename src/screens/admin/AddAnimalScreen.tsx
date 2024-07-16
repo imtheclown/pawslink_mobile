@@ -22,18 +22,17 @@ import ResponsiveImage from "../../components/ResponsiveImage";
 import { TouchableOpacity } from "react-native";
 import FlexibleButton from "../../components/admin/FlexibleButton";
 
-import { AddAnimalScreenProps } from "../../navigation/admin/AnimalDBNavigation";
+import { AddAnimalProps } from "../../navigation/admin/AdminNavigationStack";
 
 // temp data
 // ---to do----
 // create a function that saves this information in the local or online database1
 const tempData = ["male", "female"]
-const AddAnimalScreen = ({route, navigation}:AddAnimalScreenProps) => {
+const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
     const [imgUrl, setImageUrl] = useState<string|null>(null);
     const getAnimalName = () =>{
         console.log("animal name");
     }
-
     const handleKeyBoardDismiss = () => {
         Keyboard.dismiss()
     }

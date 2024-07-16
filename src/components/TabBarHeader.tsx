@@ -11,20 +11,28 @@ import {
 import React from 'react'
 import Feather from 'react-native-vector-icons/Feather'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { ParamListBase } from '@react-navigation/native'
 import { Color } from '../assets/general/GlobalStyles'
 import { generalStyles } from '../assets/general/generalStyles'
 import { memo } from 'react'
 
+// necessary props for the tab bar header
+// back is optional as it is only present in the stack navigator
+// navigation is object that is present both in the stack and bottom tabs navigator
 interface TabBarHeaderProps {
-    logoPosition: ViewStyle,
-    back: {title:string}|undefined,
-    navigation: StackNavigationProp<ParamListBase, string, undefined>
+    back?: {title:string}|undefined,
+    navigation: StackNavigationProp<ParamListBase, string, undefined>|BottomTabNavigationProp<ParamListBase, string, undefined>
 }
-const TabBarHeader:React.FC<TabBarHeaderProps> = ({logoPosition, back, navigation}) =>{
-    const handlePress = () =>{
-        navigation.goBack();
-    }
+const TabBarHeader:React.FC<TabBarHeaderProps> = ({back, navigation}) =>{
+    // returns to the previous screen
+    // function rerenders only if there is a change in the back or navigation props
+    // prevents reconstruction of the function when the parent rerenders
+    const handlePress = React.useCallback(() =>{
+        if(navigation && back){
+            navigation.goBack();
+        }
+    }, [navigation, back]);
     return(
         <View style = {[styles.containerStyle]}>
             {back && 

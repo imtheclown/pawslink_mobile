@@ -11,15 +11,19 @@ import {
  } from "../../assets/general/GlobalStyles";
 import { generalStyles } from "../../assets/general/generalStyles";
 import FlexibleButton from "../../components/admin/FlexibleButton";
-import { AnimalDBScreenProps } from "../../navigation/admin/AnimalDBNavigation";
-const AnimalDataScreen = ({route, navigation}: AnimalDBScreenProps) =>{
+
+// navigation props
+// annotates the parameters passed to the component
+// try to use useNavigation hook 
+import { AnimalDatabaseProps } from "../../navigation/admin/AdminBottomNavigation";
+const AnimalDataScreen = ({route, navigation}:AnimalDatabaseProps) =>{;
     // function that navigates to list of cats
     const gotoCatsDatabase = () =>{
-        console.log("cats");
+        navigation.navigate("animal_list",{type: 'cat'});
     };
     // function that navigates to list of dogs screen
     const gotoDogsDatabase = () =>{
-        console.log("dogs");
+        navigation.navigate("animal_list", {type: 'dog'})
     };
     // navigates to the screen where you can add animals
     const gotoAddAnimalScreen = () =>{
