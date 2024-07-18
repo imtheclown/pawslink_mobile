@@ -73,23 +73,23 @@ const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
                     <View style ={[styles.formsContainer]}>
                         <FlexibleTextInput
                             title="name"
-                            size={175}
                             callback={getAnimalName}
+                            style = {styles.nameTextInput}
                         />
                         <FlexibleTextInput
                             title="age"
-                            size={70}
                             callback={getAnimalName}
+                            style = {styles.ageTextInput}
                         />
                         <FlexibleDropDown
-                            size={85}
+                            style ={styles.sexDropDown}
                             title="sex"
                             data={tempData}
                             callBack={getAnimalName}
 
                         />
                         <FlexibleDropDown
-                            size={175}
+                            style = {styles.statusDropDown}
                             title="status"
                             data={tempData}
                             callBack={getAnimalName}
@@ -97,15 +97,15 @@ const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
                         />
                         <CustomDatePicker
                             title="neuter/spay date"
-                            size={175}
+                            style = {styles.strliztnDate}
                         />
                         <CustomDatePicker
                             title="vaccination date"
-                            size={175}
+                            style ={styles.vaxDate}
                         />
                         <CustomDatePicker
                             title="deworming date"
-                            size={175}
+                            style ={styles.dewormingDate}
                         />
                         <FlexibleTextInput
                             title="traits and personality"
@@ -150,12 +150,13 @@ const styles = StyleSheet.create({
     },
     contentContainer:{
         alignItems: 'center',
-        width: '90%'
+        width: '90%',
     },
     formsContainer:{
         width: '100%',
         flexDirection: "row",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        justifyContent: 'space-between',
     },
     imageContainer:{
         width: 160
@@ -208,5 +209,27 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: "row",
         justifyContent: 'flex-end'
+    },
+    // text input styles
+    ageTextInput:{
+        width: '20%'
+    },
+    nameTextInput:{
+        width: '50%'
+    },
+    sexDropDown:{
+        width: '30%'
+    },
+    statusDropDown:{
+        width: '49%'
+    },
+    dewormingDate:{
+        width: '49%',
+    },
+    vaxDate:{
+        width: '49%',
+    },
+    strliztnDate:{
+        width: '49%',
     }
 })

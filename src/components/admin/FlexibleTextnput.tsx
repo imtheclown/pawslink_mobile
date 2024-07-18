@@ -6,19 +6,21 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
     Keyboard,
+    TextStyle,
+    StyleProp
 } from "react-native";
 
 import React from "react";
 
 interface FlexibleTextInputProps {
     title:string,
-    size?: number,
     numberOfLines? : number,
+    style? : StyleProp<TextStyle>
     callback: () => void
 }
 import { useState } from "react";
 import { generalStyles } from "../../assets/general/generalStyles";
-const FlexibleTextInput: React.FC<FlexibleTextInputProps> =({title, size, numberOfLines, callback}) =>{
+const FlexibleTextInput: React.FC<FlexibleTextInputProps> =({title, style, numberOfLines, callback}) =>{
     // lacks callback functions, add functions
     // controls the state of the component
     const [isFocused, setIsFocused] = useState(false);
@@ -35,13 +37,14 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> =({title, size, number
         setIsFocused(false);
     }
     return (
-        <KeyboardAvoidingView style = {[size? {}:{width: '100%'}]}>
+        <KeyboardAvoidingView style = {[style? style:{width: '100%'}]}>
             <Text style = {[generalStyles.TextInputTitle, ]}>
                     {
                         title
                     }
                 </Text >
-                <View style = {[!size?styles.fullWidthTextInput : {},generalStyles.outerTextInputBox, 
+                <View style = {[generalStyles.outerTextInputBox, 
+                        styles.fullWidthTextInput,
                         isFocused?generalStyles.onFocusOuterTextInputBox: {}]}>
                     <TextInput
                     multiline = {numberOfLines? true: false}
@@ -49,8 +52,9 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> =({title, size, number
                     onFocus={() => setFocusedOn()}
                     onBlur={() => setFocusedOff()}
                     style = {[generalStyles.innerTextInputBox, 
+                        styles.fullWidthTextInput,
                         isFocused?generalStyles.onFocusInnnerTextInputBox: generalStyles.normalInnerTextInputBox, 
-                        size?{width: size}:styles.fullWidthTextInput, numberOfLines? styles.multilineStart: styles.singleLineStart]}
+                        numberOfLines? styles.multilineStart: styles.singleLineStart]}
                     />
                 </View>
         </KeyboardAvoidingView>

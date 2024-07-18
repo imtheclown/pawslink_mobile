@@ -8,7 +8,9 @@ import {
     Text,
     Keyboard,
     Modal,
-    SafeAreaView
+    SafeAreaView,
+    StyleProp,
+    TextStyle,
  } from 'react-native';
  import { FontSize,
     Border, 
@@ -30,9 +32,10 @@ interface DataParams {
 // props for the custom date picker
 interface CustomDatePickerProps {
     title: string,
-    size: number,
+    style?: StyleProp<TextStyle>
+
 }
-const CustomDatePicker:React.FC<CustomDatePickerProps> = ({title, size}) => {
+const CustomDatePicker:React.FC<CustomDatePickerProps> = ({title,style}) => {
     // saves the selected date
     const [date, setDate] = useState<Date|null>(null);
     // keeps track of the focused state of the component
@@ -71,13 +74,13 @@ const CustomDatePicker:React.FC<CustomDatePickerProps> = ({title, size}) => {
         <>
         {/* button component */}
         {/* ui component used to trigger the date picking */}
-        <View>
+        <View style= {[style? style: styles.fullWidth]}>
             <Text style = {[styles.textTitle]}>
                 {/* title here */}
                 {title}
             </Text>
-            <View style = {[styles.outerContainer, isFocused? styles.onFocusOuterContainer: {}]}>
-                <TouchableOpacity onPress={handlePress} style = {[styles.textInputBox, {width: size}, isFocused? styles.onFocusTextInputBox: styles.normalTextInputBox]}>
+            <View style = {[ styles.fullWidth, styles.outerContainer, isFocused? styles.onFocusOuterContainer: {}]}>
+                <TouchableOpacity onPress={handlePress} style = {[styles.fullWidth, styles.textInputBox, isFocused? styles.onFocusTextInputBox: styles.normalTextInputBox]}>
                     <AntDesign style={[styles.dateIconStyle]} name='calendar' size={14} color={isFocused? Color.colorPaleovioletred: Color.colorDarkslategray}/>
                     <Text>
                         {/* selected date */}
@@ -163,6 +166,9 @@ const styles = StyleSheet.create({
     },
     modalBackground: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    },
+    fullWidth:{
+        width: '100%'
     },
     // button styles
     cancelButton:{

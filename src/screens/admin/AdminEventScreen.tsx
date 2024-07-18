@@ -10,15 +10,17 @@ import { generalStyles } from "../../assets/general/generalStyles";
 import {
      Color,
      FontFamily
- } from "../../assets/general/GlobalStyles";
-const AdminEventScreen = () =>{
+} from "../../assets/general/GlobalStyles";
+import { AdminEventScreenProps } from '../../navigation/admin/AdminBottomNavigation';
+import AdminStackNavigator from '../../navigation/admin/AdminNavigationStack';
+const AdminEventScreen = ({route, navigation}: AdminEventScreenProps) =>{
     // navigates to the current list of active events
     const gotoEvents = () => {
          console.log("events");
     };
     // navigates to the screen where we can add events
     const gotoAddEvents = () => {
-        console.log("add events");
+        navigation.navigate("add_event");
     };
     return (
         <SafeAreaView style ={[generalStyles.flexContainer, styles.mainContainer]}>

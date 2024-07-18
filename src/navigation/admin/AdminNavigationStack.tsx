@@ -4,6 +4,7 @@
 import AdminBottomNavigation from "./AdminBottomNavigation";
 import AddAnimalScreen from "../../screens/admin/AddAnimalScreen";
 import AnimalListScreen from "../../screens/admin/AnimalListScreen";
+import AddEventScreen from '../../screens/admin/AddEventScreen';
 // import screens here
 
 import { createStackNavigator, StackHeaderProps } from '@react-navigation/stack';
@@ -17,11 +18,13 @@ export type RootStackParamList = {
     // type refers to the title in the animal list screen
     // cat or dog
     animal_list: {type:string}
+    add_event: undefined
 }
 // types used to annotate the route and navigation props for each of the strings in the stack navigator
 export type BottomNavProps = NativeStackScreenProps<RootStackParamList, 'bottom_nav'>
 export type AddAnimalProps = NativeStackScreenProps<RootStackParamList, 'add_animal'>
 export type AnimalListProps = NativeStackScreenProps<RootStackParamList, 'animal_list'>
+export type AddEventProps = NativeStackScreenProps<RootStackParamList, 'add_event'>
 
 
 const Stack = createStackNavigator<RootStackParamList>()
@@ -59,6 +62,13 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="animal_list"
                 component={AnimalListScreen}
+                options={{
+                    ...navScreenOptions
+                }}
+            />
+            <Stack.Screen
+                name="add_event"
+                component={AddEventScreen}
                 options={{
                     ...navScreenOptions
                 }}
