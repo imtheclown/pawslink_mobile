@@ -44,6 +44,9 @@ type BottomTabNavigationParamsList = {
 export type AnimalDatabaseProps = CompositeScreenProps<BottomTabScreenProps<BottomTabNavigationParamsList, 'animal_database'>,
     StackScreenProps<RootStackParamList>
 >
+export type AdminEventScreenProps = CompositeScreenProps<BottomTabScreenProps<BottomTabNavigationParamsList, 'events'>,
+    StackScreenProps<RootStackParamList>
+>
 const Tab = createBottomTabNavigator<BottomTabNavigationParamsList>()
 
 

@@ -4,7 +4,9 @@ import {
     View,
     StyleSheet,
     Text,
-    Keyboard
+    Keyboard,
+    StyleProp,
+    TextStyle
  } from "react-native";
  import { Dropdown } from "react-native-element-dropdown";
 import React from "react";
@@ -17,7 +19,7 @@ interface FlexibleDropDownProps {
     title: string,
     data: Array<string>
     callBack : () => void,
-    size: number,
+    style?: StyleProp<TextStyle>
 
 }
 //structure of the data passed to the data props of the dropdown component
@@ -27,7 +29,7 @@ export interface DatalistStructure  {
 }
 
 // a customized dropdown list
-const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBack, size}) => {
+const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBack, style}) => {
     // values selected from the drop down list
     // improve this one
     const [selected, setSelected] = useState("");
@@ -54,9 +56,9 @@ const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBac
     // memoizes the data produced by the generateData
     const processedData: Array<DatalistStructure> = useMemo(generateData, [data])
     return (
-        <View>
+        <View style ={[style?style:styles.fullWidth]}>
             <Text style ={[generalStyles.TextInputTitle]}>{title}</Text>
-            <View style = {[generalStyles.outerTextInputBox, isFocused? generalStyles.onFocusOuterTextInputBox: {}]}>
+            <View style = {[generalStyles.outerTextInputBox, styles.fullWidth, isFocused? generalStyles.onFocusOuterTextInputBox: {}]}>
                 <Dropdown
                     onFocus={() => {
                         handleOnfocus()
@@ -77,7 +79,7 @@ const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBac
                     selectedTextStyle ={{marginHorizontal: 5}}
                     selectedTextProps={{numberOfLines: 1}}
                     containerStyle = {{marginTop: 5}}
-                    style = {[{width: size}, generalStyles.innerTextInputBox, isFocused? generalStyles.onFocusInnnerTextInputBox: generalStyles.normalInnerTextInputBox]}
+                    style = {[styles.fullWidth,generalStyles.innerTextInputBox, isFocused? generalStyles.onFocusInnnerTextInputBox: generalStyles.normalInnerTextInputBox]}
                     itemContainerStyle ={{width:300}}
                     iconStyle = {[isFocused?styles.rotatedIcon:styles.normalIcon, styles.iconStyle]}
                     iconColor={isFocused? Color.colorPaleovioletred: Color.colorSilver}
@@ -108,4 +110,7 @@ const styles = StyleSheet.create({
             }
         ]
     },
+    fullWidth:{
+        width: '100%'
+    }
 })
