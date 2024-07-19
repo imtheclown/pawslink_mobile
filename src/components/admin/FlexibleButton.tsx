@@ -1,4 +1,9 @@
 // flexible button
+
+// customizable button that allows icons
+// must provide button styling for visualization
+// in default, the icon is located at the left of the text
+// can be customized by having flexDirection = 'row-reverse' in the buttonStyle object
 import React from "react";
 import {
     TouchableOpacity,
@@ -19,22 +24,23 @@ interface FlexibleButtonProps {
     title: string,
     fontStyle: TextStyle,
     buttonStyle: ViewStyle,
+    icon? :React.ReactNode,
     callback: () => void,
 }
 
-const FlexibleButton : React.FC<FlexibleButtonProps> = ({title, callback,fontStyle, buttonStyle}) => {
+const FlexibleButton : React.FC<FlexibleButtonProps> = ({title, callback,fontStyle, buttonStyle, icon}) => {
     const handleClick = () =>{
         callback();
     }
     return (
         <TouchableOpacity 
-            style = {[styles.buttonStyle, 
-            generalStyles.centerContainer, 
-            generalStyles.containerWithShadow,
+            style = {[
             buttonStyle,
+            styles.buttonStyle, 
             ]}
             onPress={handleClick}
         >
+            {icon}
             <Text style = {[styles.buttonTextStyle, fontStyle]}> {title} </Text>
         </TouchableOpacity>
     )
@@ -44,10 +50,10 @@ export default React.memo(FlexibleButton);
 
 const styles = StyleSheet.create({
     buttonStyle:{
-        borderRadius: Border.br_9xs,
         marginTop: 10,
         borderWidth: 1,
-        marginHorizontal: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     buttonTextStyle: {
         fontFamily: FontFamily.interRegular,

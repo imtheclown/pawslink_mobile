@@ -16,7 +16,7 @@ import AdminStackNavigator from '../../navigation/admin/AdminNavigationStack';
 const AdminEventScreen = ({route, navigation}: AdminEventScreenProps) =>{
     // navigates to the current list of active events
     const gotoEvents = () => {
-         console.log("events");
+        navigation.navigate("view_event")
     };
     // navigates to the screen where we can add events
     const gotoAddEvents = () => {
@@ -70,11 +70,13 @@ const styles = StyleSheet.create({
     },
     // buttons
     pinkButton: {
+        justifyContent: 'center',
         backgroundColor: Color.colorPaleovioletred,
         borderColor: Color.colorPaleovioletred,
         height: 55
     },
     whiteButton:{
+        justifyContent: 'center',
         backgroundColor: Color.colorWhite,
         borderColor: Color.colorPaleovioletred,
         height: 55
