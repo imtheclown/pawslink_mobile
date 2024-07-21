@@ -37,18 +37,28 @@ enum AnimalSex {
     UNKNOWN
 }
 
+# add the qr code string here
+# convert the hexadeximal string to string
+
+# required keys:
+# id
+# location
+# name
+# animalsex
+# animal species
+# 
 type Animal @model{
   id: ID!
   location: String!
   mainName: String!
-  sex: AnimalSex = AnimalSex.UNKNOWN
-  status: [AnimalStatus!] = [AnimalStatus.ON_CAMPUS]
+  sex: AnimalSex!
+  status: [AnimalStatus!]!
   coatColor: [String!]
   localImgDir: String
   notes:[String!]
   species: AnimalSpecies!
   traitsAndPersonality: [String!]
   disabilities: [String!]
-  age: Int = -1
-  
+  age: Int @default(value: "-1")
+  sterilizationDate: AWSDate
 }
