@@ -7,3 +7,48 @@ type Todo @model {
   name: String!
   description: String
 }
+
+# defined status for the animal
+# rainbow bridge for dead animal
+# owned when animal has an owner
+# transient if the animal is not a campus animal but is seen within the vicinity of the campus
+# on campus is for animals that are considered as up dogs
+# adopted animal is for animals that are formerly on campus dogs that are adopted
+enum AnimalStatus {
+    RAINBOW_BRIDGE,
+    OWNED,
+    TRANSIENT,
+    ON_CAMPUS,
+    ADOPTED
+}
+
+# species of animals
+# limited to dog and cat
+enum AnimalSpecies {
+    DOG,
+    CAT
+}
+
+# defined sex for the animals
+# unknown is for animals with unconfirmed sex
+enum AnimalSex {
+    MALE,
+    FEMALE,
+    UNKNOWN
+}
+
+type Animal @model{
+  id: ID!
+  location: String!
+  mainName: String!
+  sex: AnimalSex = AnimalSex.UNKNOWN
+  status: [AnimalStatus!] = [AnimalStatus.ON_CAMPUS]
+  coatColor: [String!]
+  localImgDir: String
+  notes:[String!]
+  species: AnimalSpecies!
+  traitsAndPersonality: [String!]
+  disabilities: [String!]
+  age: Int = -1
+  
+}
