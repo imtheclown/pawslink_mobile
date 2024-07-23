@@ -33,9 +33,9 @@ interface DataParams {
 interface CustomDatePickerProps {
     title: string,
     style?: StyleProp<TextStyle>
-
+    callBack: (newDate: Date) => void,
 }
-const CustomDatePicker:React.FC<CustomDatePickerProps> = ({title,style}) => {
+const CustomDatePicker:React.FC<CustomDatePickerProps> = ({title,style, callBack}) => {
     // saves the selected date
     const [date, setDate] = useState<Date|null>(null);
     // keeps track of the focused state of the component
@@ -46,7 +46,9 @@ const CustomDatePicker:React.FC<CustomDatePickerProps> = ({title,style}) => {
     const handleDateChange = (dateParams: DataParams) =>{
         // checks if the date params is not null or undefined
         if(dateParams.date){
-            setDate(new Date(dateParams.date.toString()));
+            const selectedDate = new Date(dateParams.date.toString());
+            setDate(selectedDate);
+            callBack(selectedDate);
             exitFocus()
         }
     }

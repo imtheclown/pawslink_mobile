@@ -7,54 +7,77 @@ import {
     KeyboardAvoidingView,
     Keyboard,
     TextStyle,
-    StyleProp
+    StyleProp,
+    KeyboardTypeOptions,
+    Platform,
 } from "react-native";
-
-import React from "react";
+import React, { useEffect } from "react";
+import { useRef } from "react";
+import { useState, useCallback } from 'react';
+import { generalStyles } from "../../assets/general/generalStyles";
+import {debounce} from 'lodash'
 
 interface FlexibleTextInputProps {
     title:string,
     numberOfLines? : number,
     style? : StyleProp<TextStyle>
-    callback: () => void
+    keyBoardType? : KeyboardTypeOptions,
+    callback: (newName:string) => void
 }
-import { useState } from "react";
-import { generalStyles } from "../../assets/general/generalStyles";
-const FlexibleTextInput: React.FC<FlexibleTextInputProps> =({title, style, numberOfLines, callback}) =>{
-    // lacks callback functions, add functions
-    // controls the state of the component
-    const [isFocused, setIsFocused] = useState(false);
-
+const FlexibleTextInput: React.FC<FlexibleTextInputProps> =({title, style, numberOfLines, keyBoardType, callback}) =>{
+    const [isFocused, setIsFocused] = useState(false)
+    // own state to keep the value
+    const [value, setValue] = useState("");
+    // callback called when there is a change in value in the text input
+    const handleTextChange = (newValue: string) =>{
+        // update the state of the text input
+        setValue(newValue)
+        // return the current value 300 ms after typing
+        debounceCallback(newValue)
+    }
+    // for ux
     const setFocusedOn = () =>{
+        // sets the state isfocus to true
         if(!isFocused){
             setIsFocused(true);
-        }else{
-            Keyboard.dismiss();
         }
     }
-
+    // callback when cursor is not in focus
     const setFocusedOff = () =>{
+        // return the value to the
         setIsFocused(false);
+        // return the current value to the parent
+        // make sure the updated value to return to the parent component when cursor is not at the text input
+        callback(value)
     }
+    const debounceCallback = useCallback(debounce(callback, 300), [callback])
     return (
-        <KeyboardAvoidingView style = {[style? style:{width: '100%'}]}>
+        <KeyboardAvoidingView
+             style = {[style? style:{width: '100%'}]}
+             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+         >
             <Text style = {[generalStyles.TextInputTitle, ]}>
                     {
                         title
                     }
                 </Text >
-                <View style = {[generalStyles.outerTextInputBox, 
-                        styles.fullWidthTextInput,
-                        isFocused?generalStyles.onFocusOuterTextInputBox: {}]}>
+                <View style = {
+                    [generalStyles.outerTextInputBox, 
+                    styles.fullWidthTextInput,
+                    isFocused?generalStyles.onFocusOuterTextInputBox: {}]}
+                >
                     <TextInput
-                    multiline = {numberOfLines? true: false}
-                    numberOfLines={numberOfLines}
-                    onFocus={() => setFocusedOn()}
-                    onBlur={() => setFocusedOff()}
-                    style = {[generalStyles.innerTextInputBox, 
-                        styles.fullWidthTextInput,
-                        isFocused?generalStyles.onFocusInnnerTextInputBox: generalStyles.normalInnerTextInputBox, 
-                        numberOfLines? styles.multilineStart: styles.singleLineStart]}
+                        multiline = {numberOfLines? true: false}
+                        value={value}
+                        numberOfLines={numberOfLines}
+                        onFocus={() => setFocusedOn()}
+                        onBlur={() => setFocusedOff()}
+                        style = {[generalStyles.innerTextInputBox, 
+                            styles.fullWidthTextInput,
+                            isFocused?generalStyles.onFocusInnnerTextInputBox: generalStyles.normalInnerTextInputBox, 
+                            numberOfLines? styles.multilineStart: styles.singleLineStart]}
+                        keyboardType={keyBoardType? keyBoardType: 'default'}
+                        onChangeText={handleTextChange}
                     />
                 </View>
         </KeyboardAvoidingView>
