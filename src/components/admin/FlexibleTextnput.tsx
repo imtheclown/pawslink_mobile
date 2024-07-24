@@ -17,6 +17,12 @@ import { useState, useCallback } from 'react';
 import { generalStyles } from "../../assets/general/generalStyles";
 import {debounce} from 'lodash'
 
+// interface for the flexible text input component
+// title refers to the title of the text input
+// number of lines to set the initial number of lines in the text input
+// style for the text input
+// keyboard type to determine the keyboard to be shown
+// required determines if the text input returns a valuable data
 interface FlexibleTextInputProps {
     title:string,
     numberOfLines? : number,
@@ -27,11 +33,12 @@ interface FlexibleTextInputProps {
 }
 const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, style, numberOfLines, keyBoardType, callback, required}) =>{
     const [isFocused, setIsFocused] = useState(true);
+    const [inError, setInError] = useState(false);
     // own state to keep the value
     const [value, setValue] = useState("");
     useEffect(() =>{
         setIsFocused(false);
-    }, [])
+    }, []);
     // animated value
     // callback called when there is a change in value in the text input
     const handleTextChange = (newValue: string) =>{
@@ -46,6 +53,7 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
         if(!isFocused){
             setIsFocused(true);
         }
+        setInError(false);
     }
     // callback when cursor is not in focus
     const setFocusedOff = () =>{
@@ -57,6 +65,7 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
         if(checkValue()){
             callback(value);
         }else{
+            setInError(true);
             callback(null)
         }
     }
@@ -74,9 +83,10 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
     }
     const debounceCallback = useCallback(debounce(callback, 300), [callback]);
 
-    // animate the border
-    const animatedBorder = () => {
-
+    const generateBorderColor = () =>{
+        if(inError){
+            return 
+        }
     }
     return (
         <KeyboardAvoidingView

@@ -18,7 +18,7 @@ import { Avatar } from "@rneui/base";
 
 
 // temp data here
-import { AnimalStatus } from "../../backend/realm/schemas/Animal";
+import { AnimalStatus } from "../../models";
 
 interface AnimalListItemProps {
     imgSoure ? :string,

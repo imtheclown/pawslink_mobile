@@ -17,8 +17,10 @@ import React from "react";
 import ResponsiveImage from "../components/ResponsiveImage"
 import { generalStyles } from "../assets/general/generalStyles"
 import IonIcon from "react-native-vector-icons/Ionicons"
-import { AnimalSex, AnimalStatus } from "../backend/realm/schemas/Animal";
+import { AnimalSex} from "../backend/realm/schemas/Animal";
 import { useState, useEffect } from "react";
+import { AnimalStatus } from "../models";
+
 // function that processes database data to view data
 import { replaceUnderScoreWithSpace } from "../utils/TextBasedUtilityFunctions";
 // general purpose button
