@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign"
 import React from "react";
-
+import { useState } from "react";
 import { generalStyles } from "../../assets/general/generalStyles";
 import { Color, FontFamily, FontSize, Border } from "../../assets/general/GlobalStyles";
 import ResponsiveImage from "../../components/ResponsiveImage";
@@ -20,7 +20,8 @@ import FlexibleButton from "../../components/admin/FlexibleButton";
 import { AddEventProps } from "../../navigation/admin/AdminNavigationStack";
 
 // handle navigation here
-const AddEventScreen = ({route, navigation}:AddEventProps) =>{
+const AddEventScreen = React.memo(({route, navigation}:AddEventProps) =>{
+    
     const handleCallback = () =>{
         console.log("callback")
     }
@@ -50,6 +51,7 @@ const AddEventScreen = ({route, navigation}:AddEventProps) =>{
                     <CustomDatePicker
                         title="event date"
                         style = {[styles.eventDate]}
+                        callBack={handleCallback}
                     />
                     <CustomTimePicker 
                         title="time"
@@ -83,9 +85,9 @@ const AddEventScreen = ({route, navigation}:AddEventProps) =>{
             </ScrollView>
         </SafeAreaView>
     )
-}
+});
 
-export default React.memo(AddEventScreen)
+export default AddEventScreen;
 
 const styles = StyleSheet.create({
     mainContainer: {

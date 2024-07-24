@@ -8,7 +8,8 @@ import {
     TouchableWithoutFeedback,
     Keyboard, 
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
+    Animated
 } from "react-native";
 import { useCallback, useState } from "react";
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -35,9 +36,10 @@ import { AnimalSpecies } from "../../models";
 import { AnimalInterface } from "../../utils/ModelInterfaces";
 import { getEnumValueFromString } from "../../utils/TypeBasedUtilityFunctions";
 const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
+    // add location and coat color
     const [imgUrl, setImageUrl] = useState<string|null>(null);
     const [name, setName] = useState<string|null>(null)
-    const [age, setAge] = useState<string|null>(null)
+    const [age, setAge] = useState<number|null>(null)
     const [sex, setSex] = useState<string|null>(null)
     const [species, setSpecies] = useState<string|null>(null)
     const [status, setStatus] = useState<string|null>(null)
@@ -51,12 +53,14 @@ const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
     // wrap in useCallback to prevent rerendering of
     
     // updates the name state
-    const handleNameChange = useCallback((newName:string) =>{
+    const handleNameChange = useCallback((newName:(string| null)) =>{
         setName(newName)
     }, []);
     // updates the age state
-    const handleAgeChange = useCallback((newAge:string) =>{
-        setAge(newAge);
+    const handleAgeChange = useCallback((newAge:(string| null)) =>{
+        if(newAge !== null){
+            setAge(parseInt(newAge));
+        }
     }, [])
     // updates the sex state
     const handleSexChange = useCallback((newSex: string) =>{
@@ -83,16 +87,15 @@ const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
         setDewormingDate(newDewormingDate);
     }, []);
     // updates the trait state
-    const handleTraitsChange = useCallback((newTraits: string) =>{
+    const handleTraitsChange = useCallback((newTraits: (string | null)) =>{
         setTraits(newTraits);
     }, []);
     // updates the notes state
-    const handleNotesChange = useCallback((newNotes: string) =>{
+    const handleNotesChange = useCallback((newNotes: (string| null)) =>{
         setNotes(newNotes);
     }, []);
     const handleKeyBoardDismiss = () => {
-        // Keyboard.dismiss()
-        console.log("dismissed")
+        Keyboard.dismiss()
     }
     const handlePickImagePress = () =>{
         pickImageFromDir()
@@ -118,55 +121,61 @@ const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
     // saves the information in the database
     const handleSave = async () =>{
         // preprocess data here 
-        const animalObject = preprocessData()
-        try{
-            // may cause an error if there is an incorrect input
-            // may use some sort of alert or catch here
-            await DataStore.save(
-                new Animal(animalObject)
-            )
-            console.log("succeed")
-        }catch(err){
-            console.log(err);
-            console.log("failed to create animal instance")
+        const animalObject = createAnimalObject()
+        if(animalObject !== null){
+            try{
+                // may cause an error if there is an incorrect input
+                // may use some sort of alert or catch here
+                await DataStore.save(
+                    new Animal(animalObject)
+                )
+                console.log("succeed")
+            }catch(err){
+                console.log(err);
+                console.log("failed to create animal instance")
+            }
         }
+
     }
-    const preprocessData = () =>{
-        // check if the values are not null
-        // create an object that can be used to create an instance of animal
-        const animalObject: Partial<AnimalInterface> = {}
-        // check if items are null or not
-        // brute force for now
-        if(name !== null){
-            animalObject.mainName = name;
+
+    // creates an animal object that can be used as parameter for the database write
+    // returns null if required keys are null
+    const createAnimalObject= ():AnimalInterface|null =>{
+        if(name !== null && sex !== null && status !== null && species !== null){
+            // generate/get the key which corresponds to the key in enum given a string value
+            const sexValue = getEnumValueFromString(AnimalSex, sex);
+            const statusValue = getEnumValueFromString(AnimalStatus, status);
+            const speciesValue = getEnumValueFromString(AnimalSpecies, species);
+            // check if values are undefined 
+            // if at least one is undefined, returl null
+            if(sexValue && statusValue && speciesValue){
+                // create an animal object based on the animal interface
+                const animalObject: AnimalInterface ={
+                    mainName: name,
+                    location: 'here',
+                    status: [statusValue],
+                    species: speciesValue,
+                    sex: sexValue,
+                    age: age === null? -1: age,
+                    coatColor: ['none for now']
+                }
+                // add additional keys here
+                if(notes !== null){
+                    // new line seperated string
+                    // create a function that splits a string by new line
+                    animalObject.notes = [notes]
+                }
+                if(traits !== null){
+                    // new line seperated string
+                    // create a function that splits a string by new line
+                    animalObject.traitsAndPersonality = [traits]
+                }
+                // return the created animal object
+                return animalObject;
+            }
         }
-        if(age !== null){
-            animalObject.age = parseInt(age);
-        }
-        if(sex !== null && getEnumValueFromString(AnimalSex, sex)){
-            animalObject.sex = getEnumValueFromString(AnimalSex, sex);
-        }
-        if(species !== null && getEnumValueFromString(AnimalSpecies, species)){
-            animalObject.species = getEnumValueFromString(AnimalSpecies, species);
-        }
-        if(status !== null && getEnumValueFromString(AnimalStatus, status)){
-            animalObject.status = [getEnumValueFromString(AnimalStatus, status)];
-        }
-        if(neuterDate !== null){
-            animalObject.sterilizationDate = neuterDate.toString();
-        }
-        if(traits !== null && traits.length > 0){
-            // should be newline seperated string
-            // split the string by newline to create list of strings
-            animalObject.traitsAndPersonality = [traits];
-        }
-        if(notes !== null && notes.length > 0){
-            // should be a newline seperated string
-            // split the string by newline to create a list of strings
-            animalObject.notes = [notes]
-        }
-        animalObject.location = "home"
-        return animalObject;
+        // return null
+        return null
     }
     return (
         <TouchableWithoutFeedback onPress={handleKeyBoardDismiss}>
@@ -177,12 +186,14 @@ const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
                             source={imgUrl === null? require("../../assets/images/no_image.png"): {uri: imgUrl}}
                         />
                     </View>
-                    <TouchableOpacity style ={[styles.uploadPhotoButton, generalStyles.centerContainer]} onPress={handlePickImagePress}>
-                        <AntDesign style ={[styles.buttonIcon]} name="upload" color={Color.colorWhite} size={16}/>
-                        <Text style = {[styles.buttonTitleText]}>
-                            {`upload photo`}
-                        </Text>
-                    </TouchableOpacity>
+                    {/* can be exchanged with flexible button */}
+                    <FlexibleButton
+                        icon = {<AntDesign style ={[styles.buttonIcon]} name="upload" color={Color.colorWhite} size={16}/>}
+                        title= {imgUrl !== null? "change photo" : "select photo"}
+                        buttonStyle={{...styles.uploadPhotoButton, ...generalStyles.centerContainer}}
+                        fontStyle={styles.buttonTitleText}
+                        callback={handlePickImagePress}
+                    />
                     <View style ={[styles.formsContainer]}>
                         <FlexibleTextInput
                             title="name"
@@ -288,6 +299,7 @@ const styles = StyleSheet.create({
     uploadPhotoButton:{
         width: 160,
         backgroundColor: Color.colorPaleovioletred,
+        borderColor: Color.colorPaleovioletred,
         borderRadius: Border.br_9xs,
         flexDirection: "row",
         minHeight: 36,

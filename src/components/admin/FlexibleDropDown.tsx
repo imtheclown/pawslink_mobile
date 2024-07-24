@@ -9,7 +9,7 @@ import {
     TextStyle
  } from "react-native";
  import { Dropdown } from "react-native-element-dropdown";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useMemo, useState } from "react";
 import { Border, Color, FontSize, FontFamily } from '../../assets/general/GlobalStyles';
 import { generalStyles } from "../../assets/general/generalStyles";
@@ -30,13 +30,16 @@ export interface DatalistStructure  {
 }
 
 // a customized dropdown list
-const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBack, style}) => {
+const FlexibleDropDown: React.FC<FlexibleDropDownProps> = React.memo(({title, data, callBack, style}) => {
     // values selected from the drop down list
     // improve this one
     const [selected, setSelected] = useState<string|null>(null);
     // keeps track of the focus state
     // used for the ux/ emphasis when in focus
-    const [isFocused, setIsFocused] = useState(false);
+    const [isFocused, setIsFocused] = useState(true);
+    useEffect(() =>{
+        setIsFocused(false);
+    }, []);
     // generates the list of data 
     // pool of data for the dropdown list
     // each element of the array follows the dataliststructure interface
@@ -90,9 +93,9 @@ const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBac
             </View>
         </View>
     )
-}
+})
 
-export default React.memo(FlexibleDropDown);
+export default FlexibleDropDown;
 
 const styles = StyleSheet.create({
     iconStyle : {

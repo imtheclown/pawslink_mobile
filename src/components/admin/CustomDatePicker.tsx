@@ -35,7 +35,7 @@ interface CustomDatePickerProps {
     style?: StyleProp<TextStyle>
     callBack: (newDate: Date) => void,
 }
-const CustomDatePicker:React.FC<CustomDatePickerProps> = ({title,style, callBack}) => {
+const CustomDatePicker:React.FC<CustomDatePickerProps> = React.memo(({title,style, callBack}) => {
     // saves the selected date
     const [date, setDate] = useState<Date|null>(null);
     // keeps track of the focused state of the component
@@ -119,8 +119,8 @@ const CustomDatePicker:React.FC<CustomDatePickerProps> = ({title,style, callBack
         </Modal>
         </>
     )
-}
-export default React.memo(CustomDatePicker);
+})
+export default CustomDatePicker;
 
 const styles = StyleSheet.create({
     textTitle:{

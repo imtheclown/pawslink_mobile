@@ -1,11 +1,12 @@
 // interfaces for the validation of animal object
 
+// edit according to the schema.graphql
 import { AnimalSex, AnimalStatus, AnimalSpecies } from "../models"
 interface AnimalInterface{
     location: string,
     mainName: string,
     sex: AnimalSex,
-    status: (AnimalStatus|undefined)[],
+    status: AnimalStatus[],
     coatColor:string[],
     localImgDir?: string,
     notes?:string[]

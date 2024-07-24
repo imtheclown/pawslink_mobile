@@ -10,9 +10,9 @@ import {
     StyleProp,
     KeyboardTypeOptions,
     Platform,
+    Animated
 } from "react-native";
-import React, { useEffect } from "react";
-import { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState, useCallback } from 'react';
 import { generalStyles } from "../../assets/general/generalStyles";
 import {debounce} from 'lodash'
@@ -22,12 +22,17 @@ interface FlexibleTextInputProps {
     numberOfLines? : number,
     style? : StyleProp<TextStyle>
     keyBoardType? : KeyboardTypeOptions,
-    callback: (newName:string) => void
+    required?: boolean,
+    callback: (newName:(string|null)) => void
 }
-const FlexibleTextInput: React.FC<FlexibleTextInputProps> =({title, style, numberOfLines, keyBoardType, callback}) =>{
-    const [isFocused, setIsFocused] = useState(false)
+const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, style, numberOfLines, keyBoardType, callback, required}) =>{
+    const [isFocused, setIsFocused] = useState(true);
     // own state to keep the value
     const [value, setValue] = useState("");
+    useEffect(() =>{
+        setIsFocused(false);
+    }, [])
+    // animated value
     // callback called when there is a change in value in the text input
     const handleTextChange = (newValue: string) =>{
         // update the state of the text input
@@ -48,9 +53,31 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> =({title, style, numbe
         setIsFocused(false);
         // return the current value to the parent
         // make sure the updated value to return to the parent component when cursor is not at the text input
-        callback(value)
+        // make sure that if the value is empty return null
+        if(checkValue()){
+            callback(value);
+        }else{
+            callback(null)
+        }
     }
-    const debounceCallback = useCallback(debounce(callback, 300), [callback])
+    // check if valid on onblur
+    // if upon onblur, the value is empty and the component is required, make it an error
+    const checkValue = ():boolean =>{
+        if(required){
+            // return false on empty input
+            if(value.length !> 0){
+                return false
+            }
+        }
+        // return true if it is not required
+        return true;
+    }
+    const debounceCallback = useCallback(debounce(callback, 300), [callback]);
+
+    // animate the border
+    const animatedBorder = () => {
+
+    }
     return (
         <KeyboardAvoidingView
              style = {[style? style:{width: '100%'}]}
@@ -82,9 +109,9 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> =({title, style, numbe
                 </View>
         </KeyboardAvoidingView>
     )
-};
+});
 
-export default React.memo(FlexibleTextInput)
+export default FlexibleTextInput
 
 const styles = StyleSheet.create({
     fullWidthTextInput : {

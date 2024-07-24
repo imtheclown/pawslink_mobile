@@ -15,7 +15,7 @@ import FlexibleButton from "./FlexibleButton";
 
 // -- TODO ----
 // make this component recieve data from the parent component
-const EventBox = () =>{
+const EventBox = React.memo(() =>{
     const handleCallback = () =>{
         console.log("handled")
     }
@@ -64,9 +64,9 @@ const EventBox = () =>{
             </View>
         </View>
     )
-}
+});
 
-export default React.memo(EventBox)
+export default EventBox
 
 const styles = StyleSheet.create({
     mainContainer:{

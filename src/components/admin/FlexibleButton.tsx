@@ -13,9 +13,7 @@ import {
     ViewStyle
 
 } from "react-native";
-import { generalStyles } from "../../assets/general/generalStyles";
 import {
-    Border,
     FontFamily,
     FontSize,
 
