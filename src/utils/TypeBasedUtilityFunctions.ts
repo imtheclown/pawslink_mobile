@@ -9,5 +9,6 @@ function getEnumValueFromString<T>(enumType: T, value: string): T[keyof T] | und
     }
     return undefined;
 }
-  
+
+// function that converts type number|undefined|
 export {getEnumValueFromString}

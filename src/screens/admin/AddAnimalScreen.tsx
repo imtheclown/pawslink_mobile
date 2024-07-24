@@ -11,7 +11,7 @@ import {
     TouchableOpacity,
     Animated
 } from "react-native";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 // custom functions/comonents
 import { pickImageFromDir } from "../../utils/FileBasedUtilitilityFunctions";
@@ -37,6 +37,7 @@ import { AnimalInterface } from "../../utils/ModelInterfaces";
 import { getEnumValueFromString } from "../../utils/TypeBasedUtilityFunctions";
 const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
     // add location and coat color
+    const params = route.params;
     const [imgUrl, setImageUrl] = useState<string|null>(null);
     const [name, setName] = useState<string|null>(null)
     const [age, setAge] = useState<number|null>(null)
@@ -49,6 +50,12 @@ const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
     const [traits, setTraits] = useState<string|null>(null)
     const [notes, setNotes] = useState<string|null>(null)
 
+    useEffect(()=>{
+        // if there is a passed animal object, then it is edit animal
+        if(params && params.animalObject){
+            prePopulateStates();
+        }
+    }, []);
     // callback functions
     // wrap in useCallback to prevent rerendering of
     
@@ -177,6 +184,19 @@ const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
         // return null
         return null
     }
+
+    const prePopulateStates = useCallback(() =>{
+        const animalObject = params.animalObject;
+        // set the states with non null keys
+        if(animalObject){
+            setName(animalObject.mainName);
+            setSex(animalObject.sex);
+            setStatus(animalObject.status[0]);
+            setSpecies(animalObject.species);
+            // non required here
+            // add in the future
+        }
+    }, [route.params])
     return (
         <TouchableWithoutFeedback onPress={handleKeyBoardDismiss}>
             <SafeAreaView style = {[generalStyles.flexContainer, styles.mainContainer]}>
@@ -199,12 +219,14 @@ const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
                             title="name"
                             callback={handleNameChange}
                             style = {styles.nameTextInput}
+                            oldValue={name}
                         />
                         <FlexibleTextInput
                             title="age"
                             callback={handleAgeChange}
                             keyBoardType={"numeric"}
                             style = {styles.ageTextInput}
+                            oldValue={age === null? null: age.toString()}
                         />
                         <FlexibleDropDown
                             style ={styles.sexDropDown}
@@ -246,11 +268,13 @@ const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
                             title="traits and personality"
                             numberOfLines={3}
                             callback={handleTraitsChange}
+                            oldValue={traits}
                         />
                         <FlexibleTextInput
                             title="notes"
                             numberOfLines={3}
                             callback={handleNotesChange}
+                            oldValue={notes}
                         />
                     </View>
                     <View style = {[styles.bottomButtonContainer]}>

@@ -29,16 +29,22 @@ interface FlexibleTextInputProps {
     style? : StyleProp<TextStyle>
     keyBoardType? : KeyboardTypeOptions,
     required?: boolean,
+    oldValue: string | null,
     callback: (newName:(string|null)) => void
 }
-const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, style, numberOfLines, keyBoardType, callback, required}) =>{
+const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, style, numberOfLines, keyBoardType, callback, required, oldValue}) =>{
     const [isFocused, setIsFocused] = useState(true);
     const [inError, setInError] = useState(false);
     // own state to keep the value
     const [value, setValue] = useState("");
     useEffect(() =>{
         setIsFocused(false);
-    }, []);
+        if(oldValue !== null){
+            setValue(oldValue)
+        }
+        console.log(oldValue);
+    }, [oldValue]);
+
     // animated value
     // callback called when there is a change in value in the text input
     const handleTextChange = (newValue: string) =>{
@@ -83,11 +89,6 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
     }
     const debounceCallback = useCallback(debounce(callback, 300), [callback]);
 
-    const generateBorderColor = () =>{
-        if(inError){
-            return 
-        }
-    }
     return (
         <KeyboardAvoidingView
              style = {[style? style:{width: '100%'}]}

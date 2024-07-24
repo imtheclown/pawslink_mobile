@@ -47,6 +47,7 @@ const AnimalListScreen = ({route, navigation}: AnimalListProps) =>{
                 name={item.mainName}
                 index={index}
                 status={status}
+                id = {item.id}
             />
         )
     }
