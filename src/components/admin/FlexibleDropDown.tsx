@@ -18,7 +18,8 @@ import { debounce } from "lodash";
 // props structure for the component
 interface FlexibleDropDownProps {
     title: string,
-    data: Array<string>
+    data: Array<string>,
+    oldValue: string|null,
     callBack : (newValue: string) => void,
     style?: StyleProp<TextStyle>
 
@@ -30,7 +31,7 @@ export interface DatalistStructure  {
 }
 
 // a customized dropdown list
-const FlexibleDropDown: React.FC<FlexibleDropDownProps> = React.memo(({title, data, callBack, style}) => {
+const FlexibleDropDown: React.FC<FlexibleDropDownProps> = React.memo(({title, data, callBack, style, oldValue}) => {
     // values selected from the drop down list
     // improve this one
     const [selected, setSelected] = useState<string|null>(null);
@@ -39,7 +40,10 @@ const FlexibleDropDown: React.FC<FlexibleDropDownProps> = React.memo(({title, da
     const [isFocused, setIsFocused] = useState(true);
     useEffect(() =>{
         setIsFocused(false);
-    }, []);
+        if(oldValue !== null){
+            setSelected(oldValue)
+        }
+    }, [oldValue]);
     // generates the list of data 
     // pool of data for the dropdown list
     // each element of the array follows the dataliststructure interface

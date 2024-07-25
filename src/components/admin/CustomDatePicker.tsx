@@ -17,7 +17,7 @@ import {
     FontFamily 
 } from '../../assets/general/GlobalStyles';
 import { Color } from '../../assets/general/GlobalStyles';
-import { useState, } from 'react';
+import { useState, useEffect } from 'react';
 import AntDesign from "react-native-vector-icons/AntDesign"
 import React from 'react';
 import FlexibleButton from './FlexibleButton';
@@ -32,16 +32,20 @@ interface DataParams {
 // props for the custom date picker
 interface CustomDatePickerProps {
     title: string,
-    style?: StyleProp<TextStyle>
+    style?: StyleProp<TextStyle>,
+    oldValue: Date|null,
     callBack: (newDate: Date) => void,
 }
-const CustomDatePicker:React.FC<CustomDatePickerProps> = React.memo(({title,style, callBack}) => {
+const CustomDatePicker:React.FC<CustomDatePickerProps> = React.memo(({title,style, callBack, oldValue}) => {
     // saves the selected date
     const [date, setDate] = useState<Date|null>(null);
     // keeps track of the focused state of the component
     // aids in the ux
     const [isFocused, setIsfocused] = useState(false);
 
+    useEffect(() =>{
+        setDate(oldValue)
+    }, [oldValue]);
     // function called when a date is selected
     const handleDateChange = (dateParams: DataParams) =>{
         // checks if the date params is not null or undefined

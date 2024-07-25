@@ -42,7 +42,6 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
         if(oldValue !== null){
             setValue(oldValue)
         }
-        console.log(oldValue);
     }, [oldValue]);
 
     // animated value
@@ -51,7 +50,10 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
         // update the state of the text input
         setValue(newValue)
         // return the current value 300 ms after typing
-        debounceCallback(newValue)
+        if(newValue.length !== 0){
+            // if value length is not zero, return the value to the parent
+            debounceCallback(newValue)
+        }
     }
     // for ux
     const setFocusedOn = () =>{

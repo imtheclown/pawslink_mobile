@@ -49,11 +49,10 @@ interface StatusBoxProps {
 // box that covers the status
 // differenct color (background and font) for each of the animal status
 export const StatusBox: React.FC<StatusBoxProps> = React.memo(({value}) =>{
-
     const generateBoxStyle = (): {font: TextStyle, background: ViewStyle} => {
         const generatedStyles =  {
             font : {color: "#0F4C81" },
-            background: {backgroundColor: '"#A1C6EA"'}
+            background: {backgroundColor: "#A1C6EA"}
         }
         if(value === AnimalStatus.ON_CAMPUS){
             generatedStyles.font.color = "#117B34";
@@ -69,12 +68,15 @@ export const StatusBox: React.FC<StatusBoxProps> = React.memo(({value}) =>{
             generatedStyles.font.color = "#8D6E08";
             generatedStyles.background.backgroundColor = "#FEF9EB";
         }
+
         return generatedStyles
     }
     const generatedStyles = generateBoxStyle();
     return (
         <View style ={[styles.statusBoxContainer, generatedStyles.background]}>
-            <Text style = {[styles.statusBoxText, generatedStyles.font]}>
+            <Text style = {[styles.statusBoxText, generatedStyles.font]}
+                numberOfLines={1}
+            >
                 {replaceUnderScoreWithSpace(value)}
             </Text>
         </View>
