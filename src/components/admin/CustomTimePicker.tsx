@@ -9,37 +9,53 @@ import {
     TextStyle,
     StyleProp
 } from 'react-native';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from 'react';
 
 import { generateTimeFromNumbers } from '../../utils/DateTimeBasedUtilityFunctions';
 import { generalStyles } from '../../assets/general/generalStyles';
 
-interface PickedTime {
+// interface for the selected time using the time picker
+export interface PickedTime {
     minutes: number,
     hours: number
 }
 interface CustomTimePickerProps {
     title: string,
-    style: StyleProp<TextStyle>
+    style: StyleProp<TextStyle>,
+    callback: (value: PickedTime|null) => void,
+    oldValue:PickedTime| null
 }
-const CustomTimePicker:React.FC<CustomTimePickerProps> = ({style, title}) =>{
+const CustomTimePicker:React.FC<CustomTimePickerProps> = ({style, title, callback, oldValue}) =>{
     const [visible, setVisible] = useState(false)
     const [hour, setHour] = useState<number| null>(null);
     const [minute, setMinute] = useState<number| null>(null);
+
+    useEffect(() =>{
+        if(oldValue !== null){
+            setHour(oldValue.hours);
+            setMinute(oldValue.minutes);
+        }
+    }, [oldValue]);
     // callbacks here
+    // removes the time picker from view
     const handleDismiss = () => {
         setVisible(false);
-        console.log("dismissed")
     }
+    // user picks value
     const handleConfirm = ({hours, minutes}: PickedTime) =>{
         setVisible(false);
-        setHour(hours)
-        setMinute(minutes)
+        setHour(hours);
+        setMinute(minutes);
+        callback({minutes: minutes, hours: hours});
+        
     }
     const handlePress = () => {
         setVisible(true);
     }
+    // show the value to display
+    // if values are null, place a string
+    // else display selected time
     const generateValueToDisplay = () =>{
         if(hour !== null && minute !== null){
             return generateTimeFromNumbers(hour, minute)

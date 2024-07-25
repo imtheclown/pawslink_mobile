@@ -3,12 +3,12 @@ import {
     SafeAreaView, 
     ScrollView,
     View,
-    Text,
     StyleSheet,
-    TouchableOpacity
+    TouchableWithoutFeedback,
+    Keyboard,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign"
-import React from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import { generalStyles } from "../../assets/general/generalStyles";
 import { Color, FontFamily, FontSize, Border } from "../../assets/general/GlobalStyles";
@@ -18,72 +18,128 @@ import CustomDatePicker from "../../components/admin/CustomDatePicker";
 import CustomTimePicker from "../../components/admin/CustomTimePicker";
 import FlexibleButton from "../../components/admin/FlexibleButton";
 import { AddEventProps } from "../../navigation/admin/AdminNavigationStack";
+import { pickImageFromDir } from "../../utils/FileBasedUtilitilityFunctions";
 
-// handle navigation here
+// time object followed by the time picker
+import { PickedTime } from "../../components/admin/CustomTimePicker";
 const AddEventScreen = React.memo(({route, navigation}:AddEventProps) =>{
-    
+    // handle states
+    const [imgUrl, setImgUrl] = useState<string|null>(null);
+    const [name, setName] = useState<string|null>(null);
+    const [location, setLocation] = useState<string|null>(null);
+    const [description, setDescription] = useState<string|null>(null);
+    const [date, setDate] = useState<Date|null>(null);
+    const [time, setTime] = useState<PickedTime|null>(null);
+
     const handleCallback = () =>{
         console.log("callback")
     }
-    const handleTextInput = ()=>{
-        console.log("something here")
+
+    // handle callbacks here
+    // changes the name state
+    const handleNameChange = useCallback((newValue:(string|null)) =>{
+        setName(newValue);
+    }, []);
+    // handles changes in the location state
+    const handleLocationChange = useCallback((newValue:(string|null)) =>{
+        setLocation(newValue);
+    }, []);
+    // handles the change in the event description
+    const handleDescriptionChange = useCallback((newValue: (string| null)) =>{
+        setLocation(newValue);
+    }, []);
+    // handle sthe change in date state
+    const handleDateChange = useCallback((newValue: Date|null) =>{
+        setDate(newValue);
+    }, []);
+    // handles the change in the time state
+    const handleTimeChange = useCallback((newValue: PickedTime|null) =>{
+        setTime(newValue);
+    }, []);
+    // handles the picking of images from the file manager
+    const handlePickImage = useCallback(() =>{
+        pickImageFromDir()
+        .then(res =>{
+            if(res[0].uri){
+                setImgUrl(res[0].uri)
+            }
+            throw new Error("cannot find the selected image's directory");
+        }).catch(err =>{
+            console.log(err)
+        })
+    }, []);
+    // dismisses the keyboard when user clicks outside of the text input
+    // removes focus from each of the text input present in the screen
+    const handleExitTextInput =() =>{
+        Keyboard.dismiss();
     }
     const handleCancelButtonPress = () =>{
         navigation.goBack()
     }
     return (
-        <SafeAreaView style= {[generalStyles.flexContainer, styles.mainContainer]}>
-            <View style = {[styles.imageContainerStyle]}>
-                <ResponsiveImage
-                    source={require("../../assets/images/no_image.png")}    
-                />
-                <TouchableOpacity style = {[styles.buttonContainer, generalStyles.centerContainer]}>
-                    <AntDesign name="upload" color={Color.colorWhite} size={16}/>
-                    <Text style ={[styles.buttonTextStyle]}>choose a photo</Text>
-                </TouchableOpacity>
-            </View>
-            <ScrollView contentContainerStyle ={[styles.contentContainer]}>
-                <View style = {[styles.formsContainer]}>
-                    <FlexibleTextnput
-                        title="event name"
-                        callback={handleTextInput}
-                    />
-                    <CustomDatePicker
-                        title="event date"
-                        style = {[styles.eventDate]}
-                        callBack={handleCallback}
-                    />
-                    <CustomTimePicker 
-                        title="time"
-                        style ={styles.eventTime}
-                    />
-                    <FlexibleTextnput
-                        title="location"
-                        callback={handleTextInput}
-                    />
-                    <FlexibleTextnput
-                        title="event description"
-                        callback={handleTextInput}
-                        numberOfLines={3}
-                    />
-                </View>
-                {/* button containers */}
-                <View style ={[styles.bottomButtonContainer]}>
-                    <FlexibleButton
-                        title="cancel"
-                        callback={handleCancelButtonPress}
-                        buttonStyle={styles.cancelButton}
-                        fontStyle={styles.cancelButtonText}
+        <TouchableWithoutFeedback onPress={handleExitTextInput}>
+            <SafeAreaView style= {[generalStyles.flexContainer, styles.mainContainer]}>
+                <View style = {[styles.imageContainerStyle]}>
+                    <ResponsiveImage
+                        source={require("../../assets/images/no_image.png")}    
                     />
                     <FlexibleButton
-                        title="save"
-                        callback={handleCallback}
-                        buttonStyle={styles.saveButton}
-                        fontStyle={styles.saveButtonText}
+                        title={imgUrl === null? 'choose photo': 'change photo'}
+                        icon = {<AntDesign name="upload" color={Color.colorWhite} size={16}/>}
+                        buttonStyle={styles.buttonContainer}
+                        fontStyle={styles.buttonTextStyle}
+                        callback={handlePickImage}
                     />
                 </View>
-            </ScrollView>
-        </SafeAreaView>
+                <ScrollView contentContainerStyle ={[styles.contentContainer]}>
+                    <View style = {[styles.formsContainer]}>
+                        <FlexibleTextnput
+                            title="event name"
+                            callback={handleNameChange}
+                            oldValue={name}
+                        />
+                        <CustomDatePicker
+                            title="event date"
+                            style = {[styles.eventDate]}
+                            callBack={handleDateChange}
+                            oldValue={date}
+                        />
+                        <CustomTimePicker 
+                            title="time"
+                            style ={styles.eventTime}
+                            callback={handleTimeChange}
+                            oldValue={time}
+                        />
+                        <FlexibleTextnput
+                            title="location"
+                            oldValue={location}
+                            callback={handleLocationChange}
+                        />
+                        <FlexibleTextnput
+                            title="event description"
+                            numberOfLines={3}
+                            oldValue={description}
+                            callback={handleDescriptionChange}
+                        />
+                    </View>
+                    {/* button containers */}
+                    <View style ={[styles.bottomButtonContainer]}>
+                        <FlexibleButton
+                            title="cancel"
+                            callback={handleCancelButtonPress}
+                            buttonStyle={styles.cancelButton}
+                            fontStyle={styles.cancelButtonText}
+                        />
+                        <FlexibleButton
+                            title="save"
+                            callback={handleCallback}
+                            buttonStyle={styles.saveButton}
+                            fontStyle={styles.saveButtonText}
+                        />
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
     )
 });
 
@@ -103,7 +159,8 @@ const styles = StyleSheet.create({
         borderRadius: Border.br_9xs,
         flexDirection: "row",
         minHeight: 36,
-        marginVertical: 10
+        marginVertical: 10,
+        borderColor: Color.colorPaleovioletred,
     },
     buttonIcon:{
         marginLeft: 10, 
@@ -141,6 +198,7 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: Color.colorWhite,
         borderColor: Color.colorPaleovioletred,
+        marginRight: 10,
     },
     cancelButtonText:{
         fontSize: 14,
