@@ -9,16 +9,18 @@ import {
     TextStyle
  } from "react-native";
  import { Dropdown } from "react-native-element-dropdown";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { useMemo, useState } from "react";
 import { Border, Color, FontSize, FontFamily } from '../../assets/general/GlobalStyles';
 import { generalStyles } from "../../assets/general/generalStyles";
+import { debounce } from "lodash";
 
 // props structure for the component
 interface FlexibleDropDownProps {
     title: string,
-    data: Array<string>
-    callBack : () => void,
+    data: Array<string>,
+    oldValue: string|null,
+    callBack : (newValue: string) => void,
     style?: StyleProp<TextStyle>
 
 }
@@ -29,29 +31,42 @@ export interface DatalistStructure  {
 }
 
 // a customized dropdown list
-const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBack, style}) => {
+const FlexibleDropDown: React.FC<FlexibleDropDownProps> = React.memo(({title, data, callBack, style, oldValue}) => {
     // values selected from the drop down list
     // improve this one
-    const [selected, setSelected] = useState("");
+    const [selected, setSelected] = useState<string|null>(null);
     // keeps track of the focus state
     // used for the ux/ emphasis when in focus
-    const [isFocused, setIsFocused] = useState(false);
+    const [isFocused, setIsFocused] = useState(true);
+    useEffect(() =>{
+        setIsFocused(false);
+        if(oldValue !== null){
+            setSelected(oldValue)
+        }
+    }, [oldValue]);
     // generates the list of data 
     // pool of data for the dropdown list
     // each element of the array follows the dataliststructure interface
-    const generateData = () =>{
-        const processedData = data.map(item => {
-            return {
-                label: item,
-                value: item
-            }
-        });
-        return processedData;
-    }
+    const generateData = useCallback(() => {
+        return data.map(item => ({ label: item, value: item }));
+      }, [data]);
 
     const handleOnfocus = () =>{
         setIsFocused(true);
-        Keyboard.dismiss();
+    }
+    const handleOnBlur = () =>{
+        setIsFocused(false);
+        if(selected !== null){
+            callBack(selected);
+        }
+    }
+
+    const debounceChangeValue = useCallback(debounce(callBack, 500), [callBack]);
+
+    const handleChangeValue = (newValue:DatalistStructure) =>{
+        const value = newValue.value;
+        setSelected(value);
+        debounceChangeValue(value);
     }
     // memoizes the data produced by the generateData
     const processedData: Array<DatalistStructure> = useMemo(generateData, [data])
@@ -60,15 +75,9 @@ const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBac
             <Text style ={[generalStyles.TextInputTitle]}>{title}</Text>
             <View style = {[generalStyles.outerTextInputBox, styles.fullWidth, isFocused? generalStyles.onFocusOuterTextInputBox: {}]}>
                 <Dropdown
-                    onFocus={() => {
-                        handleOnfocus()
-                    }}
-                    onBlur={() => {
-                        setIsFocused(false)
-                    }}
-                    onChange={(item) => {
-                        setSelected(item.value);
-                    }}
+                    onFocus={handleOnfocus}
+                    onBlur={handleOnBlur}
+                    onChange={handleChangeValue}
                     value={selected}
                     data={processedData}
                     labelField={"label"}
@@ -78,9 +87,9 @@ const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBac
                     fontFamily= {FontFamily.interRegular}
                     selectedTextStyle ={{marginHorizontal: 5}}
                     selectedTextProps={{numberOfLines: 1}}
-                    containerStyle = {{marginTop: 5}}
+                    containerStyle = {[styles.listContainer]}
                     style = {[styles.fullWidth,generalStyles.innerTextInputBox, isFocused? generalStyles.onFocusInnnerTextInputBox: generalStyles.normalInnerTextInputBox]}
-                    itemContainerStyle ={{width:300}}
+                    itemContainerStyle ={[styles.itemContainerStyle]}
                     iconStyle = {[isFocused?styles.rotatedIcon:styles.normalIcon, styles.iconStyle]}
                     iconColor={isFocused? Color.colorPaleovioletred: Color.colorSilver}
                     activeColor={Color.colorPalevioletred_200}
@@ -88,9 +97,9 @@ const FlexibleDropDown: React.FC<FlexibleDropDownProps> = ({title, data, callBac
             </View>
         </View>
     )
-}
+})
 
-export default React.memo(FlexibleDropDown);
+export default FlexibleDropDown;
 
 const styles = StyleSheet.create({
     iconStyle : {
@@ -112,5 +121,14 @@ const styles = StyleSheet.create({
     },
     fullWidth:{
         width: '100%'
-    }
+    },
+    listContainer:{
+        marginTop: 5,
+        width: '45%',
+        
+    },
+    itemContainerStyle:{
+        width: 'auto',
+        alignItems: 'flex-start'
+    },
 })

@@ -15,18 +15,33 @@ import { Color, FontFamily, FontSize } from "../../assets/general/GlobalStyles";
 import { generalStyles } from "../../assets/general/generalStyles";
 import { StatusBox } from "../../screens/ViewAnimalScreen";
 import { Avatar } from "@rneui/base";
+import { useNavigation } from "@react-navigation/native";
 
+// aws
+import { LazyAnimal, Animal } from "../../models";
+import { DataStore } from "aws-amplify/datastore";
 
 // temp data here
-import { AnimalStatus } from "../../backend/realm/schemas/Animal";
+import { AnimalStatus } from "../../models";
+import type { StackNavProps } from "../../navigation/admin/AdminNavigationStack";
+import { useCallback } from "react";
 
 interface AnimalListItemProps {
     imgSoure ? :string,
     index: number,
     name: string,
-    status: AnimalStatus
+    status: AnimalStatus,
+    id: string,
 }
-const AnimalListItem: React.FC<AnimalListItemProps> = React.memo(({imgSoure, index, name, status}) =>{
+const AnimalListItem: React.FC<AnimalListItemProps> = React.memo(({imgSoure, index, name, status, id}) =>{
+    const navigation = useNavigation<StackNavProps>();
+
+    const gotoEditAnimalView = useCallback(async() =>{
+        const animalObject = await DataStore.query(Animal, (c) => c.id.eq(id));
+        if(animalObject.length){
+            navigation.navigate('add_animal', {animalObject: animalObject[0]})
+        }
+    }, [])
     return (
         <View style = {[styles.mainContainer, index%2===0?styles.evenBackground: styles.oddBackground]}>
             <View style = {[styles.imageContainer]}>
@@ -40,7 +55,10 @@ const AnimalListItem: React.FC<AnimalListItemProps> = React.memo(({imgSoure, ind
             <View style ={[styles.statusContainer]}>
                 <StatusBox value = {status}/>
             </View>
-            <TouchableOpacity style = {[generalStyles.centerContainer, styles.editButtonContainer]}>
+            <TouchableOpacity
+                style = {[generalStyles.centerContainer, styles.editButtonContainer]}
+                onPress={gotoEditAnimalView}
+            >
                 {/* provide icon here */}
                 <AntDesign name="edit" color={Color.colorPaleovioletred} size={16}/>
             </TouchableOpacity>

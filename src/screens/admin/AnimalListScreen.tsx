@@ -5,18 +5,55 @@ import {
     Text,
     SafeAreaView,
     StyleSheet,
-    ScrollView
+    ScrollView,
+    FlatList
 } from "react-native"
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { FontFamily, Color, FontSize } from "../../assets/general/GlobalStyles";
 
-import { AnimalStatus } from "../../backend/realm/schemas/Animal";
 import { AnimalListProps } from '../../navigation/admin/AdminNavigationStack';
 import { generalStyles } from "../../assets/general/generalStyles";
 import AnimalListItem from "../../components/admin/AnimalListItem";
+
+// aws
+import { AnimalStatus } from "../../models";
+import { DataStore } from "aws-amplify/datastore";
+import { Animal } from "../../models";
+import { LazyAnimal } from "../../models";
+import { getEnumValueFromString } from "../../utils/TypeBasedUtilityFunctions";
+import { Flat } from "lodash";
+
+interface CustomRendererInterface{
+    item: LazyAnimal,
+    index: number,
+}
 const AnimalListScreen = ({route, navigation}: AnimalListProps) =>{
     // navigation parameter, key "type"
+    const [animalList, setAnimalList] = useState<LazyAnimal[]|null>(null)
     const type = route.params.type;
+
+    const getAnimals = async () =>{
+        const animals = await DataStore.query(Animal);
+        setAnimalList(animals)
+    }
+
+    const itemRenderer = ({item, index} : CustomRendererInterface) =>{
+        var status = getEnumValueFromString(AnimalStatus, item.status[0]);
+        if(!status){
+            status = AnimalStatus.ADOPTED
+        }
+        return (
+            <AnimalListItem
+                name={item.mainName}
+                index={index}
+                status={status}
+                id = {item.id}
+            />
+        )
+    }
+    useEffect(() =>{
+        getAnimals();
+    })
     return (
         <SafeAreaView style ={[generalStyles.flexContainer, styles.mainContainer]}>
             <View style = {[styles.contentContainer]}>
@@ -38,75 +75,14 @@ const AnimalListScreen = ({route, navigation}: AnimalListProps) =>{
             </View>
             {/* list of animals here */}
             {/* maybe use pagination */}
-            <ScrollView>
-                {/* these are test data, change this later */}
-                <AnimalListItem 
-                    name="ampon"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={0}
+            {
+                animalList !== null ?
+                <FlatList
+                    data={animalList}
+                    renderItem={itemRenderer}
                 />
-                <AnimalListItem 
-                    name="ampon"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={1}
-                />
-                <AnimalListItem 
-                    name="ampon"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={0}
-                />
-                <AnimalListItem 
-                    name="ampon"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={1}
-                />
-                <AnimalListItem 
-                    name="ampon"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={0}
-                />
-                <AnimalListItem 
-                    name="ampon"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={1}
-                />
-                <AnimalListItem 
-                    name="ampon"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={0}
-                />
-                <AnimalListItem 
-                    name="ampon"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={1}
-                />
-                <AnimalListItem 
-                    name="ampon"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={0}
-                />
-                <AnimalListItem 
-                    name="lSR"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={1}
-                />
-                <AnimalListItem 
-                    name="last"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={0}
-                />
-                <AnimalListItem 
-                    name="last"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={0}
-                />
-                <AnimalListItem 
-                    name="last"
-                    status={AnimalStatus.ON_CAMPUS}
-                    index={0}
-                />
-                <View style ={[{height: 20}]}></View>
-            </ScrollView>
+                : <></>
+            }
         </SafeAreaView>
     )
 }

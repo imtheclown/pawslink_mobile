@@ -72,7 +72,7 @@ export const generalStyles = StyleSheet.create({
         minHeight: 55,
         height: 'auto',
         color: Color.colorDarkslategray,
-        lineHeight: 55,
+        lineHeight: 24,
     },
     onFocusInnnerTextInputBox:{
         borderColor: Color.colorPaleovioletred,

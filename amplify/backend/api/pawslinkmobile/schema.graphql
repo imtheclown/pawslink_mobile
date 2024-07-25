@@ -1,0 +1,64 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type Todo @model {
+  id: ID!
+  name: String!
+  description: String
+}
+
+# defined status for the animal
+# rainbow bridge for dead animal
+# owned when animal has an owner
+# transient if the animal is not a campus animal but is seen within the vicinity of the campus
+# on campus is for animals that are considered as up dogs
+# adopted animal is for animals that are formerly on campus dogs that are adopted
+enum AnimalStatus {
+    RAINBOW_BRIDGE,
+    OWNED,
+    TRANSIENT,
+    ON_CAMPUS,
+    ADOPTED
+}
+
+# species of animals
+# limited to dog and cat
+enum AnimalSpecies {
+    DOG,
+    CAT
+}
+
+# defined sex for the animals
+# unknown is for animals with unconfirmed sex
+enum AnimalSex {
+    MALE,
+    FEMALE,
+    UNKNOWN
+}
+
+# add the qr code string here
+# convert the hexadeximal string to string
+
+# required keys:
+# id
+# location
+# name
+# animalsex
+# animal species
+# 
+type Animal @model{
+  id: ID!
+  location: String!
+  mainName: String!
+  sex: AnimalSex!
+  status: [AnimalStatus!]!
+  coatColor: [String!]
+  localImgDir: String
+  notes:[String!]
+  species: AnimalSpecies!
+  traitsAndPersonality: [String!]
+  disabilities: [String!]
+  age: Int @default(value: "-1")
+  sterilizationDate: AWSDate
+}

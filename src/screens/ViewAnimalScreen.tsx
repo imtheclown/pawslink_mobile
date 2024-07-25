@@ -5,7 +5,9 @@ import {
     View,
     StyleSheet,
     ScrollView,
-    Text
+    Text,
+    ViewStyle,
+    TextStyle
 } from "react-native"
 import { 
     Border,
@@ -17,8 +19,10 @@ import React from "react";
 import ResponsiveImage from "../components/ResponsiveImage"
 import { generalStyles } from "../assets/general/generalStyles"
 import IonIcon from "react-native-vector-icons/Ionicons"
-import { AnimalSex, AnimalStatus } from "../backend/realm/schemas/Animal";
+import { AnimalSex} from "../backend/realm/schemas/Animal";
 import { useState, useEffect } from "react";
+import { AnimalStatus } from "../models";
+
 // function that processes database data to view data
 import { replaceUnderScoreWithSpace } from "../utils/TextBasedUtilityFunctions";
 // general purpose button
@@ -45,33 +49,34 @@ interface StatusBoxProps {
 // box that covers the status
 // differenct color (background and font) for each of the animal status
 export const StatusBox: React.FC<StatusBoxProps> = React.memo(({value}) =>{
-    // can be optimized by creating a function and directly initialize the variables instead of using states
-    // default is blue background with dark blue font color
-    const [fontColor, setFontColor] = useState("#0F4C81");
-    const [bgColor, setBgColor] = useState("#A1C6EA")
-    // determines the color of the status box
-    const getBoxColor = () => {
+    const generateBoxStyle = (): {font: TextStyle, background: ViewStyle} => {
+        const generatedStyles =  {
+            font : {color: "#0F4C81" },
+            background: {backgroundColor: "#A1C6EA"}
+        }
         if(value === AnimalStatus.ON_CAMPUS){
-            setFontColor("#117B34");
-            setBgColor("#EEFDF3");
+            generatedStyles.font.color = "#117B34";
+            generatedStyles.background.backgroundColor = "#EEFDF3";
         }
         else if(value === AnimalStatus.TRANSIENT){
-            setFontColor("#E0949D");
-            setBgColor("#FFE5E7");
+            generatedStyles.font.color = "#E0949D";
+            generatedStyles.background.backgroundColor = "#FFE5E7";
         }else if (value === AnimalStatus.ADOPTED){
-            setFontColor("#774A7F");
-            setBgColor("#F9F5F9");
+            generatedStyles.font.color = "#774A7F";
+            generatedStyles.background.backgroundColor = "#F9F5F9";
         }else if (value === AnimalStatus.OWNED){
-            setFontColor("#8D6E08");
-            setBgColor("#FEF9EB");
+            generatedStyles.font.color = "#8D6E08";
+            generatedStyles.background.backgroundColor = "#FEF9EB";
         }
+
+        return generatedStyles
     }
-    useEffect (() =>{
-        getBoxColor();
-    }, []);
+    const generatedStyles = generateBoxStyle();
     return (
-        <View style ={[styles.statusBoxContainer, {backgroundColor: bgColor}]}>
-            <Text style = {[styles.statusBoxText, {color: fontColor}]}>
+        <View style ={[styles.statusBoxContainer, generatedStyles.background]}>
+            <Text style = {[styles.statusBoxText, generatedStyles.font]}
+                numberOfLines={1}
+            >
                 {replaceUnderScoreWithSpace(value)}
             </Text>
         </View>
