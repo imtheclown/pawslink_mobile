@@ -16,6 +16,7 @@ import React, { useEffect, useRef } from "react";
 import { useState, useCallback } from 'react';
 import { generalStyles } from "../../assets/general/generalStyles";
 import {debounce} from 'lodash'
+import { disable } from "aws-amplify/analytics";
 
 // interface for the flexible text input component
 // title refers to the title of the text input
@@ -30,9 +31,10 @@ interface FlexibleTextInputProps {
     keyBoardType? : KeyboardTypeOptions,
     required?: boolean,
     oldValue: string | null,
+    disabled? : boolean,
     callback: (newName:(string|null)) => void
 }
-const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, style, numberOfLines, keyBoardType, callback, required, oldValue}) =>{
+const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, style, numberOfLines, keyBoardType, callback, required, oldValue, disabled}) =>{
     const [isFocused, setIsFocused] = useState(true);
     const [inError, setInError] = useState(false);
     // own state to keep the value
@@ -118,6 +120,7 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
                             numberOfLines? styles.multilineStart: styles.singleLineStart]}
                         keyboardType={keyBoardType? keyBoardType: 'default'}
                         onChangeText={handleTextChange}
+                        editable = {disabled? !disabled: true}
                     />
                 </View>
         </KeyboardAvoidingView>

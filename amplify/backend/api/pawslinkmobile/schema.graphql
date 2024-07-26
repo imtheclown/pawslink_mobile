@@ -62,3 +62,44 @@ type Animal @model{
   age: Int @default(value: "-1")
   sterilizationDate: AWSDate
 }
+# interface for the personal information of the user
+#cmplteHomeAdd and cmplteCurrentAdd refers to complete home address and complete current address respectively
+type AdopterBasicPersonalInfo {
+  fname: String!
+  lname: String!
+  age: Int!
+  isStudent: Boolean!
+  contactNum: String!
+  emailAdd: String!
+  facebookLink: String!
+  cmpltHomeAdd: String!
+  cmpltCurrentAdd: String!
+}
+# interface for the adoptor's pet history
+type AdopterPetHistory {
+  noOfPets: Int!
+  yearsOfBeingPetOwner: Int!
+  oldestPetAge: Int!
+  strlztnAwareness: Boolean!
+  strlztnWillingness: Boolean!
+  regVetClinic: String!
+}
+# interface for the planned housing/accomodation of the will be adopted animal
+type PetAccommodation{
+  adoptionDestination: String!
+  indoorOutdoor: String!
+  cagedLeashed: String!
+}
+# other information about the adopter
+type AdopterOtherInfo{
+  basicNecesities: [String!]!
+  enrichmentAct: String!
+  discoverySource: String
+}
+type AdoptionRequest @model {
+  id: ID!
+  basicPersonalInfo: AdopterBasicPersonalInfo!
+  petHistory: AdopterPetHistory!
+  otherInfo: AdopterOtherInfo!
+  idImageUrl: String!
+}

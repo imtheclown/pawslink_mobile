@@ -21,12 +21,17 @@ const AnimalSex = {
   "UNKNOWN": "UNKNOWN"
 };
 
-const { Todo, Animal } = initSchema(schema);
+const { Todo, Animal, AdoptionRequest, AdopterBasicPersonalInfo, AdopterPetHistory, PetAccommodation, AdopterOtherInfo } = initSchema(schema);
 
 export {
   Todo,
   Animal,
+  AdoptionRequest,
   AnimalStatus,
   AnimalSpecies,
-  AnimalSex
+  AnimalSex,
+  AdopterBasicPersonalInfo,
+  AdopterPetHistory,
+  PetAccommodation,
+  AdopterOtherInfo
 };

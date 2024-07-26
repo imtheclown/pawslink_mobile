@@ -180,6 +180,76 @@ export const schema = {
                     "properties": {}
                 }
             ]
+        },
+        "AdoptionRequest": {
+            "name": "AdoptionRequest",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "basicPersonalInfo": {
+                    "name": "basicPersonalInfo",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "AdopterBasicPersonalInfo"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "petHistory": {
+                    "name": "petHistory",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "AdopterPetHistory"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "otherInfo": {
+                    "name": "otherInfo",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "AdopterOtherInfo"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "idImageUrl": {
+                    "name": "idImageUrl",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "AdoptionRequests",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                }
+            ]
         }
     },
     "enums": {
@@ -209,7 +279,176 @@ export const schema = {
             ]
         }
     },
-    "nonModels": {},
+    "nonModels": {
+        "AdopterBasicPersonalInfo": {
+            "name": "AdopterBasicPersonalInfo",
+            "fields": {
+                "fname": {
+                    "name": "fname",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "lname": {
+                    "name": "lname",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "age": {
+                    "name": "age",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "isStudent": {
+                    "name": "isStudent",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "contactNum": {
+                    "name": "contactNum",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "emailAdd": {
+                    "name": "emailAdd",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "facebookLink": {
+                    "name": "facebookLink",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "cmpltHomeAdd": {
+                    "name": "cmpltHomeAdd",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "cmpltCurrentAdd": {
+                    "name": "cmpltCurrentAdd",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                }
+            }
+        },
+        "AdopterPetHistory": {
+            "name": "AdopterPetHistory",
+            "fields": {
+                "noOfPets": {
+                    "name": "noOfPets",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "yearsOfBeingPetOwner": {
+                    "name": "yearsOfBeingPetOwner",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "oldestPetAge": {
+                    "name": "oldestPetAge",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "strlztnAwareness": {
+                    "name": "strlztnAwareness",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "strlztnWillingness": {
+                    "name": "strlztnWillingness",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "regVetClinic": {
+                    "name": "regVetClinic",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                }
+            }
+        },
+        "PetAccommodation": {
+            "name": "PetAccommodation",
+            "fields": {
+                "adoptionDestination": {
+                    "name": "adoptionDestination",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "indoorOutdoor": {
+                    "name": "indoorOutdoor",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "cagedLeashed": {
+                    "name": "cagedLeashed",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                }
+            }
+        },
+        "AdopterOtherInfo": {
+            "name": "AdopterOtherInfo",
+            "fields": {
+                "basicNecesities": {
+                    "name": "basicNecesities",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": [],
+                    "isArrayNullable": false
+                },
+                "enrichmentAct": {
+                    "name": "enrichmentAct",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "discoverySource": {
+                    "name": "discoverySource",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            }
+        }
+    },
     "codegenVersion": "3.4.4",
-    "version": "86c243f674cb513add55719fb43329c9"
+    "version": "ededa2003d8067b20b283e41341306c2"
 };
