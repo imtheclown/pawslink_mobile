@@ -7,13 +7,16 @@ import {
 
 import FlexibleTextInput from "../../components/admin/FlexibleTextnput"
 
-
+// define the props on the navigation
+// should pass an adoption request object
 const AdoptionRequestForm = () =>{
     return (
         <SafeAreaView>
             <ScrollView>
-
+                
             </ScrollView>
         </SafeAreaView>
     )
 }
+
+export default AdoptionRequestForm;

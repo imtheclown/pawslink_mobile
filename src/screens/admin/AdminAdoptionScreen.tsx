@@ -11,10 +11,14 @@ import {
      Color,
      FontFamily
  } from "../../assets/general/GlobalStyles";
-const AdminAdoptionScreen = () =>{
-    const gotoAdoptionRequests = () =>{
-        console.log("to adoption requests");
-    };
+import { useCallback } from "react";
+
+// navigation props
+import { AdminAdoptionScreenProps } from "../../navigation/admin/AdminBottomNavigation";
+const AdminAdoptionScreen = ({route, navigation} : AdminAdoptionScreenProps) =>{
+    const gotoAdoptionRequests = useCallback(() =>{
+        navigation.navigate("adoption_request_list")
+    }, []);
 
     const gotoAdoptedAnimals = () =>{
         console.log("to adopted animals");
@@ -76,11 +80,13 @@ const styles = StyleSheet.create({
         height: 'auto',
     },
     pinkButton: {
+        marginTop: 10,
         backgroundColor: Color.colorPaleovioletred,
         borderColor: Color.colorPaleovioletred,
         height: 55
     },
     whiteButton:{
+        marginTop: 10,
         backgroundColor: Color.colorWhite,
         borderColor: Color.colorPaleovioletred
     },

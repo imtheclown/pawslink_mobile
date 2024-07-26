@@ -19,8 +19,8 @@ import {
 
 } from "../../assets/general/GlobalStyles";
 interface FlexibleButtonProps {
-    title: string,
-    fontStyle: TextStyle,
+    title?: string,
+    fontStyle?: TextStyle,
     buttonStyle: ViewStyle,
     icon? :React.ReactNode,
     callback: () => void,
@@ -39,7 +39,7 @@ const FlexibleButton : React.FC<FlexibleButtonProps> = ({title, callback,fontSty
             onPress={handleClick}
         >
             {icon}
-            <Text style = {[styles.buttonTextStyle, fontStyle]}> {title} </Text>
+            {title && <Text style = {[styles.buttonTextStyle, fontStyle]}> {title} </Text>}
         </TouchableOpacity>
     )
 }
@@ -48,7 +48,6 @@ export default React.memo(FlexibleButton);
 
 const styles = StyleSheet.create({
     buttonStyle:{
-        marginTop: 10,
         borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',

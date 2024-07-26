@@ -30,6 +30,7 @@ import TabBarHeader from "../../components/TabBarHeader";
 import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
 // specify types here
 import { RootStackParamList } from './AdminNavigationStack';
+import { BottomSheetProps } from "@rneui/base";
 // list of parameter list and their types for the respective screen for each tab
 // undefined for now
 type BottomTabNavigationParamsList = {
@@ -47,6 +48,11 @@ export type AnimalDatabaseProps = CompositeScreenProps<BottomTabScreenProps<Bott
 export type AdminEventScreenProps = CompositeScreenProps<BottomTabScreenProps<BottomTabNavigationParamsList, 'events'>,
     StackScreenProps<RootStackParamList>
 >
+export type AdminAdoptionScreenProps =CompositeScreenProps<BottomTabScreenProps<BottomTabNavigationParamsList, 'adoption'>,
+StackScreenProps<RootStackParamList>
+>
+
+
 const Tab = createBottomTabNavigator<BottomTabNavigationParamsList>()
 
 
