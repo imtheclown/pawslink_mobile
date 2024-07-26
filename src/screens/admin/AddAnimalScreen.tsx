@@ -121,10 +121,10 @@ const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
     const handlePickImagePress = () =>{
         pickImageFromDir()
         .then(res => {
-            console.log(res);
             if(res[0].uri){
                 setImageUrl(res[0].uri)
             }
+            throw new Error("cannot find the selected image's directory");
         }).catch(err =>{
             console.log(err)
         })
