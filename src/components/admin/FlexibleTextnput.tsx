@@ -38,13 +38,10 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
     const [isFocused, setIsFocused] = useState(true);
     const [inError, setInError] = useState(false);
     // own state to keep the value
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(oldValue === null? "": oldValue);
     useEffect(() =>{
         setIsFocused(false);
-        if(oldValue !== null){
-            setValue(oldValue)
-        }
-    }, [oldValue]);
+    }, []);
 
     // animated value
     // callback called when there is a change in value in the text input

@@ -2,7 +2,18 @@
 
 // accepts two numbers, hours and minutes and returns a time string
 const generateTimeFromNumbers = (hours: number, minutes : number) =>{
-    return `${hours.toString()}:${minutes.toString()}`
+    var hour = hours.toString();
+    var minute = minutes.toString();
+
+    // prepend a zero if number of digits is one
+    if(hour.length === 1){
+        hour = "0"+hour;
+    }
+    if(minute.length === 1){
+        minute = "0" + minute;
+    }
+    // return generated string that follows the awsTime format
+    return `${hour}:${minute}:00.000`
 }
 
 // exports functions here

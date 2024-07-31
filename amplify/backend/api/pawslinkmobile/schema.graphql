@@ -103,3 +103,14 @@ type AdoptionRequest @model {
   otherInfo: AdopterOtherInfo!
   idImageUrl: String!
 }
+
+# event object
+type Event @model {
+  id: ID!
+  imgURL: String
+  location: String!
+  name: String!
+  eventDate: AWSDate!
+  eventTime: AWSTime!
+  description: String!
+}

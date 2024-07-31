@@ -8,7 +8,7 @@ import {
     Keyboard,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign"
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { generalStyles } from "../../assets/general/generalStyles";
 import { Color, FontFamily, FontSize, Border } from "../../assets/general/GlobalStyles";
@@ -19,10 +19,23 @@ import CustomTimePicker from "../../components/admin/CustomTimePicker";
 import FlexibleButton from "../../components/admin/FlexibleButton";
 import { AddEventProps } from "../../navigation/admin/AdminNavigationStack";
 import { pickImageFromDir } from "../../utils/FileBasedUtilitilityFunctions";
-
+import { generateTimeFromNumbers } from "../../utils/DateTimeBasedUtilityFunctions";
 // time object followed by the time picker
 import { PickedTime } from "../../components/admin/CustomTimePicker";
+import { LazyEvent, Event } from "../../models";
+import { DataStore } from "aws-amplify/datastore";
+
+interface EventObject {
+    imgURL?: string,
+    location: string,
+    name: string,
+    eventDate: string,
+    eventTime: string,
+    description: string,
+}
+
 const AddEventScreen = React.memo(({route, navigation}:AddEventProps) =>{
+    const params = route.params;
     // handle states
     const [imgUrl, setImgUrl] = useState<string|null>(null);
     const [name, setName] = useState<string|null>(null);
@@ -30,11 +43,77 @@ const AddEventScreen = React.memo(({route, navigation}:AddEventProps) =>{
     const [description, setDescription] = useState<string|null>(null);
     const [date, setDate] = useState<Date|null>(null);
     const [time, setTime] = useState<PickedTime|null>(null);
+    
+    useEffect(() =>{
+        if(params.eventObject){
+            const eventObject = params.eventObject;
+            // set the non-null values
+            setName(eventObject.name);
+            setLocation(eventObject.location);
+            setDescription(eventObject.description);
+            setDate(eventObject.eventDate === null? null: new Date(eventObject.eventDate));
+            setTime(generatePickedTimeObject(eventObject.eventTime));
+            if(eventObject.imgURL){
+                setImgUrl(eventObject.imgURL);
+            }
+        }
+    }, []);
 
+    const generatePickedTimeObject = (timeString: string):PickedTime|null =>{
+        const seperatedValues = timeString.split(":");
+        if(seperatedValues.length < 3){
+            return null
+        }
+        try {
+            const hours = parseInt(seperatedValues[0]);
+            const minutes = parseInt(seperatedValues[1]);
+            return {
+                hours,
+                minutes
+            }
+        }catch(err){
+            console.log(err);
+            return null
+        }
+    }
     const handleCallback = () =>{
         console.log("callback")
     }
+    const handleSave = async () =>{
+        const eventObject: EventObject|null = generateEventObject();
+        if(eventObject !== null){
+            try{
+                await DataStore.save(new Event(eventObject))
+                .then(()=>{
+                    console.log("success");
+                })
+                .catch(err =>{
+                    console.log(err);
+                })
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+    }
 
+    const generateEventObject = ():EventObject|null =>{
+        if(!name || !location || !date || !time|| !description ){
+            return null;
+        }
+        const eventObject:EventObject = {
+            name: name,
+            location: location,
+            eventDate: date.toISOString().split('T')[0],
+            eventTime: generateTimeFromNumbers(time.hours, time.minutes),
+            description: description
+        }
+
+        if(imgUrl !== null){
+            eventObject.imgURL = imgUrl;
+        }
+        return eventObject
+    }
     // handle callbacks here
     // changes the name state
     const handleNameChange = useCallback((newValue:(string|null)) =>{
@@ -46,7 +125,7 @@ const AddEventScreen = React.memo(({route, navigation}:AddEventProps) =>{
     }, []);
     // handles the change in the event description
     const handleDescriptionChange = useCallback((newValue: (string| null)) =>{
-        setLocation(newValue);
+        setDescription(newValue);
     }, []);
     // handle sthe change in date state
     const handleDateChange = useCallback((newValue: Date|null) =>{
@@ -132,7 +211,7 @@ const AddEventScreen = React.memo(({route, navigation}:AddEventProps) =>{
                         />
                         <FlexibleButton
                             title="save"
-                            callback={handleCallback}
+                            callback={handleSave}
                             buttonStyle={styles.saveButton}
                             fontStyle={styles.saveButtonText}
                         />

@@ -13,9 +13,13 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import React from "react";
 import FlexibleButton from "./FlexibleButton";
 
-// -- TODO ----
-// make this component recieve data from the parent component
-const EventBox = React.memo(() =>{
+// aws
+import { LazyEvent} from "../../models";
+interface EventBoxInterface {
+    eventObject: LazyEvent
+}
+
+const EventBox:React.FC<EventBoxInterface> = React.memo(({eventObject}) =>{
     const handleCallback = () =>{
         console.log("handled")
     }

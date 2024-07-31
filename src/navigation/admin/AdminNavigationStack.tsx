@@ -18,7 +18,7 @@ import TabBarHeader from "../../components/TabBarHeader";
 // defines the parameters and their types needed be each of the following functional components
 
 // import interfaces classes here
-import { LazyAnimal, LazyAdoptionRequest } from "../../models";
+import { LazyAnimal, LazyAdoptionRequest, LazyEvent } from "../../models";
 export type RootStackParamList = {
     bottom_nav: undefined,
     add_animal: {
@@ -27,7 +27,7 @@ export type RootStackParamList = {
     // type refers to the title in the animal list screen
     // cat or dog
     animal_list: {type:string}
-    add_event: undefined,
+    add_event: {eventObject?: LazyEvent}
     view_event: undefined,
     adoption_request_list : undefined,
     adoption_form: {adoptionRequestObject?: LazyAdoptionRequest},

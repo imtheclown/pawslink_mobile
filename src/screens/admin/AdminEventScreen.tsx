@@ -20,7 +20,7 @@ const AdminEventScreen = ({route, navigation}: AdminEventScreenProps) =>{
     };
     // navigates to the screen where we can add events
     const gotoAddEvents = () => {
-        navigation.navigate("add_event");
+        navigation.navigate("add_event", {});
     };
     return (
         <SafeAreaView style ={[generalStyles.flexContainer, styles.mainContainer]}>

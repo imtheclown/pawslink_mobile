@@ -216,3 +216,41 @@ export declare type AdoptionRequest = LazyLoading extends LazyLoadingDisabled ? 
 export declare const AdoptionRequest: (new (init: ModelInit<AdoptionRequest>) => AdoptionRequest) & {
   copyOf(source: AdoptionRequest, mutator: (draft: MutableModel<AdoptionRequest>) => MutableModel<AdoptionRequest> | void): AdoptionRequest;
 }
+
+type EagerEvent = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Event, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly imgURL?: string | null;
+  readonly location: string;
+  readonly name: string;
+  readonly eventDate: string;
+  readonly eventTime: string;
+  readonly description: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyEvent = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Event, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly imgURL?: string | null;
+  readonly location: string;
+  readonly name: string;
+  readonly eventDate: string;
+  readonly eventTime: string;
+  readonly description: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Event = LazyLoading extends LazyLoadingDisabled ? EagerEvent : LazyEvent
+
+export declare const Event: (new (init: ModelInit<Event>) => Event) & {
+  copyOf(source: Event, mutator: (draft: MutableModel<Event>) => MutableModel<Event> | void): Event;
+}
