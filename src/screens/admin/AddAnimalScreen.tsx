@@ -27,7 +27,7 @@ import FlexibleButton from "../../components/admin/FlexibleButton";
 import { DataStore } from "aws-amplify/datastore";
 import { Animal } from "../../models";
 // aws imports
-import { AddAnimalProps } from "../../navigation/admin/AdminNavigationStack";
+import { AddAnimalProps } from "../../navigation/AppNavigation";
 
 import { AnimalSex } from "../../models";
 import { AnimalStatus } from "../../models";

@@ -29,7 +29,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import TabBarHeader from "../../components/TabBarHeader";
 import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
 // specify types here
-import { RootStackParamList } from './AdminNavigationStack';
+import { RootStackParamList } from '../AppNavigation';
 import { BottomSheetProps } from "@rneui/base";
 // list of parameter list and their types for the respective screen for each tab
 // undefined for now

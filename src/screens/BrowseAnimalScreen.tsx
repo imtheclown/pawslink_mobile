@@ -26,6 +26,12 @@ import MultiFilterContainer from "../components/SortingDropDown";
 import AnimalProfileBox from "../components/AnimalProfileBox";
 import { filterObject } from "../components/SortingDropDown";
 
+// aws
+import { DataStore } from "aws-amplify/datastore";
+import { Animal, LazyAnimal } from "../models";
+
+// aws
+
 // sample data
 const sampleType = ['cat', 'dog']
 const sampleLocation = ['CUB', 'CAS']
@@ -68,8 +74,30 @@ const animalListEnd = () =>{
         </View>
     )
 }
+
+// renderer interface
+interface AnimalBoxRendererInterface {
+    item: LazyAnimal,
+    index: number
+}
 // main screen for the browse animal screen
 const BrowseAnimalContent = () =>{
+    const [animalList, setAnimalList] = useState<LazyAnimal[]|null>(null);
+    useEffect(() =>{
+        try{
+            DataStore.query(Animal)
+            .then(res =>{
+                setAnimalList(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+        catch(err){
+            console.log(err);
+        }
+    }, [])
+
     // searches animal and updates the list of animal objects
     const searchAnimal = (newSearchQuery: string) =>{
         // TODO
@@ -82,6 +110,17 @@ const BrowseAnimalContent = () =>{
 
     const filterAnimal = (filterList: Array<filterObject>) =>{
         console.log(filterList);
+    }
+
+    const itemRenderer = ({item, index}:AnimalBoxRendererInterface) =>{
+        return(
+            <AnimalProfileBox
+                name={item.mainName}
+                location={item.location}
+                sex={item.sex}
+                id={item.id}
+            />
+        )
     }
     return(
         <View style ={[styles.mainContainer]}>
@@ -100,8 +139,8 @@ const BrowseAnimalContent = () =>{
                 contentContainerStyle = {[styles.flatListContentContainer]}
                 horizontal = {false}
                 numColumns={2}
-                data={data}
-                renderItem={({item}) => <AnimalProfileBox name={item.name} location={item.location} sex={item.sex}/>}
+                data={animalList}
+                renderItem={itemRenderer}
                 ListFooterComponent={animalListEnd}
             />
         </View>

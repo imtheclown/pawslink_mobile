@@ -23,6 +23,9 @@ import { AnimalSex} from "../backend/realm/schemas/Animal";
 import { useState, useEffect } from "react";
 import { AnimalStatus } from "../models";
 
+// navigation
+import type { ViewAnimalProps } from "../navigation/AppNavigation";
+
 // function that processes database data to view data
 import { replaceUnderScoreWithSpace } from "../utils/TextBasedUtilityFunctions";
 // general purpose button
@@ -129,14 +132,15 @@ const myTitle = "TRAITS AND PERSONALITY"
 const data = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
 // trial data
 
-interface animalInterface {
-    sex: AnimalSex
-}
+
+
 // view animal screen
 // in progress
 // should display all the data for the specified animal
 // pass animal object or sort of
-const ViewAnimalScreen = () =>{
+const ViewAnimalScreen = ({route, navigation}:ViewAnimalProps) =>{
+    // get the passed parameters
+    const param = route.params;
     // temporary
     const sex = AnimalSex.MALE;
     // determines what sex icon to display

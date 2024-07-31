@@ -9,7 +9,7 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { generalStyles } from "../assets/general/generalStyles";
-import { FontFamily
+import { FontFamily, Color, Border
  } from "../assets/general/GlobalStyles";
 // interface for the browse animal search bar
 interface searchBarProps {
@@ -32,6 +32,7 @@ const BrowseAnimalSearchBar: React.FC<searchBarProps> = ({searchGivenString}) =>
         setQuery(newString);
     }
     // triggers when user presses the check button in the keyboard
+    // maybe use debounce here
     const handleOnEndEditing = () =>{
         searchGivenString(query);
     }
@@ -41,7 +42,7 @@ const BrowseAnimalSearchBar: React.FC<searchBarProps> = ({searchGivenString}) =>
         Keyboard.dismiss();
     }
     return (
-        <View style ={[styles.textInputContainer, generalStyles.rowContainer, generalStyles.curvedContainerWithShadow]}>
+        <View style ={[styles.textInputContainer, generalStyles.rowContainer, generalStyles.containerWithShadow]}>
             {
                 !query.length || !isFocused?
                 <FontAwesome 
@@ -90,6 +91,8 @@ const styles = StyleSheet.create({
             height: 'auto',
             fontFamily: FontFamily.interRegular,
             minHeight: 45, 
-            marginRight: 10 
+            marginRight: 10,
+            backgroundColor: Color.colorWhite,
+            borderRadius: Border.br_4xs,
         },
 })

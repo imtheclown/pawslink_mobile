@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet
  } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import { createBottomTabNavigator, BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import IonIcons from 'react-native-vector-icons/Ionicons'
 import { Color } from '../assets/general/GlobalStyles';
@@ -39,15 +40,20 @@ const tabBarScreenOption = {
     tabBarInactiveTintColor: inactiveTabColor,
     // static image only
     // configure to have a dynamic header
-    header:  () => <TabBarHeader/>,
     // hides the tab bar when the keyboard is opened
-    tabBarHideOnKeyboard: true
+    tabBarHideOnKeyboard: true,
+    header: ({ navigation, route, options}:BottomTabHeaderProps) => 
+        // displays the header top of the screen that is in the bottom tabs
+        <TabBarHeader 
+    
+            navigation={navigation}
+    />
 }
 
 
 // import components here
 // browse animal screen
-import BrowseAnimalWrapper from '../components/realm_wrappers/BrowseAnimalScreenWrapper';
+import BrowseAnimal from '../screens/BrowseAnimalScreen';
 // qr code screen
 import QRCodeScanner from '../screens/QRCodeScannerScreen';
 // temporary
@@ -64,7 +70,7 @@ const BottomTabs = () =>{
         >
             <Tab.Screen 
                 name='Home'
-                component={BrowseAnimalWrapper}
+                component={BrowseAnimal}
                 options={{
                     ...tabBarScreenOption,
                     tabBarIcon: ({focused, color, size}) =>{
