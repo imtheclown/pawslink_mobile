@@ -13,6 +13,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import React from "react";
 import FlexibleButton from "./FlexibleButton";
 
+// navigation imports
+import { useNavigation } from "@react-navigation/native";
+import type { StackNavProps } from "../../navigation/admin/AdminNavigationStack";
+
 // aws
 import { LazyEvent} from "../../models";
 interface EventBoxInterface {
@@ -20,8 +24,13 @@ interface EventBoxInterface {
 }
 
 const EventBox:React.FC<EventBoxInterface> = React.memo(({eventObject}) =>{
+    const navigation = useNavigation<StackNavProps>();
     const handleCallback = () =>{
         console.log("handled")
+    }
+
+    const gotoEdit = () =>{
+        navigation.navigate("add_event", {eventObject})
     }
     return (
         <View style ={[styles.mainContainer, generalStyles.containerWithShadow]}>
@@ -39,11 +48,11 @@ const EventBox:React.FC<EventBoxInterface> = React.memo(({eventObject}) =>{
                 <View style ={[styles.rightContainer]}>
                     {/* title */}
                     <Text style = {[styles.titleText]}>
-                    Emotional Support Furries dfgsd dfgsd dfg dsfg dsfg sdf dfgds
+                        {eventObject.name}
                     </Text>
                     {/* details */}
                     <Text>
-                    May 28, 2024 | 4:30 PM | CDH
+                    {new Date(eventObject.eventDate).toDateString()} | {eventObject.eventTime} | {eventObject.location}
                     </Text>
                     {/* button container */}
                     <View style ={[styles.buttonContainer]}>
@@ -53,7 +62,7 @@ const EventBox:React.FC<EventBoxInterface> = React.memo(({eventObject}) =>{
                             buttonStyle={{...styles.buttonStyle, ...styles.editButton}}
                             fontStyle={{...styles.buttonTextStyle, ...styles.editButtonText}}
                             icon = {<AntDesign name="edit" color={Color.colorWhite} size={11}/>}
-                            callback={handleCallback}
+                            callback={gotoEdit}
                         />
                         {/* delete button */}
                         <FlexibleButton
@@ -74,12 +83,12 @@ export default EventBox
 
 const styles = StyleSheet.create({
     mainContainer:{
-        width: '100%',
+        width: '98%',
         backgroundColor: Color.colorWhite,
         height: 'auto',
         borderRadius: Border.br_9xs,
         alignItems: 'center',
-        marginBottom: 5
+        margin: 5
     },
     contentContainer:{
         flexDirection: 'row',

@@ -16,5 +16,23 @@ const generateTimeFromNumbers = (hours: number, minutes : number) =>{
     return `${hour}:${minute}:00.000`
 }
 
+const convertTimeToString = (timeString: string) => {
+    // time string format
+    // hh:mm:ss.sss
+    const splitString = timeString.split(":");
+    var hour = splitString[0];
+    const minute = splitString[1];
+
+    var meridiem = "AM"
+    if(parseInt(hour) > 11){
+        meridiem = "PM"
+        const numHour = parseInt(hour);
+        if(numHour > 12){
+            hour = (numHour - 12).toString();
+        }
+    }
+    return `${hour}:${minute} ${meridiem}`
+}
+
 // exports functions here
-export {generateTimeFromNumbers}
+export {generateTimeFromNumbers, convertTimeToString}

@@ -16,7 +16,7 @@ import AdminStackNavigator from '../../navigation/admin/AdminNavigationStack';
 const AdminEventScreen = ({route, navigation}: AdminEventScreenProps) =>{
     // navigates to the current list of active events
     const gotoEvents = () => {
-        navigation.navigate("view_event")
+        navigation.navigate("view_event_list")
     };
     // navigates to the screen where we can add events
     const gotoAddEvents = () => {

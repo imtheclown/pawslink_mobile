@@ -76,9 +76,6 @@ const AddEventScreen = React.memo(({route, navigation}:AddEventProps) =>{
             return null
         }
     }
-    const handleCallback = () =>{
-        console.log("callback")
-    }
     const handleSave = async () =>{
         const eventObject: EventObject|null = generateEventObject();
         if(eventObject !== null){

@@ -38,21 +38,20 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
     const [isFocused, setIsFocused] = useState(true);
     const [inError, setInError] = useState(false);
     // own state to keep the value
-    const [value, setValue] = useState(oldValue === null? "": oldValue);
+    const [value, setValue] = useState("");
     useEffect(() =>{
+        // needs to reload as transition from screens throug react native navigations does not reload the page
         setIsFocused(false);
-    }, []);
+        if(oldValue !== null){
+            setValue(oldValue)
+        }
+    }, [oldValue]);
 
     // animated value
     // callback called when there is a change in value in the text input
     const handleTextChange = (newValue: string) =>{
         // update the state of the text input
-        setValue(newValue)
-        // return the current value 300 ms after typing
-        if(newValue.length !== 0){
-            // if value length is not zero, return the value to the parent
-            debounceCallback(newValue)
-        }
+        setValue(newValue);
     }
     // for ux
     const setFocusedOn = () =>{

@@ -8,6 +8,7 @@ import AddEventScreen from '../../screens/admin/AddEventScreen';
 import AdoptionRequestForm from "../../screens/admin/AdoptionRequestFormScreen";
 import ViewEventScreen from "../../screens/admin/ViewEventScreen";
 import ViewAdoptionrequestListScreen from "../../screens/admin/ViewAdoptionRequestListScreen";
+import ViewEventListScreen from "../../screens/admin/ViewEventListScreen";
 // import screens here
 
 import { createStackNavigator, StackHeaderProps } from '@react-navigation/stack';
@@ -31,6 +32,7 @@ export type RootStackParamList = {
     view_event: undefined,
     adoption_request_list : undefined,
     adoption_form: {adoptionRequestObject?: LazyAdoptionRequest},
+    view_event_list : undefined
 }
 // types used to annotate the route and navigation props for each of the strings in the stack navigator
 export type BottomNavProps = NativeStackScreenProps<RootStackParamList, 'bottom_nav'>
@@ -54,7 +56,9 @@ const navScreenOptions = {
     <TabBarHeader 
         back = {back}
         navigation={navigation}
-    />
+    />,
+
+    keyboardHandlingEnabled: false,
 }
 
 const AdminStackNavigator = () => {
@@ -106,6 +110,13 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="adoption_request_list"
                 component={ViewAdoptionrequestListScreen}
+                options={{
+                    ...navScreenOptions
+                }}
+            />
+            <Stack.Screen
+                name="view_event_list"
+                component={ViewEventListScreen}
                 options={{
                     ...navScreenOptions
                 }}
