@@ -27,7 +27,7 @@ const AnimalDataScreen = ({route, navigation}:AnimalDatabaseProps) =>{;
     };
     // navigates to the screen where you can add animals
     const gotoAddAnimalScreen = () =>{
-        navigation.navigate('add_animal');
+        navigation.navigate('add_animal', {});
     };
 
     return (
@@ -82,12 +82,14 @@ const styles = StyleSheet.create({
         height: '30%'
     },
     pinkButton: {
+        marginTop: 10,
         justifyContent: 'center',
         backgroundColor: Color.colorPaleovioletred,
         borderColor: Color.colorPaleovioletred,
         height: 55
     },
     whiteButton:{
+        marginTop: 10,
         justifyContent: 'center',
         backgroundColor: Color.colorWhite,
         borderColor: Color.colorPaleovioletred,

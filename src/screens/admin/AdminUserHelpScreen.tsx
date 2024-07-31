@@ -79,11 +79,13 @@ const styles = StyleSheet.create({
     },
     // buttons
     pinkButton: {
+        marginTop: 10,
         backgroundColor: Color.colorPaleovioletred,
         borderColor: Color.colorPaleovioletred,
         height: 55
     },
     whiteButton:{
+        marginTop: 10,
         backgroundColor: Color.colorWhite,
         borderColor: Color.colorPaleovioletred,
         height: 55

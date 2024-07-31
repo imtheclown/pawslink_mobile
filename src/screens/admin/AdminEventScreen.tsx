@@ -16,11 +16,11 @@ import AdminStackNavigator from '../../navigation/admin/AdminNavigationStack';
 const AdminEventScreen = ({route, navigation}: AdminEventScreenProps) =>{
     // navigates to the current list of active events
     const gotoEvents = () => {
-        navigation.navigate("view_event")
+        navigation.navigate("view_event_list")
     };
     // navigates to the screen where we can add events
     const gotoAddEvents = () => {
-        navigation.navigate("add_event");
+        navigation.navigate("add_event", {});
     };
     return (
         <SafeAreaView style ={[generalStyles.flexContainer, styles.mainContainer]}>
@@ -70,12 +70,14 @@ const styles = StyleSheet.create({
     },
     // buttons
     pinkButton: {
+        marginTop: 10,
         justifyContent: 'center',
         backgroundColor: Color.colorPaleovioletred,
         borderColor: Color.colorPaleovioletred,
         height: 55
     },
     whiteButton:{
+        marginTop: 10,
         justifyContent: 'center',
         backgroundColor: Color.colorWhite,
         borderColor: Color.colorPaleovioletred,

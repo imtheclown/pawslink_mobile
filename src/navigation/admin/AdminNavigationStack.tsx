@@ -5,8 +5,10 @@ import AdminBottomNavigation from "./AdminBottomNavigation";
 import AddAnimalScreen from "../../screens/admin/AddAnimalScreen";
 import AnimalListScreen from "../../screens/admin/AnimalListScreen";
 import AddEventScreen from '../../screens/admin/AddEventScreen';
-// view event screen
+import AdoptionRequestForm from "../../screens/admin/AdoptionRequestFormScreen";
 import ViewEventScreen from "../../screens/admin/ViewEventScreen";
+import ViewAdoptionrequestListScreen from "../../screens/admin/ViewAdoptionRequestListScreen";
+import ViewEventListScreen from "../../screens/admin/ViewEventListScreen";
 // import screens here
 
 import { createStackNavigator, StackHeaderProps } from '@react-navigation/stack';
@@ -15,8 +17,9 @@ import { NavigationProp } from "@react-navigation/native";
 import TabBarHeader from "../../components/TabBarHeader";
 
 // defines the parameters and their types needed be each of the following functional components
+
 // import interfaces classes here
-import { LazyAnimal } from "../../models";
+import { LazyAnimal, LazyAdoptionRequest, LazyEvent } from "../../models";
 export type RootStackParamList = {
     bottom_nav: undefined,
     add_animal: {
@@ -25,8 +28,11 @@ export type RootStackParamList = {
     // type refers to the title in the animal list screen
     // cat or dog
     animal_list: {type:string}
-    add_event: undefined,
-    view_event: undefined
+    add_event: {eventObject?: LazyEvent}
+    view_event: undefined,
+    adoption_request_list : undefined,
+    adoption_form: {adoptionRequestObject?: LazyAdoptionRequest},
+    view_event_list : undefined
 }
 // types used to annotate the route and navigation props for each of the strings in the stack navigator
 export type BottomNavProps = NativeStackScreenProps<RootStackParamList, 'bottom_nav'>
@@ -34,6 +40,7 @@ export type AddAnimalProps = NativeStackScreenProps<RootStackParamList, 'add_ani
 export type AnimalListProps = NativeStackScreenProps<RootStackParamList, 'animal_list'>
 export type AddEventProps = NativeStackScreenProps<RootStackParamList, 'add_event'>
 export type ViewEventProps = NativeStackScreenProps<RootStackParamList, 'view_event'>
+export type ViewAdoptionRequestList = NativeStackScreenProps<RootStackParamList, 'adoption_request_list'>
 
 
 // navigation prop
@@ -49,7 +56,9 @@ const navScreenOptions = {
     <TabBarHeader 
         back = {back}
         navigation={navigation}
-    />
+    />,
+
+    keyboardHandlingEnabled: false,
 }
 
 const AdminStackNavigator = () => {
@@ -87,6 +96,27 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="view_event"
                 component={ViewEventScreen}
+                options={{
+                    ...navScreenOptions
+                }}
+            />
+            <Stack.Screen
+                name="adoption_form"
+                component = {AdoptionRequestForm}
+                options={{
+                    ...navScreenOptions
+                }}
+            />
+            <Stack.Screen
+                name="adoption_request_list"
+                component={ViewAdoptionrequestListScreen}
+                options={{
+                    ...navScreenOptions
+                }}
+            />
+            <Stack.Screen
+                name="view_event_list"
+                component={ViewEventListScreen}
                 options={{
                     ...navScreenOptions
                 }}

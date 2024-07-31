@@ -14,6 +14,7 @@ import React from 'react';
 
 import { generateTimeFromNumbers } from '../../utils/DateTimeBasedUtilityFunctions';
 import { generalStyles } from '../../assets/general/generalStyles';
+import { convertTimeToString } from '../../utils/DateTimeBasedUtilityFunctions';
 
 // interface for the selected time using the time picker
 export interface PickedTime {
@@ -58,7 +59,7 @@ const CustomTimePicker:React.FC<CustomTimePickerProps> = ({style, title, callbac
     // else display selected time
     const generateValueToDisplay = () =>{
         if(hour !== null && minute !== null){
-            return generateTimeFromNumbers(hour, minute)
+            return convertTimeToString(generateTimeFromNumbers(hour, minute))
         } else{
             return "NaN:NaN"
         }

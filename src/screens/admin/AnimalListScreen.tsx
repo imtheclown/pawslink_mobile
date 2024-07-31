@@ -40,7 +40,7 @@ const AnimalListScreen = ({route, navigation}: AnimalListProps) =>{
     const itemRenderer = ({item, index} : CustomRendererInterface) =>{
         var status = getEnumValueFromString(AnimalStatus, item.status[0]);
         if(!status){
-            status = AnimalStatus.ADOPTED
+            status = AnimalStatus.ON_CAMPUS
         }
         return (
             <AnimalListItem
