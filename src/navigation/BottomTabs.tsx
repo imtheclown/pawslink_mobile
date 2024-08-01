@@ -58,7 +58,7 @@ import BrowseAnimal from '../screens/BrowseAnimalScreen';
 import QRCodeScanner from '../screens/QRCodeScannerScreen';
 // temporary
 // view animal screen
-import ViewAnimalScreen from '../screens/ViewAnimalScreen';
+import BasicInfoScreen from '../screens/adoption_form/BasicInfoScreen';
 // add Tab.Screen here
 // provide name, component and the icon for the tab bar
 const BottomTabs = () =>{
@@ -89,13 +89,12 @@ const BottomTabs = () =>{
                 }}
             />
             <Tab.Screen
-                name='Events'
-                // temporary
-                component={ViewAnimalScreen}
+                name='trial'
+                component={BasicInfoScreen}
                 options={{
                     ...tabBarScreenOption,
-                    tabBarIcon: ({focused, color, size}) =>{
-                        return <IonIcons name='calendar-outline' color={color} size={focused? size + 10: size}/>
+                    tabBarIcon: ({focused,color, size}) =>{
+                        return <MaterialIcons name='qr-code-scanner' color={color} size={focused? size + 10: size}/>
                     }
                 }}
             />
