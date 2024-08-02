@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     // flatlist
     flatListContentContainer:{
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'flex-start',
     },
     endTextContainer:{
         padding: 10,

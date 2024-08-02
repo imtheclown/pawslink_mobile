@@ -17,7 +17,7 @@ import { LazyEvent, Event } from "../../models";
 // import event box
 import EventBox from "../../components/admin/EventBox";
 import EmptyListNotifier from "../../components/EmptyListNotifier";
-import { ViewEventProps } from "../../navigation/admin/AdminNavigationStack";
+import { ViewEventProps } from "../../navigation/AppNavigation";
 
 interface CustomRendererInterface {
     item: LazyEvent,

@@ -33,10 +33,10 @@ import { AnimalSex } from "../models";
 const AnimalProfileBox:React.FC<animalProfileBoxProps> = React.memo(({name,location, sex, id}) =>{
     const navigation = useNavigation<StackNavProps>();
     const gotoAnimal = () =>{
-        
+        navigation.navigate("view_animal", {animalId: id})
     }
     return (
-        <TouchableOpacity style = {[styles.mainContainer, generalStyles.containerWithShadow, generalStyles.centerContainer]}>
+        <TouchableOpacity onPress={gotoAnimal} style = {[styles.mainContainer, generalStyles.containerWithShadow, generalStyles.centerContainer]}>
             <View style = {[styles.contentContainer]}>
                 <Image
                     resizeMode="cover"

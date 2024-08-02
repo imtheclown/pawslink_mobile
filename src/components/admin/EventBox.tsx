@@ -15,7 +15,7 @@ import FlexibleButton from "./FlexibleButton";
 
 // navigation imports
 import { useNavigation } from "@react-navigation/native";
-import type { StackNavProps } from "../../navigation/admin/AdminNavigationStack";
+import type { StackNavProps } from "../../navigation/AppNavigation";
 
 // aws
 import { LazyEvent} from "../../models";

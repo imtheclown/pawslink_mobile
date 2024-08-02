@@ -12,8 +12,8 @@ import ViewEventScreen from "../screens/admin/ViewEventScreen";
 import ViewAdoptionrequestListScreen from "../screens/admin/ViewAdoptionRequestListScreen";
 import ViewEventListScreen from "../screens/admin/ViewEventListScreen";
 // user view
-import BrowseAnimal from "../screens/BrowseAnimalScreen";
 import BottomTabs from "./BottomTabs";
+import BasicInfoScreen from '../screens/adoption_form/BasicInfoScreen';
 // import screens here
 
 import { createStackNavigator, StackHeaderProps } from '@react-navigation/stack';
@@ -25,19 +25,19 @@ import TabBarHeader from "../components/TabBarHeader";
 
 // import interfaces classes here
 import { LazyAnimal, LazyAdoptionRequest, LazyEvent } from "../models";
+import ViewAnimalScreen from "../screens/ViewAnimalScreen";
 export type RootStackParamList = {
     // user view
     // user view bottom navigator
     user_nav: undefined,
-    view_animal: {animalObject: LazyAnimal}
+    view_animal: {animalId: string},
+    adoption_form_1: {basicInfoObject: LazyAdoptionRequest|null},
     // admin view
     // admin view bottom navigator
     admin_nav: undefined,
     add_animal: {
         animalObject?: LazyAnimal
     },
-    // type refers to the title in the animal list screen
-    // cat or dog
     animal_list: {type:string}
     add_event: {eventObject?: LazyEvent}
     view_event: undefined,
@@ -53,6 +53,8 @@ export type AddEventProps = NativeStackScreenProps<RootStackParamList, 'add_even
 export type ViewEventProps = NativeStackScreenProps<RootStackParamList, 'view_event'>
 export type ViewAdoptionRequestList = NativeStackScreenProps<RootStackParamList, 'adoption_request_list'>
 export type ViewAnimalProps = NativeStackScreenProps<RootStackParamList, "view_animal">
+// user views
+export type BasicInfoScreenProps = NativeStackScreenProps<RootStackParamList, 'adoption_form_1'>
 
 // navigation prop
 export type StackNavProps = NavigationProp<RootStackParamList>
@@ -89,6 +91,13 @@ const AdminStackNavigator = () => {
                 options={{
                     ...navScreenOptions,
                     headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="view_animal"
+                component={ViewAnimalScreen}
+                options={{
+                    ...navScreenOptions,
                 }}
             />
             <Stack.Screen
@@ -136,6 +145,13 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="view_event_list"
                 component={ViewEventListScreen}
+                options={{
+                    ...navScreenOptions
+                }}
+            />
+            <Stack.Screen
+                name="adoption_form_1"
+                component={BasicInfoScreen}
                 options={{
                     ...navScreenOptions
                 }}

@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import React, { useEffect, useRef } from "react";
 import { useState, useCallback } from 'react';
-import { generalStyles } from "../../assets/general/generalStyles";
+import { generalStyles } from "../assets/general/generalStyles";
 import {debounce} from 'lodash'
 import { disable } from "aws-amplify/analytics";
 
@@ -92,7 +92,6 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
     return (
         <KeyboardAvoidingView
              style = {[style? style:{width: '100%'}]}
-             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
          >
             <Text style = {[generalStyles.TextInputTitle, ]}>
                     {

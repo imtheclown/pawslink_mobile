@@ -13,7 +13,7 @@ import { useState } from "react";
 import { generalStyles } from "../../assets/general/generalStyles";
 import { Color, FontFamily, FontSize, Border } from "../../assets/general/GlobalStyles";
 import ResponsiveImage from "../../components/ResponsiveImage";
-import FlexibleTextnput from "../../components/admin/FlexibleTextnput";
+import FlexibleTextnput from "../../components/FlexibleTextnput";
 import CustomDatePicker from "../../components/admin/CustomDatePicker";
 import CustomTimePicker from "../../components/admin/CustomTimePicker";
 import FlexibleButton from "../../components/admin/FlexibleButton";

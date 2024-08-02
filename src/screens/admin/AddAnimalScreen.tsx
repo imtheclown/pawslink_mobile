@@ -17,7 +17,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { pickImageFromDir } from "../../utils/FileBasedUtilitilityFunctions";
 import { generalStyles } from "../../assets/general/generalStyles";
 import { Border, Color, FontFamily, FontSize } from "../../assets/general/GlobalStyles";
-import FlexibleTextInput from "../../components/admin/FlexibleTextnput";
+import FlexibleTextInput from "../../components/FlexibleTextnput";
 import FlexibleDropDown from "../../components/admin/FlexibleDropDown";
 import CustomDatePicker from "../../components/admin/CustomDatePicker";
 import ResponsiveImage from "../../components/ResponsiveImage";
@@ -162,43 +162,29 @@ const AddAnimalScreen = ({route, navigation}:AddAnimalProps) => {
 
     // creates an animal object that can be used as parameter for the database write
     // returns null if required keys are null
-    const createAnimalObject= ():AnimalInterface|null =>{
-        if(name !== null && sex !== null && status !== null && species !== null){
-            // generate/get the key which corresponds to the key in enum given a string value
-            const sexValue = getEnumValueFromString(AnimalSex, sex);
-            const statusValue = getEnumValueFromString(AnimalStatus, status);
-            const speciesValue = getEnumValueFromString(AnimalSpecies, species);
-            // check if values are undefined 
-            // if at least one is undefined, returl null
-            if(sexValue && statusValue && speciesValue){
-                // create an animal object based on the animal interface
-                const animalObject: AnimalInterface ={
-                    mainName: name,
-                    location: 'here',
-                    status: [statusValue],
-                    species: speciesValue,
-                    sex: sexValue,
-                    age: age === null? -1: age,
-                    coatColor: ['none for now']
-                }
-                // add additional keys here
-                if(notes !== null){
-                    // new line seperated string
-                    // create a function that splits a string by new line
-                    animalObject.notes = [notes]
-                }
-                if(traits !== null){
-                    // new line seperated string
-                    // create a function that splits a string by new line
-                    animalObject.traitsAndPersonality = [traits]
-                }
-                // return the created animal object
-                return animalObject;
-            }
-        }
-        // return null
-        return null
-    }
+    const createAnimalObject = (): AnimalInterface | null => {
+        if (!name || !sex || !status || !species) return null;
+    
+        const sexValue = getEnumValueFromString(AnimalSex, sex);
+        const statusValue = getEnumValueFromString(AnimalStatus, status);
+        const speciesValue = getEnumValueFromString(AnimalSpecies, species);
+    
+        if (!sexValue || !statusValue || !speciesValue) return null;
+    
+        const animalObject: AnimalInterface = {
+            mainName: name,
+            location: 'here',
+            status: [statusValue],
+            species: speciesValue,
+            sex: sexValue,
+            age: age ?? -1,
+            coatColor: ['none for now'],
+            notes: notes ? [notes] : undefined,
+            traitsAndPersonality: traits ? [traits] : undefined
+        };
+    
+        return animalObject;
+    };
 
     const prePopulateStates = useCallback(() =>{
         const animalObject = params.animalObject;

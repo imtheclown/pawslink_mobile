@@ -5,7 +5,7 @@ import {
     Text
 } from "react-native"
 
-import FlexibleTextInput from "../../components/admin/FlexibleTextnput"
+import FlexibleTextInput from "../../components/FlexibleTextnput"
 
 // define the props on the navigation
 // should pass an adoption request object

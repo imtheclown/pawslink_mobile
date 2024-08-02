@@ -22,6 +22,7 @@ import IonIcon from "react-native-vector-icons/Ionicons"
 import { AnimalSex} from "../backend/realm/schemas/Animal";
 import { useState, useEffect } from "react";
 import { AnimalStatus } from "../models";
+import FlexibleButton from "../components/admin/FlexibleButton";
 
 // navigation
 import type { ViewAnimalProps } from "../navigation/AppNavigation";
@@ -133,18 +134,35 @@ const data = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ei
 // trial data
 
 
+// aws
+import { DataStore } from "aws-amplify/datastore";
+import { Animal, LazyAnimal } from "../models";
 
 // view animal screen
 // in progress
 // should display all the data for the specified animal
 // pass animal object or sort of
 const ViewAnimalScreen = ({route, navigation}:ViewAnimalProps) =>{
+    const [animalObject, setAnimalObject] = useState<LazyAnimal | null>(null);
     // get the passed parameters
     const param = route.params;
-    // temporary
-    const sex = AnimalSex.MALE;
-    // determines what sex icon to display
-    const getSexIcon = () =>{
+
+    useEffect(() =>{
+        if(param.animalId){
+            getAnimalObject(param.animalId);
+        }
+    }, [])
+    const getAnimalObject = async(id:string) =>
+    {
+        await DataStore.query(Animal, (c) => c.id.eq(id))
+        .then(res =>{
+            if(res.length > 0){
+                setAnimalObject(res[0])
+            }
+        })
+    }
+
+    const getSexIcon = (sex:string) =>{
         return (
             <IonIcon
             name= {sex === AnimalSex.MALE? "male":"female"}
@@ -154,48 +172,60 @@ const ViewAnimalScreen = ({route, navigation}:ViewAnimalProps) =>{
         />
         )
     }
+    const handleGotoAdoption = () =>{
+        navigation.navigate("adoption_form_1", {basicInfoObject: null})
+    }
     return (
         <SafeAreaView style = {[generalStyles.flexContainer, generalStyles.centerContainer, styles.mainContainer]}>
-            <ScrollView style = {[styles.scrollContainer]}>
-                <ResponsiveImage
-                    source={require("../assets/images/no_image.png")}
-                />
-                {/* name and sex */}
-                <View style = {[generalStyles.rowStartContainer,styles.nameAndSexContainer]}>
-                    <Text style = {[styles.nameTextStyle]}>{`Name`}</Text>
-                    {getSexIcon()}
-                </View>
-                <Text style = {[styles.usualLocationTextStyle]}>
-                    {`Usual location`}
-                </Text>
-                <View style={[styles.infoBoxWrapper]}>
-                    <InfoBox
-                        title={"age"}
-                        value={"NA"}
+            {
+                animalObject !== null?
+                <ScrollView style = {[styles.scrollContainer]}>
+                    <ResponsiveImage
+                        source={require("../assets/images/no_image.png")}
                     />
-                    <InfoBox
-                        title={"status"}
-                        value={[AnimalStatus.ON_CAMPUS, AnimalStatus.ADOPTED]}
+                    {/* name and sex */}
+                    <View style = {[generalStyles.rowStartContainer,styles.nameAndSexContainer]}>
+                        <Text style = {[styles.nameTextStyle]}>{animalObject.mainName}</Text>
+                        {getSexIcon(animalObject.sex)}
+                    </View>
+                    <Text style = {[styles.usualLocationTextStyle]}>
+                        {animalObject.location}
+                    </Text>
+                    <View style={[styles.infoBoxWrapper]}>
+                        <InfoBox
+                            title={"age"}
+                            value={animalObject.age? animalObject.age.toString(): "UNKNOWN"}
+                        />
+                        <InfoBox
+                            title={"status"}
+                            value={animalObject.status}
+                        />
+                        <InfoBox
+                            title={"vaccinated last"}
+                            value={"NA"}
+                        />
+                        <InfoBox
+                            title={"dewormed last"}
+                            value={"NA"}
+                        />
+                    </View>
+                    {
+                        animalObject.notes? <Paragraph title= {myTitle} content={animalObject.notes.join("\n")}/> : <></>
+                    }
+                    {
+                        animalObject.traitsAndPersonality? <Paragraph title= {myTitle} content={animalObject.traitsAndPersonality.join("\n")}/>
+                        : <></>
+                    }
+                    <FlexibleButton
+                        callback={handleGotoAdoption}
+                        title="adopt me"
+                        buttonStyle={styles.buttonContainer}
+                        fontStyle={styles.buttonText}
                     />
-                    <InfoBox
-                        title={"vaccinated last"}
-                        value={"NA"}
-                    />
-                    <InfoBox
-                        title={"dewormed last"}
-                        value={"NA"}
-                    />
-                </View>
-                <Paragraph title= {myTitle} content={data}/>
-                <Paragraph title= {myTitle} content={data}/>
-                <RoundButton 
-                backgroundColor="#f6d25e"
-                callBack={() =>{
-                    console.log("pressed")
-                }}
-                title="adopt me"
-                />
-            </ScrollView>
+                </ScrollView>
+                :
+                <Text>animal not found</Text>
+            }
         </SafeAreaView>
     )
 }
@@ -279,6 +309,24 @@ const styles = StyleSheet.create({
         fontWeight: 400,
         lineHeight: 16,
         textTransform: 'uppercase'
+    },
+    buttonContainer:{
+        marginVertical: 10,
+        borderRadius: 34,
+        width: "100%",
+        height: 68,
+        elevation: 2,
+        marginBottom: 10,
+        backgroundColor: Color.colorSunfloweryellow,
+        borderColor: Color.colorSunfloweryellow,
+    },
+    buttonText:{
+        fontSize: 18,
+        fontFamily: FontFamily.interBold,
+        color: Color.colorWhite,
+        textAlign: "left",
+        fontWeight: "700",
+        lineHeight: 26,
     }
 })
 
