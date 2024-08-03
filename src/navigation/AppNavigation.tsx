@@ -14,6 +14,7 @@ import ViewEventListScreen from "../screens/admin/ViewEventListScreen";
 // user view
 import BottomTabs from "./BottomTabs";
 import BasicInfoScreen from '../screens/adoption_form/BasicInfoScreen';
+import PetHistoryScreen from "../screens/adoption_form/PetHistoryScreen";
 // import screens here
 
 import { createStackNavigator, StackHeaderProps } from '@react-navigation/stack';
@@ -31,7 +32,11 @@ export type RootStackParamList = {
     // user view bottom navigator
     user_nav: undefined,
     view_animal: {animalId: string},
+    // adoption forms
+    // refers to the basic info screen
     adoption_form_1: {basicInfoObject: LazyAdoptionRequest|null},
+    // refers to the pet history screen
+    adoption_form_2 : undefined,
     // admin view
     // admin view bottom navigator
     admin_nav: undefined,
@@ -55,6 +60,7 @@ export type ViewAdoptionRequestList = NativeStackScreenProps<RootStackParamList,
 export type ViewAnimalProps = NativeStackScreenProps<RootStackParamList, "view_animal">
 // user views
 export type BasicInfoScreenProps = NativeStackScreenProps<RootStackParamList, 'adoption_form_1'>
+export type PetHistoryScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_2">
 
 // navigation prop
 export type StackNavProps = NavigationProp<RootStackParamList>
@@ -153,7 +159,16 @@ const AdminStackNavigator = () => {
                 name="adoption_form_1"
                 component={BasicInfoScreen}
                 options={{
-                    ...navScreenOptions
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="adoption_form_2"
+                component={PetHistoryScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
                 }}
             />
         </Stack.Navigator>

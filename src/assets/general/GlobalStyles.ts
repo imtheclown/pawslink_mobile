@@ -27,6 +27,7 @@ export const Color = {
   colorDarkslategray: "#424856",
   colorSunfloweryellow: '#FDD043',
   colorLightslategray: "#9095a1",
+  colorLightGray : "#F3F4F6",
   colorPalevioletred_200: "rgba(210, 98, 138, 0.2)",
   colorGray_200: "rgba(0, 0, 0, 0)",
 

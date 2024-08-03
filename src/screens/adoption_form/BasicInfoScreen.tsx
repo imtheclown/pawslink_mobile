@@ -20,7 +20,9 @@ import FlexibleButton from "../../components/admin/FlexibleButton";
 // aws
 import { LazyAdopterBasicPersonalInfo } from "../../models";
 
-const BasicInfoScreen = () =>{
+import type { BasicInfoScreenProps } from "../../navigation/AppNavigation";
+
+const BasicInfoScreen = ({route, navigation}:BasicInfoScreenProps) =>{
     const [fname, setFname] = useState<string|null>(null);
     const [lname, setLname] = useState<string|null>(null);
     const [age, setAge] = useState<string|null>(null);
@@ -100,9 +102,11 @@ const BasicInfoScreen = () =>{
         const animalObject = generateBasicInfo()
         if(animalObject !== null){
             // go to the next screen
+            navigation.navigate("adoption_form_2");
         }else{
             // maybe execute a validation here that checks which input component results in error
         }
+        navigation.navigate("adoption_form_2");
     }
     return (
         <SafeAreaView style = {[generalStyles.flexContainer, styles.mainContainer]}>
@@ -176,10 +180,7 @@ const BasicInfoScreen = () =>{
                         title="next"
                         fontStyle={{...styles.buttonText, ...styles.positiveButtonText}}
                         buttonStyle={{...styles.navButtons, ...styles.positiveButtonStyle}}
-                        callback={()=>{
-                            console.log("pressed");
-                            
-                        }}
+                        callback={handleNext}
                     />
                     <FlexibleButton
                         title="return to previous page"
@@ -215,6 +216,8 @@ const styles = StyleSheet.create({
         fontFamily: FontFamily.interBold,
         fontSize: 26,
         textTransform: 'capitalize',
+        marginTop: 40,
+        paddingBottom: 10,
     },
     nameTextInputStyle :{
         width: '100%',
