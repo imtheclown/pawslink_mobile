@@ -15,6 +15,7 @@ import ViewEventListScreen from "../screens/admin/ViewEventListScreen";
 import BottomTabs from "./BottomTabs";
 import BasicInfoScreen from '../screens/adoption_form/BasicInfoScreen';
 import PetHistoryScreen from "../screens/adoption_form/PetHistoryScreen";
+import AccommodationScreen from '../screens/adoption_form/AccommodationScreen';
 // import screens here
 
 import { createStackNavigator, StackHeaderProps } from '@react-navigation/stack';
@@ -25,7 +26,7 @@ import TabBarHeader from "../components/TabBarHeader";
 // defines the parameters and their types needed be each of the following functional components
 
 // import interfaces classes here
-import { LazyAnimal, LazyAdoptionRequest, LazyEvent } from "../models";
+import { LazyAnimal, LazyAdoptionRequest, LazyEvent, LazyAdopterPetHistory, LazyAdopterBasicPersonalInfo } from "../models";
 import ViewAnimalScreen from "../screens/ViewAnimalScreen";
 export type RootStackParamList = {
     // user view
@@ -34,9 +35,17 @@ export type RootStackParamList = {
     view_animal: {animalId: string},
     // adoption forms
     // refers to the basic info screen
-    adoption_form_1: {basicInfoObject: LazyAdoptionRequest|null},
+    // adoptionRequestObject is the save adoption request in the local database --optional
+    adoption_form_1: {adoptionRequestObject?: LazyAdoptionRequest},
     // refers to the pet history screen
-    adoption_form_2 : undefined,
+    // adoptionRequestObject is the same object/edited object from the previous screen --use only if there is an existing object in the local database
+    // basicInfoObject is the object containing data from adoption_form_1
+    // used when there is no existing data from the database
+    adoption_form_2 : {basicInfoObject?:LazyAdopterBasicPersonalInfo, adoptionRequestObject?: LazyAdoptionRequest},
+    // refers to the accommodation screen
+    // petHistoryObject --data from the adoption_form_2
+    // basicInfoObject and petHistoryObject will be used if there is no adoptionRequestObject converse is true
+    adoption_form_3: {basicInfoObject?: LazyAdopterBasicPersonalInfo, petHistoryObject?: LazyAdopterPetHistory, adoptionRequestObject?: LazyAdoptionRequest},
     // admin view
     // admin view bottom navigator
     admin_nav: undefined,
@@ -61,6 +70,7 @@ export type ViewAnimalProps = NativeStackScreenProps<RootStackParamList, "view_a
 // user views
 export type BasicInfoScreenProps = NativeStackScreenProps<RootStackParamList, 'adoption_form_1'>
 export type PetHistoryScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_2">
+export type AccommodationScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_3">
 
 // navigation prop
 export type StackNavProps = NavigationProp<RootStackParamList>
@@ -166,6 +176,14 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="adoption_form_2"
                 component={PetHistoryScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="adoption_form_3"
+                component={AccommodationScreen}
                 options={{
                     ...navScreenOptions,
                     headerShown: false
