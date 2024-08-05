@@ -87,6 +87,7 @@ const BrowseAnimalContent = () =>{
         try{
             DataStore.query(Animal)
             .then(res =>{
+                console.log(res)
                 setAnimalList(res);
             })
             .catch(err => {

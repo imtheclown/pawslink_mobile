@@ -10,7 +10,7 @@ import React from "react";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Border, Color, FontSize, FontFamily } from "../assets/general/GlobalStyles";
 import { generalStyles } from "../assets/general/generalStyles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 interface CustomCheckBoxInterface {
     title: string,
     containerStyle: ViewStyle,
@@ -19,7 +19,11 @@ interface CustomCheckBoxInterface {
 }
 const CustomCheckBox:React.FC<CustomCheckBoxInterface> = React.memo(({title, containerStyle, callback, oldValue}) =>{
     const [isChecked, setIsChecked] = useState(oldValue);
-
+    useEffect(() =>{
+        if(oldValue!== isChecked){
+            setIsChecked(oldValue)
+        }
+    }, [oldValue]);
     const handlePress = () =>{
         callback(!isChecked);
         setIsChecked(!isChecked);

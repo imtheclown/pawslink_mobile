@@ -21,6 +21,13 @@ const AnimalSex = {
   "UNKNOWN": "UNKNOWN"
 };
 
+const NeuterSpayStatus = {
+  "YES_FOR_BOTH": "YES_FOR_BOTH",
+  "YES_FOR_NEUTER_ONLY": "YES_FOR_NEUTER_ONLY",
+  "YES_FOR_SPAYING_ONLY": "YES_FOR_SPAYING_ONLY",
+  "NO_FOR_BOTH": "NO_FOR_BOTH"
+};
+
 const { Todo, Animal, AdoptionRequest, Event, AdopterBasicPersonalInfo, AdopterPetHistory, PetAccommodation, AdopterOtherInfo } = initSchema(schema);
 
 export {
@@ -31,6 +38,7 @@ export {
   AnimalStatus,
   AnimalSpecies,
   AnimalSex,
+  NeuterSpayStatus,
   AdopterBasicPersonalInfo,
   AdopterPetHistory,
   PetAccommodation,

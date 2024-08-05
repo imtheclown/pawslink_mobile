@@ -21,6 +21,13 @@ export enum AnimalSex {
   UNKNOWN = "UNKNOWN"
 }
 
+export enum NeuterSpayStatus {
+  YES_FOR_BOTH = "YES_FOR_BOTH",
+  YES_FOR_NEUTER_ONLY = "YES_FOR_NEUTER_ONLY",
+  YES_FOR_SPAYING_ONLY = "YES_FOR_SPAYING_ONLY",
+  NO_FOR_BOTH = "NO_FOR_BOTH"
+}
+
 type EagerAdopterBasicPersonalInfo = {
   readonly fname: string;
   readonly lname: string;
@@ -53,7 +60,7 @@ type EagerAdopterPetHistory = {
   readonly noOfPets: number;
   readonly yearsOfBeingPetOwner: number;
   readonly oldestPetAge: number;
-  readonly strlztnAwareness: boolean;
+  readonly strlztnAwareness: NeuterSpayStatus | keyof typeof NeuterSpayStatus;
   readonly strlztnWillingness: boolean;
   readonly regVetClinic: string;
 }
@@ -62,7 +69,7 @@ type LazyAdopterPetHistory = {
   readonly noOfPets: number;
   readonly yearsOfBeingPetOwner: number;
   readonly oldestPetAge: number;
-  readonly strlztnAwareness: boolean;
+  readonly strlztnAwareness: NeuterSpayStatus | keyof typeof NeuterSpayStatus;
   readonly strlztnWillingness: boolean;
   readonly regVetClinic: string;
 }

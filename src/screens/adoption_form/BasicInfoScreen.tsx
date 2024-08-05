@@ -108,89 +108,91 @@ const BasicInfoScreen = ({route, navigation}:BasicInfoScreenProps) =>{
         }
         navigation.navigate("adoption_form_2");
     }
+    const handleReturn = () =>{
+        navigation.goBack()
+    }
     return (
         <SafeAreaView style = {[generalStyles.flexContainer, styles.mainContainer]}>
             {/* place header here */}
             <Text style = {[styles.headerTextStyle]}>
                 {`verify for adoption`}
             </Text>
-            <ScrollView contentContainerStyle ={[styles.contentContainer]}>
-                <FlexibleTextInput
-                    title="name"
-                    callback={handleFnameChange}
-                    oldValue={null}
-                    style ={styles.nameTextInputStyle}
-                />
-                <FlexibleTextInput
-                    title="last name"
-                    callback={handleLNameChange}
-                    oldValue={null}
-                    style ={styles.nameTextInputStyle}
-                />
-                <FlexibleTextInput
-                    title="age"
-                    callback={handleAgeChange}
-                    oldValue={null}
-                    style ={styles.ageTextInputStyle}
-                    keyBoardType="numeric"
-                />
-                <CustomCheckBox
-                    title="student?"
-                    containerStyle={styles.checkBoxStyle}
-                    callback={handleIsStudent}
-                    oldValue ={isStudent}
-                />
-                <FlexibleTextInput
-                    title="contact number"
-                    callback={handleConNumChange}
-                    oldValue={null}
-                    style ={styles.nameTextInputStyle}
-                    keyBoardType="numeric"
-                />
-                <FlexibleTextInput
-                    title="email address"
-                    callback={handleEmailAddChange}
-                    oldValue={null}
-                    style ={styles.nameTextInputStyle}
-                    keyBoardType="email-address"
-                />
-                <FlexibleTextInput
-                    title="facebook link"
-                    callback={handleFbLinkChange}
-                    oldValue={null}
-                    style ={styles.nameTextInputStyle}
-                />
-                <FlexibleTextInput
-                    title="complete home address"
-                    callback={handleCmpltAddChange}
-                    oldValue={null}
-                    style ={styles.nameTextInputStyle}
-                    numberOfLines={2}
-                />
-                <FlexibleTextInput
-                    title="complete current address"
-                    callback={handleCrntAddChange}
-                    oldValue={null}
-                    style ={styles.nameTextInputStyle}
-                    numberOfLines={2}
-                />
-                {/* button container */}
-                <View style ={[styles.buttonContainer]}>
-                    <FlexibleButton
-                        title="next"
-                        fontStyle={{...styles.buttonText, ...styles.positiveButtonText}}
-                        buttonStyle={{...styles.navButtons, ...styles.positiveButtonStyle}}
-                        callback={handleNext}
+            <ScrollView contentContainerStyle ={[styles.scrollViewStyle]}>
+                <View style ={[styles.contentContainer]}>
+                    <FlexibleTextInput
+                        title="name"
+                        callback={handleFnameChange}
+                        oldValue={null}
+                        style ={styles.nameTextInputStyle}
                     />
-                    <FlexibleButton
-                        title="return to previous page"
-                        fontStyle={{...styles.buttonText, ...styles.negativeButtonText}}
-                        buttonStyle={{...styles.navButtons, ...styles.negativeButton}}
-                        callback={()=>{
-                            console.log("pressed");
-                            
-                        }}
+                    <FlexibleTextInput
+                        title="last name"
+                        callback={handleLNameChange}
+                        oldValue={null}
+                        style ={styles.nameTextInputStyle}
                     />
+                    <FlexibleTextInput
+                        title="age"
+                        callback={handleAgeChange}
+                        oldValue={null}
+                        style ={styles.ageTextInputStyle}
+                        keyBoardType="numeric"
+                    />
+                    <CustomCheckBox
+                        title="student?"
+                        containerStyle={styles.checkBoxStyle}
+                        callback={handleIsStudent}
+                        oldValue ={isStudent}
+                    />
+                    <FlexibleTextInput
+                        title="contact number"
+                        callback={handleConNumChange}
+                        oldValue={null}
+                        style ={styles.nameTextInputStyle}
+                        keyBoardType="numeric"
+                    />
+                    <FlexibleTextInput
+                        title="email address"
+                        callback={handleEmailAddChange}
+                        oldValue={null}
+                        style ={styles.nameTextInputStyle}
+                        keyBoardType="email-address"
+                    />
+                    <FlexibleTextInput
+                        title="facebook link"
+                        callback={handleFbLinkChange}
+                        oldValue={null}
+                        style ={styles.nameTextInputStyle}
+                    />
+                    <FlexibleTextInput
+                        title="complete home address"
+                        callback={handleCmpltAddChange}
+                        oldValue={null}
+                        style ={styles.nameTextInputStyle}
+                        numberOfLines={2}
+                    />
+                    <FlexibleTextInput
+                        title="complete current address"
+                        callback={handleCrntAddChange}
+                        oldValue={null}
+                        style ={styles.nameTextInputStyle}
+                        numberOfLines={2}
+                    />
+                    {/* button container */}
+                    <View style ={[styles.buttonContainer]}>
+                        <FlexibleButton
+                            title="next"
+                            fontStyle={{...styles.buttonText, ...styles.positiveButtonText}}
+                            buttonStyle={{...styles.navButtons, ...styles.positiveButtonStyle}}
+                            callback={handleNext}
+                        />
+                        <FlexibleButton
+                            title="return to previous page"
+                            fontStyle={{...styles.buttonText, ...styles.negativeButtonText}}
+                            buttonStyle={{...styles.navButtons, ...styles.negativeButton}}
+                            callback={handleReturn}
+                        />
+                    </View>
                 </View>
             </ScrollView>
 
@@ -205,8 +207,12 @@ const styles = StyleSheet.create({
         backgroundColor: Color.colorWhite,
         alignItems: 'center',
     },
+    scrollViewStyle:{
+        alignItems: 'center',
+        width: '95%'
+    },
     contentContainer:{
-        width: '95%',
+        width: '100%',
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'flex-start'
@@ -229,7 +235,7 @@ const styles = StyleSheet.create({
         width: '45%'
     },
     positiveButtonStyle:{
-
+        marginTop: 30,
         backgroundColor: Color.colorPaleovioletred,
         borderColor: Color.colorPaleovioletred,
     },
@@ -259,6 +265,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 10
     }
 
 })
