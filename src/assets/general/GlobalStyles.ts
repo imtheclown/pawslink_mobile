@@ -12,6 +12,7 @@ export const FontSize = {
   size_2xs: 11,
   size_sm: 14,
   size_base: 16,
+  size_lg: 18,
   size_xl: 20,
 };
 /* Colors */
@@ -24,13 +25,17 @@ export const Color = {
   colorSilver: "#bdc1ca",
   colorDimgray: "#565d6d",
   colorDarkslategray: "#424856",
+  colorSunfloweryellow: '#FDD043',
+  colorLightslategray: "#9095a1",
+  colorLightGray : "#F3F4F6",
   colorPalevioletred_200: "rgba(210, 98, 138, 0.2)",
   colorGray_200: "rgba(0, 0, 0, 0)",
 
 };
 /* border radiuses */
 export const Border = {
+  br_9xs: 4,
   br_5xs: 8,
   br_4xs: 9,
-  br_9xs: 4,
+  br_7xl: 26,
 };

@@ -355,6 +355,15 @@ export const schema = {
                 "FEMALE",
                 "UNKNOWN"
             ]
+        },
+        "NeuterSpayStatus": {
+            "name": "NeuterSpayStatus",
+            "values": [
+                "YES_FOR_BOTH",
+                "YES_FOR_NEUTER_ONLY",
+                "YES_FOR_SPAYING_ONLY",
+                "NO_FOR_BOTH"
+            ]
         }
     },
     "nonModels": {
@@ -453,7 +462,9 @@ export const schema = {
                 "strlztnAwareness": {
                     "name": "strlztnAwareness",
                     "isArray": false,
-                    "type": "Boolean",
+                    "type": {
+                        "enum": "NeuterSpayStatus"
+                    },
                     "isRequired": true,
                     "attributes": []
                 },
@@ -528,5 +539,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "bff528dfaf64f32522003803ae5332be"
+    "version": "a3a7f51b6a3571174e377afaba505cf8"
 };

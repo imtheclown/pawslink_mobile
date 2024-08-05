@@ -23,7 +23,7 @@ import { DataStore } from "aws-amplify/datastore";
 
 // temp data here
 import { AnimalStatus } from "../../models";
-import type { StackNavProps } from "../../navigation/admin/AdminNavigationStack";
+import { StackNavProps } from "../../navigation/AppNavigation";
 import { useCallback } from "react";
 
 interface AnimalListItemProps {

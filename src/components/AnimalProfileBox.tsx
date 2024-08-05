@@ -8,21 +8,35 @@ import {
 } from "react-native";
 import React from "react";
 import IonIcon from "react-native-vector-icons/Ionicons"
+
 import { 
+    Border,
     Color,
     FontFamily,
     FontSize
  } from '../assets/general/GlobalStyles';
 import { generalStyles } from "../assets/general/generalStyles";
 
+import { useNavigation } from "@react-navigation/native";
+
+// navigation
+import { StackNavProps } from "../navigation/AppNavigation";
+
 interface animalProfileBoxProps{
     name: string,
     location: string,
     sex: string
+    id: string
 }
-const AnimalProfileBox:React.FC<animalProfileBoxProps> = ({name,location, sex}) =>{
+
+import { AnimalSex } from "../models";
+const AnimalProfileBox:React.FC<animalProfileBoxProps> = React.memo(({name,location, sex, id}) =>{
+    const navigation = useNavigation<StackNavProps>();
+    const gotoAnimal = () =>{
+        navigation.navigate("view_animal", {animalId: id})
+    }
     return (
-        <TouchableOpacity style = {[styles.mainContainer, generalStyles.curvedContainerWithShadow, generalStyles.centerContainer]}>
+        <TouchableOpacity onPress={gotoAnimal} style = {[styles.mainContainer, generalStyles.containerWithShadow, generalStyles.centerContainer]}>
             <View style = {[styles.contentContainer]}>
                 <Image
                     resizeMode="cover"
@@ -34,9 +48,9 @@ const AnimalProfileBox:React.FC<animalProfileBoxProps> = ({name,location, sex}) 
                         {name}
                     </Text>
                     <IonIcon
-                        name= {sex === 'M'? "male":"female"}
+                        name= {sex === AnimalSex.MALE? "male":"female"}
                         size={18}
-                        color={sex === 'M'? 'blue':Color.colorPaleovioletred}
+                        color={sex === AnimalSex.MALE? 'blue':Color.colorPaleovioletred}
                     />
                 </View>
                 <View style ={[generalStyles.rowStartContainer]}>
@@ -50,7 +64,7 @@ const AnimalProfileBox:React.FC<animalProfileBoxProps> = ({name,location, sex}) 
             </View>
         </TouchableOpacity>
     )
-}
+})
 
 export default AnimalProfileBox
 
@@ -61,6 +75,8 @@ const styles = StyleSheet.create({
         minHeight: 160,
         minWidth: 160,
         margin: 5,
+        borderRadius: Border.br_4xs,
+        backgroundColor: Color.colorWhite,
     },
     contentContainer:{
         width: '90%',

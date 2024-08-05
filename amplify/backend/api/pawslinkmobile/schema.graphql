@@ -80,9 +80,16 @@ type AdopterPetHistory {
   noOfPets: Int!
   yearsOfBeingPetOwner: Int!
   oldestPetAge: Int!
-  strlztnAwareness: Boolean!
+  strlztnAwareness: NeuterSpayStatus!
   strlztnWillingness: Boolean!
   regVetClinic: String!
+}
+# list of acceptable values for the strlznAwareness
+enum NeuterSpayStatus {
+  YES_FOR_BOTH,
+  YES_FOR_NEUTER_ONLY,
+  YES_FOR_SPAYING_ONLY,
+  NO_FOR_BOTH,
 }
 # interface for the planned housing/accomodation of the will be adopted animal
 type PetAccommodation{
