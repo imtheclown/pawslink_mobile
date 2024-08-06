@@ -16,7 +16,14 @@ import CustomRadioButton from "../../components/CustomRadioButton";
 import { getEnumValueFromString } from "../../utils/TypeBasedUtilityFunctions";
 import FlexibleButton from "../../components/admin/FlexibleButton";
 import { PetHistoryScreenProps } from "../../navigation/AppNavigation";
+
+// aws
+import { LazyAdopterPetHistory } from "../../models";
+
 const PetHistoryScreen = ({route, navigation}:PetHistoryScreenProps) =>{
+    // params
+    const params = route.params;
+    // check params here and edit states accordingly
     const [noOfPets, setNumPets] = useState<number|null>(null);
     const [yearsOfBeingPetOwner, setBeingOwner] = useState<string|null>(null);
     const [oldestPetAge, setOldestPetAge] = useState<number|null>(null);
@@ -74,8 +81,30 @@ const PetHistoryScreen = ({route, navigation}:PetHistoryScreenProps) =>{
     const handleVetClinicChange  = useCallback((newValue: string|null) =>{
         setVetClinic(newValue);
     }, []);
+
+    // generate a pet history object
+
+    const generatePetHistory = ():LazyAdopterPetHistory|null =>{
+        if(!noOfPets || !yearsOfBeingPetOwner || !oldestPetAge || !strlztnAwareness ||!wantToSterilize || !vetClinic){
+            return null;
+        }
+        const petHistoryObject :LazyAdopterPetHistory ={
+            noOfPets: noOfPets,
+            yearsOfBeingPetOwner: yearsOfBeingPetOwner,
+            oldestPetAge: oldestPetAge,
+            strlztnAwareness: strlztnAwareness,
+            strlztnWillingness: wantToSterilize,
+            regVetClinic: vetClinic
+        }
+        return petHistoryObject;
+    }
     const handleNext = useCallback(() =>{
-        console.log("next");
+        const petHistoryObject = generatePetHistory();
+        if(petHistoryObject!== null){
+            navigation.navigate("adoption_form_3", {petHistoryObject: petHistoryObject});
+        }
+        navigation.navigate("adoption_form_3", {});
+        
     }, []);
     const handleReturn = useCallback(() =>{
         navigation.goBack();

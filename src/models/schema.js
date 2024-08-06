@@ -448,7 +448,7 @@ export const schema = {
                 "yearsOfBeingPetOwner": {
                     "name": "yearsOfBeingPetOwner",
                     "isArray": false,
-                    "type": "Int",
+                    "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -539,5 +539,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "a3a7f51b6a3571174e377afaba505cf8"
+    "version": "5f604af19f0808fd5d62890694311d98"
 };

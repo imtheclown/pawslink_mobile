@@ -23,6 +23,13 @@ import { LazyAdopterBasicPersonalInfo } from "../../models";
 import type { BasicInfoScreenProps } from "../../navigation/AppNavigation";
 
 const BasicInfoScreen = ({route, navigation}:BasicInfoScreenProps) =>{
+    // route parameters
+    const params = route.params;
+    // states
+
+    // create function/implementation where we check if there is a parameter adoptionRequestObject
+    // if it exists update the states with the values
+    // otherwise all values are null
     const [fname, setFname] = useState<string|null>(null);
     const [lname, setLname] = useState<string|null>(null);
     const [age, setAge] = useState<string|null>(null);
@@ -102,11 +109,14 @@ const BasicInfoScreen = ({route, navigation}:BasicInfoScreenProps) =>{
         const animalObject = generateBasicInfo()
         if(animalObject !== null){
             // go to the next screen
-            navigation.navigate("adoption_form_2");
+
+            // --todo
+            // create an alternative where there is an adoptionRequestObject as route parameter
+            navigation.navigate("adoption_form_2", {basicInfoObject: animalObject});
         }else{
             // maybe execute a validation here that checks which input component results in error
         }
-        navigation.navigate("adoption_form_2");
+        navigation.navigate("adoption_form_2", {});
     }
     const handleReturn = () =>{
         navigation.goBack()

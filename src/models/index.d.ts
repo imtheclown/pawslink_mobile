@@ -58,7 +58,7 @@ export declare const AdopterBasicPersonalInfo: (new (init: ModelInit<AdopterBasi
 
 type EagerAdopterPetHistory = {
   readonly noOfPets: number;
-  readonly yearsOfBeingPetOwner: number;
+  readonly yearsOfBeingPetOwner: string;
   readonly oldestPetAge: number;
   readonly strlztnAwareness: NeuterSpayStatus | keyof typeof NeuterSpayStatus;
   readonly strlztnWillingness: boolean;
@@ -67,7 +67,7 @@ type EagerAdopterPetHistory = {
 
 type LazyAdopterPetHistory = {
   readonly noOfPets: number;
-  readonly yearsOfBeingPetOwner: number;
+  readonly yearsOfBeingPetOwner: string;
   readonly oldestPetAge: number;
   readonly strlztnAwareness: NeuterSpayStatus | keyof typeof NeuterSpayStatus;
   readonly strlztnWillingness: boolean;

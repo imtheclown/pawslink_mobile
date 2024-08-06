@@ -78,7 +78,8 @@ type AdopterBasicPersonalInfo {
 # interface for the adoptor's pet history
 type AdopterPetHistory {
   noOfPets: Int!
-  yearsOfBeingPetOwner: Int!
+  # make it a string to provide flexibility to the answers of the users
+  yearsOfBeingPetOwner: String!
   oldestPetAge: Int!
   strlztnAwareness: NeuterSpayStatus!
   strlztnWillingness: Boolean!

@@ -9,7 +9,6 @@ import {
     Text
 } from "react-native";
 import CustomCheckBox from "./CustomCheckBox";
-import { NeuterSpayStatus } from "../models";
 import React from "react";
 import { useState, useEffect } from "react";
 import { Border, Color } from "../assets/general/GlobalStyles";
@@ -56,7 +55,7 @@ const CustomRadioButton:React.FC<CustomRadioButtonProps> = React.memo(({data, ti
     }
     return (
         <>
-        <Text style ={[generalStyles.TextInputTitle]}>{title}</Text>
+        <Text style ={[generalStyles.TextInputTitle, styles.textStyle]}>{title}</Text>
         <View style = {[styles.mainContainer, generalStyles.containerWithShadow]}>
             {data.map((value, index) =>{
                 return itemRenderer({item:value, index: index})
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         margin: 5, 
         backgroundColor: Color.colorWhite,
-        padding: 10
+        padding: 10,
     },
     customizedContainer:{
         width: '100%',
@@ -84,5 +83,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         marginBottom: 10,
+    },
+    textStyle:{
+        marginTop: 20
     }
 })
