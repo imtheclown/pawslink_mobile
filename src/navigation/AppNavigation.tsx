@@ -17,6 +17,7 @@ import BasicInfoScreen from '../screens/adoption_form/BasicInfoScreen';
 import PetHistoryScreen from "../screens/adoption_form/PetHistoryScreen";
 import AccommodationScreen from '../screens/adoption_form/AccommodationScreen';
 import OtherInfoScreen from "../screens/adoption_form/OtherInfoScreen";
+import IdVerificationScreen from '../screens/adoption_form/IdVerificationScreen';
 // import screens here
 
 import { createStackNavigator, StackHeaderProps } from '@react-navigation/stack';
@@ -27,7 +28,9 @@ import TabBarHeader from "../components/TabBarHeader";
 // defines the parameters and their types needed be each of the following functional components
 
 // import interfaces classes here
-import { LazyAnimal, LazyAdoptionRequest, LazyEvent, LazyAdopterPetHistory, LazyAdopterBasicPersonalInfo, LazyPetAccommodation } from "../models";
+import { LazyAnimal, LazyAdoptionRequest, LazyEvent, LazyAdopterPetHistory, LazyAdopterBasicPersonalInfo, LazyPetAccommodation,
+    LazyAdopterOtherInfo
+ } from "../models";
 import ViewAnimalScreen from "../screens/ViewAnimalScreen";
 export type RootStackParamList = {
     // user view
@@ -51,10 +54,18 @@ export type RootStackParamList = {
     adoption_form_4: {
         basicInfoObject?: LazyAdopterBasicPersonalInfo, 
         petHistoryObject?: LazyAdopterPetHistory, 
+        // object/data from the adoption form 3
         petAccommodationObject? : LazyPetAccommodation,
         adoptionRequestObject?: LazyAdoptionRequest
     }
-    
+    adoption_form_5: {
+        basicInfoObject?: LazyAdopterBasicPersonalInfo, 
+        petHistoryObject?: LazyAdopterPetHistory, 
+        petAccommodationObject? : LazyPetAccommodation,
+        // object/data from adoption form 4
+        otherInfo?: LazyAdopterOtherInfo,
+        adoptionRequestObject?: LazyAdoptionRequest
+    }
     // admin view
     // admin view bottom navigator
     admin_nav: undefined,
@@ -81,6 +92,7 @@ export type BasicInfoScreenProps = NativeStackScreenProps<RootStackParamList, 'a
 export type PetHistoryScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_2">
 export type AccommodationScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_3">
 export type OtherInfoScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_4">
+export type IdVerificationScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_5">
 
 // navigation prop
 export type StackNavProps = NavigationProp<RootStackParamList>
@@ -202,6 +214,14 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="adoption_form_4"
                 component={OtherInfoScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="adoption_form_5"
+                component={IdVerificationScreen}
                 options={{
                     ...navScreenOptions,
                     headerShown: false

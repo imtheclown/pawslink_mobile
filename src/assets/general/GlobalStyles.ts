@@ -35,6 +35,7 @@ export const Color = {
 /* border radiuses */
 export const Border = {
   br_9xs: 4,
+  br_7xs: 6,
   br_5xs: 8,
   br_4xs: 9,
   br_7xl: 26,

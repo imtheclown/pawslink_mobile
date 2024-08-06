@@ -53,8 +53,12 @@ const OtherInfoScreen = ({route, navigation}: OtherInfoScreenProps) =>{
     const gotoNext = useCallback(() =>{
         const otherInfoObject = generateOtherInfoObject();
         if(otherInfoObject !== null){
+            navigation.navigate("adoption_form_5", {
+                otherInfo: otherInfoObject,
+            })
             console.log("true");
         }
+        navigation.navigate("adoption_form_5", {});
     }, []);
 
     return (
