@@ -108,6 +108,7 @@ type AdoptionRequest @model {
   id: ID!
   basicPersonalInfo: AdopterBasicPersonalInfo!
   petHistory: AdopterPetHistory!
+  accommodation: PetAccommodation!
   otherInfo: AdopterOtherInfo!
   idImageUrl: String!
 }

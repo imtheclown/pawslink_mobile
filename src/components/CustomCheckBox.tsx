@@ -5,6 +5,7 @@ import {
     Text,
     StyleSheet,
     ViewStyle,
+    TextStyle,
 } from "react-native";
 import React from "react";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -15,9 +16,11 @@ interface CustomCheckBoxInterface {
     title: string,
     containerStyle: ViewStyle,
     oldValue: boolean,
+    fontStyle? :TextStyle,
+    boxSize?: number,
     callback: (newValue: boolean) => void,
 }
-const CustomCheckBox:React.FC<CustomCheckBoxInterface> = React.memo(({title, containerStyle, callback, oldValue}) =>{
+const CustomCheckBox:React.FC<CustomCheckBoxInterface> = React.memo(({title, containerStyle, callback, oldValue, fontStyle, boxSize}) =>{
     const [isChecked, setIsChecked] = useState(oldValue);
     useEffect(() =>{
         if(oldValue!== isChecked){
@@ -37,8 +40,9 @@ const CustomCheckBox:React.FC<CustomCheckBoxInterface> = React.memo(({title, con
                 iconStyle ={[styles.outerIcon]}
                 innerIconStyle ={[styles.innerIcon]}
                 fillColor={Color.colorPaleovioletred}
+                size={boxSize? boxSize: 24}
             />
-            <Text style ={[generalStyles.TextInputTitle]}>{title}</Text>
+            <Text style ={[fontStyle? fontStyle: generalStyles.TextInputTitle]}>{title}</Text>
         </View>
     )
 });
@@ -49,7 +53,6 @@ const styles = StyleSheet.create({
     mainContainer:{
         flexDirection: 'row',
         alignItems: 'center',
-        height: 77,
         justifyContent: 'center',
     },
     innerIcon:{

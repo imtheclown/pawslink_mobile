@@ -242,7 +242,8 @@ const styles = StyleSheet.create({
         width: '45%',
     },
     checkBoxStyle:{
-        width: '45%'
+        width: '45%',
+        height: 77,
     },
     positiveButtonStyle:{
         marginTop: 30,

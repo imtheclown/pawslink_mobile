@@ -16,8 +16,6 @@ import ResponsiveImage from "../../components/ResponsiveImage";
 
 // navigation
 import { IdVerificationScreenProps } from "../../navigation/AppNavigation";
-import { StatusBox } from '../ViewAnimalScreen';
-import { ca } from 'react-native-paper-dates';
 const IdVerificationScreen = ({route, navigation}: IdVerificationScreenProps) =>{
     const [imgUrl, setImgUrl] = useState<string|null>(null);
     const handlePickImage = useCallback(async() =>{
@@ -27,9 +25,16 @@ const IdVerificationScreen = ({route, navigation}: IdVerificationScreenProps) =>
                 setImgUrl(res[0].uri)
             }
         })
+        .catch(err =>{
+            console.log(err);
+        })
     }, []);
     const gotoNext = () =>{
         // go to the next page
+        if(!imgUrl){
+            navigation.navigate("adoption_form_6", {});
+        }
+        navigation.navigate("adoption_form_6", {});
     }
 
     const gotoPreviousPage = useCallback(() =>{

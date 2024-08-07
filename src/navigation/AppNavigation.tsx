@@ -13,11 +13,14 @@ import ViewAdoptionrequestListScreen from "../screens/admin/ViewAdoptionRequestL
 import ViewEventListScreen from "../screens/admin/ViewEventListScreen";
 // user view
 import BottomTabs from "./BottomTabs";
+// adoption forms
 import BasicInfoScreen from '../screens/adoption_form/BasicInfoScreen';
 import PetHistoryScreen from "../screens/adoption_form/PetHistoryScreen";
 import AccommodationScreen from '../screens/adoption_form/AccommodationScreen';
 import OtherInfoScreen from "../screens/adoption_form/OtherInfoScreen";
 import IdVerificationScreen from '../screens/adoption_form/IdVerificationScreen';
+import DataPrivacyScreen from "../screens/adoption_form/DataPrivacyScreen";
+// adoption forms
 // import screens here
 
 import { createStackNavigator, StackHeaderProps } from '@react-navigation/stack';
@@ -65,6 +68,14 @@ export type RootStackParamList = {
         // object/data from adoption form 4
         otherInfo?: LazyAdopterOtherInfo,
         adoptionRequestObject?: LazyAdoptionRequest
+    },
+    adoption_form_6 :{
+        basicInfoObject?: LazyAdopterBasicPersonalInfo, 
+        petHistoryObject?: LazyAdopterPetHistory, 
+        petAccommodationObject? : LazyPetAccommodation,
+        otherInfo?: LazyAdopterOtherInfo,
+        idImageUrl?: string,
+        adoptionRequestObject?: LazyAdoptionRequest,
     }
     // admin view
     // admin view bottom navigator
@@ -93,6 +104,7 @@ export type PetHistoryScreenProps = NativeStackScreenProps<RootStackParamList, "
 export type AccommodationScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_3">
 export type OtherInfoScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_4">
 export type IdVerificationScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_5">
+export type DataPrivacyScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_6">
 
 // navigation prop
 export type StackNavProps = NavigationProp<RootStackParamList>
@@ -222,6 +234,14 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="adoption_form_5"
                 component={IdVerificationScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="adoption_form_6"
+                component={DataPrivacyScreen}
                 options={{
                     ...navScreenOptions,
                     headerShown: false
