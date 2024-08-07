@@ -16,7 +16,7 @@ import { generalStyles } from "../../assets/general/generalStyles";
 import FlexibleTextInput from "../../components/FlexibleTextnput";
 import CustomCheckBox from "../../components/CustomCheckBox";
 import FlexibleButton from "../../components/admin/FlexibleButton";
-
+import { isValidEmail, isAllNumbers } from "../../utils/TextBasedUtilityFunctions";
 // aws
 import { LazyAdopterBasicPersonalInfo } from "../../models";
 
@@ -103,6 +103,11 @@ const BasicInfoScreen = ({route, navigation}:BasicInfoScreenProps) =>{
         return basicInfoObject;
     }
 
+    // validators
+    // email validator
+    const emailValidator = useCallback(isValidEmail, []);
+    // phone number validator
+    const phoneNumberValidator = useCallback(isAllNumbers, []);
     // poceeds to the next adoption form
     // pass the basic info object as navigation parameter
     const handleNext = () =>{
@@ -134,12 +139,14 @@ const BasicInfoScreen = ({route, navigation}:BasicInfoScreenProps) =>{
                         callback={handleFnameChange}
                         oldValue={null}
                         style ={styles.nameTextInputStyle}
+                        required ={true}
                     />
                     <FlexibleTextInput
                         title="last name"
                         callback={handleLNameChange}
                         oldValue={null}
                         style ={styles.nameTextInputStyle}
+                        required ={true}
                     />
                     <FlexibleTextInput
                         title="age"
@@ -147,6 +154,9 @@ const BasicInfoScreen = ({route, navigation}:BasicInfoScreenProps) =>{
                         oldValue={null}
                         style ={styles.ageTextInputStyle}
                         keyBoardType="numeric"
+                        required ={true}
+                        validator={phoneNumberValidator}
+                        customErrMsg="value must be a number"
                     />
                     <CustomCheckBox
                         title="student?"
@@ -160,6 +170,9 @@ const BasicInfoScreen = ({route, navigation}:BasicInfoScreenProps) =>{
                         oldValue={null}
                         style ={styles.nameTextInputStyle}
                         keyBoardType="numeric"
+                        required ={true}
+                        validator={phoneNumberValidator}
+                        customErrMsg="input must be all numbers"
                     />
                     <FlexibleTextInput
                         title="email address"
@@ -167,18 +180,23 @@ const BasicInfoScreen = ({route, navigation}:BasicInfoScreenProps) =>{
                         oldValue={null}
                         style ={styles.nameTextInputStyle}
                         keyBoardType="email-address"
+                        customErrMsg="invalid email format"
+                        validator={emailValidator}
+                        required ={true}
                     />
                     <FlexibleTextInput
                         title="facebook link"
                         callback={handleFbLinkChange}
                         oldValue={null}
                         style ={styles.nameTextInputStyle}
+                        required ={true}
                     />
                     <FlexibleTextInput
                         title="complete home address"
                         callback={handleCmpltAddChange}
                         oldValue={null}
                         style ={styles.nameTextInputStyle}
+                        required ={true}
                         numberOfLines={2}
                     />
                     <FlexibleTextInput
@@ -186,6 +204,7 @@ const BasicInfoScreen = ({route, navigation}:BasicInfoScreenProps) =>{
                         callback={handleCrntAddChange}
                         oldValue={null}
                         style ={styles.nameTextInputStyle}
+                        required ={true}
                         numberOfLines={2}
                     />
                     {/* button container */}
