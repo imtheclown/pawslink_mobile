@@ -7,6 +7,8 @@ import {
     StyleSheet,
     TouchableOpacity,
     View,
+    TouchableWithoutFeedback,
+    Keyboard,
 } from "react-native";
 import { Color, FontFamily, FontSize, Border  } from "../../assets/general/GlobalStyles";
 import { generalStyles } from "../../assets/general/generalStyles";
@@ -20,7 +22,7 @@ import { useState, useCallback } from "react";
 const SignInScreen = () =>{
     const [username, setUsername] =useState<string|null>(null);
     const [password, setPassword] = useState<string|null>(null);
-    const [hasError, setHasError] = useState(true);
+    const [hasError, setHasError] = useState(false);
 
     const handleUsernameChange = useCallback((newValue: string|null) =>{
         setUsername(newValue);
@@ -31,9 +33,19 @@ const SignInScreen = () =>{
     }, []);
 
     const handleLogin = useCallback(() =>{
-        console.log("pressed");
+        if(username !== null && password !== null){
+            console.log("passed")
+            console.log(username, password)
+        }else{
+            setHasError(true)
+        }
+    }, [username, password]);
+
+    const forceOutFocus = useCallback(() =>{
+        Keyboard.dismiss();
     }, [])
     return (
+    <TouchableWithoutFeedback onPress={forceOutFocus}>
         <SafeAreaView style = {[generalStyles.flexContainer,styles.mainContainer, ]}>
             <Image
                 source={require("../../assets/logo/pawslink_round_colored.png")}
@@ -50,7 +62,7 @@ const SignInScreen = () =>{
             />
             <AuthTextInput
                 title="password"
-                isSensitive = {false}
+                isSensitive = {true}
                 icon = {<MaterialIcon name="password" size={24} color={Color.colorGray}/>}
                 required = {true}
                 callback={handlePasswordChange}
@@ -91,6 +103,7 @@ const SignInScreen = () =>{
                 />
             </View>
         </SafeAreaView>
+    </TouchableWithoutFeedback>
     )
 }
 export default SignInScreen;
@@ -112,7 +125,8 @@ const styles = StyleSheet.create({
         lineHeight: 60,
         fontWeight: 700,
         color: Color.colorDarkslateblue,
-        textTransform: 'capitalize'
+        textTransform: 'capitalize',
+        marginBottom: 20,
     },
     loginButton:{
         width: '100%',
