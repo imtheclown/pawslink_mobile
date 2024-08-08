@@ -11,6 +11,7 @@ import AdoptionRequestForm from "../screens/admin/AdoptionRequestFormScreen";
 import ViewEventScreen from "../screens/admin/ViewEventScreen";
 import ViewAdoptionrequestListScreen from "../screens/admin/ViewAdoptionRequestListScreen";
 import ViewEventListScreen from "../screens/admin/ViewEventListScreen";
+import ThankYouScreen from '../screens/ThankYouScreen';
 // user view
 import BottomTabs from "./BottomTabs";
 // adoption forms
@@ -60,7 +61,8 @@ export type RootStackParamList = {
         // object/data from the adoption form 3
         petAccommodationObject? : LazyPetAccommodation,
         adoptionRequestObject?: LazyAdoptionRequest
-    }
+    },
+    // refers to the id photo upload screen
     adoption_form_5: {
         basicInfoObject?: LazyAdopterBasicPersonalInfo, 
         petHistoryObject?: LazyAdopterPetHistory, 
@@ -69,6 +71,7 @@ export type RootStackParamList = {
         otherInfo?: LazyAdopterOtherInfo,
         adoptionRequestObject?: LazyAdoptionRequest
     },
+    // refers to the data privacy screen props
     adoption_form_6 :{
         basicInfoObject?: LazyAdopterBasicPersonalInfo, 
         petHistoryObject?: LazyAdopterPetHistory, 
@@ -76,7 +79,9 @@ export type RootStackParamList = {
         otherInfo?: LazyAdopterOtherInfo,
         idImageUrl?: string,
         adoptionRequestObject?: LazyAdoptionRequest,
-    }
+    },
+
+    thank_you_screen : {contentText:string},
     // admin view
     // admin view bottom navigator
     admin_nav: undefined,
@@ -105,7 +110,7 @@ export type AccommodationScreenProps = NativeStackScreenProps<RootStackParamList
 export type OtherInfoScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_4">
 export type IdVerificationScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_5">
 export type DataPrivacyScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_6">
-
+export type ThankYouScreenProps = NativeStackScreenProps<RootStackParamList, 'thank_you_screen'>
 // navigation prop
 export type StackNavProps = NavigationProp<RootStackParamList>
 const Stack = createStackNavigator<RootStackParamList>()
@@ -242,6 +247,14 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="adoption_form_6"
                 component={DataPrivacyScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="thank_you_screen"
+                component={ThankYouScreen}
                 options={{
                     ...navScreenOptions,
                     headerShown: false

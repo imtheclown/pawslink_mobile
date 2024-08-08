@@ -19,6 +19,7 @@ const DataPrivacyScreen = ({route, navigation}:DataPrivacyScreenProps) =>{
     }
 
     const gotoNext =useCallback(() =>{
+        navigation.navigate("thank_you_screen", {contentText: `Thank you for your interest in adopting! you'll hear back from us soon.`});
     }, []);
 
     const gotoPreviousPage = useCallback(() =>{

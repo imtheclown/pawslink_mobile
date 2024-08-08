@@ -10,6 +10,7 @@ import {
     StyleSheet,
     View
 } from "react-native";
+import { Dialog } from "@rneui/base";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { Color, FontFamily, FontSize, Border } from "../../assets/general/GlobalStyles";
 import { generalStyles } from "../../assets/general/generalStyles";
@@ -119,7 +120,7 @@ const BasicInfoScreen = ({route, navigation}:BasicInfoScreenProps) =>{
             // create an alternative where there is an adoptionRequestObject as route parameter
             navigation.navigate("adoption_form_2", {basicInfoObject: animalObject});
         }else{
-            // maybe execute a validation here that checks which input component results in error
+            // create a function alert/ notifying the user that they have invalid/missing values
         }
         navigation.navigate("adoption_form_2", {});
     }
