@@ -22,8 +22,11 @@ import OtherInfoScreen from "../screens/adoption_form/OtherInfoScreen";
 import IdVerificationScreen from '../screens/adoption_form/IdVerificationScreen';
 import DataPrivacyScreen from "../screens/adoption_form/DataPrivacyScreen";
 // adoption forms
-// import screens here
 
+// authentication
+import SignInScreen from "../screens/authentication/SignInScreen";
+// authentication
+// import screens here
 import { createStackNavigator, StackHeaderProps } from '@react-navigation/stack';
 import { NativeStackScreenProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { NavigationProp } from "@react-navigation/native";
@@ -93,7 +96,10 @@ export type RootStackParamList = {
     view_event: undefined,
     adoption_request_list : undefined,
     adoption_form: {adoptionRequestObject?: LazyAdoptionRequest},
-    view_event_list : undefined
+    view_event_list : undefined,
+
+    // authentication pages
+    sign_in : undefined,
 }
 // types used to annotate the route and navigation props for each of the strings in the stack navigator
 export type BottomNavProps = NativeStackScreenProps<RootStackParamList, 'admin_nav'>
@@ -111,6 +117,7 @@ export type OtherInfoScreenProps = NativeStackScreenProps<RootStackParamList, "a
 export type IdVerificationScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_5">
 export type DataPrivacyScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_6">
 export type ThankYouScreenProps = NativeStackScreenProps<RootStackParamList, 'thank_you_screen'>
+export type SignInScreenProps = NativeStackScreenProps<RootStackParamList, "sign_in">
 // navigation prop
 export type StackNavProps = NavigationProp<RootStackParamList>
 const Stack = createStackNavigator<RootStackParamList>()
@@ -132,6 +139,14 @@ const navScreenOptions = {
 const AdminStackNavigator = () => {
     return (
         <Stack.Navigator>
+            <Stack.Screen
+                name="sign_in"
+                component={SignInScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
             <Stack.Screen
                 name="user_nav"
                 component={BottomTabs}

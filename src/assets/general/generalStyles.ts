@@ -84,6 +84,15 @@ export const generalStyles = StyleSheet.create({
         backgroundColor: Color.colorPalevioletred_200,
         borderRadius: Border.br_5xs,
     },
+    // fonts
+    lightInter:{
+        fontFamily: FontFamily.interRegular,
+        fontWeight: 400
+    },
+    boldInter:{
+        fontFamily:FontFamily.interBold,
+        fontWeight: 700,
+    }
 
 
 })

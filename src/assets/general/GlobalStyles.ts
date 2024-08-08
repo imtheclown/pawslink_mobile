@@ -22,6 +22,7 @@ export const Color = {
   colorGray: "#171a1f",
   colorGainsboro: "#d9d9d9",
   colorPaleovioletred: '#DB7093',
+  colorDarkPink: "#D2628A",
   colorSilver: "#bdc1ca",
   colorDimgray: "#565d6d",
   colorDarkslategray: "#424856",
@@ -30,6 +31,10 @@ export const Color = {
   colorLightGray : "#F3F4F6",
   colorPalevioletred_200: "rgba(210, 98, 138, 0.2)",
   colorGray_200: "rgba(0, 0, 0, 0)",
+  colorPlum: "#a872b7",
+  colorLavender: "#eee4f1",
+  errorRed: "#D32F2F",
+  colorRoyalPlum: "#9032AB"
 
 };
 /* border radiuses */
@@ -39,4 +44,5 @@ export const Border = {
   br_5xs: 8,
   br_4xs: 9,
   br_7xl: 26,
+  br_14xl: 33,
 };
