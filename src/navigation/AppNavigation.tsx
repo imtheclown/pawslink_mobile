@@ -25,6 +25,7 @@ import DataPrivacyScreen from "../screens/adoption_form/DataPrivacyScreen";
 
 // authentication
 import SignInScreen from "../screens/authentication/SignInScreen";
+import SignUpScreen from "../screens/authentication/SignUpScreen";
 // authentication
 // import screens here
 import { createStackNavigator, StackHeaderProps } from '@react-navigation/stack';
@@ -100,6 +101,7 @@ export type RootStackParamList = {
 
     // authentication pages
     sign_in : undefined,
+    sign_up: undefined,
 }
 // types used to annotate the route and navigation props for each of the strings in the stack navigator
 export type BottomNavProps = NativeStackScreenProps<RootStackParamList, 'admin_nav'>
@@ -117,7 +119,9 @@ export type OtherInfoScreenProps = NativeStackScreenProps<RootStackParamList, "a
 export type IdVerificationScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_5">
 export type DataPrivacyScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_6">
 export type ThankYouScreenProps = NativeStackScreenProps<RootStackParamList, 'thank_you_screen'>
+// authentication
 export type SignInScreenProps = NativeStackScreenProps<RootStackParamList, "sign_in">
+export type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, "sign_up">
 // navigation prop
 export type StackNavProps = NavigationProp<RootStackParamList>
 const Stack = createStackNavigator<RootStackParamList>()
@@ -270,6 +274,14 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="thank_you_screen"
                 component={ThankYouScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="sign_up"
+                component={SignUpScreen}
                 options={{
                     ...navScreenOptions,
                     headerShown: false

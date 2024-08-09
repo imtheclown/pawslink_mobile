@@ -18,48 +18,65 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
 import AuthTextInput from "./AuthTextInput";
 import FlexibleButton from "../../components/admin/FlexibleButton";
+import { SignInScreenProps } from "../../navigation/AppNavigation";
 import { useState, useCallback } from "react";
-const SignInScreen = () =>{
+const SignInScreen = ({route, navigation}: SignInScreenProps) =>{
+    // state management
     const [username, setUsername] =useState<string|null>(null);
     const [password, setPassword] = useState<string|null>(null);
     const [hasError, setHasError] = useState(false);
 
+    // callback for events that triggers changes in the username state
     const handleUsernameChange = useCallback((newValue: string|null) =>{
         setUsername(newValue);
     }, []);
-
+    // callack for the events that triggers changes in the password state
     const handlePasswordChange = useCallback((newValue: string|null) =>{
         setPassword(newValue);
     }, []);
-
+    // validation of user inputs before attempt to log in the user
+    // re-renders per changes in the username and password
     const handleLogin = useCallback(() =>{
+        // check if username and password fields are not empty
         if(username !== null && password !== null){
-            console.log("passed")
+            // temporary
+            // change to the log in logic
             console.log(username, password)
+        // show error if there is a problem with user input
         }else{
             setHasError(true)
         }
     }, [username, password]);
 
+    // forces text input in this component to lose focus by dismissing keyboard
     const forceOutFocus = useCallback(() =>{
         Keyboard.dismiss();
+    }, [])
+
+    // goes to the sign up page
+    const gotoSignUp = useCallback(() =>{
+        navigation.navigate("sign_up")
     }, [])
     return (
     <TouchableWithoutFeedback onPress={forceOutFocus}>
         <SafeAreaView style = {[generalStyles.flexContainer,styles.mainContainer, ]}>
+            {/* logo */}
             <Image
                 source={require("../../assets/logo/pawslink_round_colored.png")}
                 resizeMode="cover"
                 style = {[styles.logoStyle]}
             />
+            {/* title text */}
             <Text style = {[styles.titleTextStyle]}>{`welcome back`}</Text>
+            {/* username text input */}
             <AuthTextInput
                 title="username"
                 isSensitive ={false}
-                icon = {<MaterialIcon name="person-outline" size={24} color={Color.colorGray}/>}
+                icon = {<MaterialIcon name="person" size={24} color={Color.colorGray}/>}
                 required = {true}
                 callback={handleUsernameChange}
             />
+            {/* password text input */}
             <AuthTextInput
                 title="password"
                 isSensitive = {true}
@@ -67,23 +84,30 @@ const SignInScreen = () =>{
                 required = {true}
                 callback={handlePasswordChange}
             />
+            {/* logging in button */}
             <FlexibleButton
                 title="login"
                 callback={handleLogin}
                 buttonStyle={{...styles.loginButton}}
                 fontStyle={{...styles.logInButtonText}}
             />
+            {/* forgot password link */}
             <TouchableOpacity>
                 <Text style ={[styles.forgotPasswordText, generalStyles.lightInter]}>{`forgot password`}</Text>
             </TouchableOpacity>
+            {/* container holding the error message and no account text */}
             <View style ={[styles.errorAndNoAccContainer]}>
+                {/* show error message if hasError flag is on */}
                 {hasError && <Text style ={[generalStyles.lightInter, styles.errMsgStyle]}>{`ⓘ Wrong password! Please try again.`}</Text>}
-                <TouchableOpacity>
+                {/* display sign up link all the time */}
+                <TouchableOpacity onPress={gotoSignUp}>
                     <Text style ={[generalStyles.lightInter, styles.noAccountText]}>
                         {`dont have an account? sign up`}
                     </Text>
                 </TouchableOpacity>
             </View>
+            {/* logo container */}
+            {/* contains logo of pawaradise, up and pahinungod */}
             <Text style = {[styles.bottomLogoText]}>{`in partnership with`}</Text>
             <View style ={[styles.logoContainer]}>
                 <Image
@@ -179,5 +203,6 @@ const styles = StyleSheet.create({
         fontSize: FontSize.size_base,
         color: Color.errorRed,
         lineHeight: 24
-    }
+    },
+
 })

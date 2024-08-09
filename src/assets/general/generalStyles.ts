@@ -92,6 +92,14 @@ export const generalStyles = StyleSheet.create({
     boldInter:{
         fontFamily:FontFamily.interBold,
         fontWeight: 700,
+    },
+    lightEpilogue:{
+        fontFamily: FontFamily.epilogueRegular,
+        fontWeight: 400,
+    },
+    boldEpilogue:{
+        fontFamily: FontFamily.epilogueBold,
+        fontWeight: 700,
     }
 
 
