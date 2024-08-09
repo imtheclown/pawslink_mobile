@@ -15,8 +15,7 @@ import {
 import React, { useEffect, useRef } from "react";
 import { useState, useCallback } from 'react';
 import { generalStyles } from "../assets/general/generalStyles";
-import {debounce} from 'lodash'
-import { disable } from "aws-amplify/analytics";
+import { FontFamily, FontSize } from "../assets/general/GlobalStyles";
 
 // interface for the flexible text input component
 // title refers to the title of the text input
@@ -32,9 +31,11 @@ interface FlexibleTextInputProps {
     required?: boolean,
     oldValue: string | null,
     disabled? : boolean,
-    callback: (newName:(string|null)) => void
+    callback: (newName:(string|null)) => void,
+    validator?: (value:string) => boolean,
+    customErrMsg?: string,
 }
-const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, style, numberOfLines, keyBoardType, callback, required, oldValue, disabled}) =>{
+const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, style, numberOfLines, keyBoardType, callback, required, oldValue, disabled, validator, customErrMsg}) =>{
     const [isFocused, setIsFocused] = useState(true);
     const [inError, setInError] = useState(false);
     // own state to keep the value
@@ -71,7 +72,9 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
         if(checkValue()){
             callback(value);
         }else{
-            setInError(true);
+            if(value !== null){
+                setInError(true);
+            }
             callback(null)
         }
     }
@@ -79,45 +82,51 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
     // if upon onblur, the value is empty and the component is required, make it an error
     const checkValue = ():boolean =>{
         if(required){
-            // return false on empty input
-            if(value.length !> 0){
+            if(validator){
+                if(!validator(value)){
+                    return false
+                }
+            }
+            // return false on empty inpu
+            if(value.length === 0){
                 return false
             }
         }
         // return true if it is not required
         return true;
     }
-    const debounceCallback = useCallback(debounce(callback, 300), [callback]);
-
     return (
         <KeyboardAvoidingView
              style = {[style? style:{width: '100%'}]}
-         >
-            <Text style = {[generalStyles.TextInputTitle, ]}>
+        >
+            <View style ={[styles.textContainer]}>
+                <Text style = {[generalStyles.TextInputTitle, ]}>
                     {
                         title
                     }
                 </Text >
-                <View style = {
-                    [generalStyles.outerTextInputBox, 
-                    styles.fullWidthTextInput,
-                    isFocused?generalStyles.onFocusOuterTextInputBox: {}]}
-                >
-                    <TextInput
-                        multiline = {numberOfLines? true: false}
-                        value={value}
-                        numberOfLines={numberOfLines}
-                        onFocus={() => setFocusedOn()}
-                        onBlur={() => setFocusedOff()}
-                        style = {[generalStyles.innerTextInputBox, 
-                            styles.fullWidthTextInput,
-                            isFocused?generalStyles.onFocusInnnerTextInputBox: generalStyles.normalInnerTextInputBox, 
-                            numberOfLines? styles.multilineStart: styles.singleLineStart]}
-                        keyboardType={keyBoardType? keyBoardType: 'default'}
-                        onChangeText={handleTextChange}
-                        editable = {disabled? !disabled: true}
-                    />
-                </View>
+                {inError && <Text style ={[styles.errorText]}>ⓘ*{customErrMsg? customErrMsg: `required`}</Text>}
+            </View>
+            <View style = {
+                [generalStyles.outerTextInputBox, 
+                styles.fullWidthTextInput,
+                isFocused?generalStyles.onFocusOuterTextInputBox: {}]}
+            >
+                <TextInput
+                    multiline = {numberOfLines? true: false}
+                    value={value}
+                    numberOfLines={numberOfLines}
+                    onFocus={() => setFocusedOn()}
+                    onBlur={() => setFocusedOff()}
+                    style = {[generalStyles.innerTextInputBox, 
+                        styles.fullWidthTextInput,
+                        isFocused?generalStyles.onFocusInnnerTextInputBox: inError? styles.errorBorder: generalStyles.normalInnerTextInputBox, 
+                        numberOfLines? styles.multilineStart: styles.singleLineStart]}
+                    keyboardType={keyBoardType? keyBoardType: 'default'}
+                    onChangeText={handleTextChange}
+                    editable = {disabled? !disabled: true}
+                /> 
+            </View>
         </KeyboardAvoidingView>
     )
 });
@@ -133,5 +142,19 @@ const styles = StyleSheet.create({
     },
     singleLineStart:{
         textAlignVertical: 'center',
+    },
+    errorText:{
+        marginLeft: 10,
+        fontFamily: FontFamily.interRegular,
+        fontSize: FontSize.size_xs,
+        color: '#FF000F',
+        lineHeight: 21,
+    },
+    textContainer:{
+        flexDirection: 'row',
+        width: '100%',
+    },
+    errorBorder:{
+        borderColor:'#FF000F'
     }
 })

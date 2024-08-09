@@ -11,15 +11,23 @@ import AdoptionRequestForm from "../screens/admin/AdoptionRequestFormScreen";
 import ViewEventScreen from "../screens/admin/ViewEventScreen";
 import ViewAdoptionrequestListScreen from "../screens/admin/ViewAdoptionRequestListScreen";
 import ViewEventListScreen from "../screens/admin/ViewEventListScreen";
+import ThankYouScreen from '../screens/ThankYouScreen';
 // user view
 import BottomTabs from "./BottomTabs";
+// adoption forms
 import BasicInfoScreen from '../screens/adoption_form/BasicInfoScreen';
 import PetHistoryScreen from "../screens/adoption_form/PetHistoryScreen";
 import AccommodationScreen from '../screens/adoption_form/AccommodationScreen';
 import OtherInfoScreen from "../screens/adoption_form/OtherInfoScreen";
 import IdVerificationScreen from '../screens/adoption_form/IdVerificationScreen';
-// import screens here
+import DataPrivacyScreen from "../screens/adoption_form/DataPrivacyScreen";
+// adoption forms
 
+// authentication
+import SignInScreen from "../screens/authentication/SignInScreen";
+import SignUpScreen from "../screens/authentication/SignUpScreen";
+// authentication
+// import screens here
 import { createStackNavigator, StackHeaderProps } from '@react-navigation/stack';
 import { NativeStackScreenProps } from 'react-native-screens/lib/typescript/native-stack/types';
 import { NavigationProp } from "@react-navigation/native";
@@ -57,7 +65,8 @@ export type RootStackParamList = {
         // object/data from the adoption form 3
         petAccommodationObject? : LazyPetAccommodation,
         adoptionRequestObject?: LazyAdoptionRequest
-    }
+    },
+    // refers to the id photo upload screen
     adoption_form_5: {
         basicInfoObject?: LazyAdopterBasicPersonalInfo, 
         petHistoryObject?: LazyAdopterPetHistory, 
@@ -65,7 +74,18 @@ export type RootStackParamList = {
         // object/data from adoption form 4
         otherInfo?: LazyAdopterOtherInfo,
         adoptionRequestObject?: LazyAdoptionRequest
-    }
+    },
+    // refers to the data privacy screen props
+    adoption_form_6 :{
+        basicInfoObject?: LazyAdopterBasicPersonalInfo, 
+        petHistoryObject?: LazyAdopterPetHistory, 
+        petAccommodationObject? : LazyPetAccommodation,
+        otherInfo?: LazyAdopterOtherInfo,
+        idImageUrl?: string,
+        adoptionRequestObject?: LazyAdoptionRequest,
+    },
+
+    thank_you_screen : {contentText:string},
     // admin view
     // admin view bottom navigator
     admin_nav: undefined,
@@ -77,7 +97,11 @@ export type RootStackParamList = {
     view_event: undefined,
     adoption_request_list : undefined,
     adoption_form: {adoptionRequestObject?: LazyAdoptionRequest},
-    view_event_list : undefined
+    view_event_list : undefined,
+
+    // authentication pages
+    sign_in : undefined,
+    sign_up: undefined,
 }
 // types used to annotate the route and navigation props for each of the strings in the stack navigator
 export type BottomNavProps = NativeStackScreenProps<RootStackParamList, 'admin_nav'>
@@ -93,7 +117,11 @@ export type PetHistoryScreenProps = NativeStackScreenProps<RootStackParamList, "
 export type AccommodationScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_3">
 export type OtherInfoScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_4">
 export type IdVerificationScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_5">
-
+export type DataPrivacyScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_6">
+export type ThankYouScreenProps = NativeStackScreenProps<RootStackParamList, 'thank_you_screen'>
+// authentication
+export type SignInScreenProps = NativeStackScreenProps<RootStackParamList, "sign_in">
+export type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, "sign_up">
 // navigation prop
 export type StackNavProps = NavigationProp<RootStackParamList>
 const Stack = createStackNavigator<RootStackParamList>()
@@ -115,6 +143,14 @@ const navScreenOptions = {
 const AdminStackNavigator = () => {
     return (
         <Stack.Navigator>
+            <Stack.Screen
+                name="sign_in"
+                component={SignInScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
             <Stack.Screen
                 name="user_nav"
                 component={BottomTabs}
@@ -222,6 +258,30 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="adoption_form_5"
                 component={IdVerificationScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="adoption_form_6"
+                component={DataPrivacyScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="thank_you_screen"
+                component={ThankYouScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="sign_up"
+                component={SignUpScreen}
                 options={{
                     ...navScreenOptions,
                     headerShown: false
