@@ -14,6 +14,7 @@ import ViewEventListScreen from "../screens/admin/ViewEventListScreen";
 import ThankYouScreen from '../screens/ThankYouScreen';
 // user view
 import BottomTabs from "./BottomTabs";
+import UserProfileScreen from "../screens/UserProfileScreen";
 // adoption forms
 import BasicInfoScreen from '../screens/adoption_form/BasicInfoScreen';
 import PetHistoryScreen from "../screens/adoption_form/PetHistoryScreen";
@@ -84,7 +85,6 @@ export type RootStackParamList = {
         idImageUrl?: string,
         adoptionRequestObject?: LazyAdoptionRequest,
     },
-
     thank_you_screen : {contentText:string},
     // admin view
     // admin view bottom navigator
@@ -98,7 +98,6 @@ export type RootStackParamList = {
     adoption_request_list : undefined,
     adoption_form: {adoptionRequestObject?: LazyAdoptionRequest},
     view_event_list : undefined,
-
     // authentication pages
     sign_in : undefined,
     sign_up: undefined,
@@ -143,14 +142,6 @@ const navScreenOptions = {
 const AdminStackNavigator = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen
-                name="sign_in"
-                component={SignInScreen}
-                options={{
-                    ...navScreenOptions,
-                    headerShown: false
-                }}
-            />
             <Stack.Screen
                 name="user_nav"
                 component={BottomTabs}
@@ -282,6 +273,14 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="sign_up"
                 component={SignUpScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="sign_in"
+                component={SignInScreen}
                 options={{
                     ...navScreenOptions,
                     headerShown: false

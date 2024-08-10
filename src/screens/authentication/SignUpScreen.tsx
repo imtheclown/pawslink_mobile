@@ -8,8 +8,8 @@ import { useState, useCallback } from "react";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FlexibleButton from "../../components/admin/FlexibleButton";
 import CustomCheckBox from "../../components/CustomCheckBox";
-import { SignInScreenProps, SignUpScreenProps } from "../../navigation/AppNavigation";
-const SignUpScreen = ({route, navigation}: SignInScreenProps) => {
+import { SignUpScreenProps } from "../../navigation/AppNavigation";
+const SignUpScreen = ({route, navigation}: SignUpScreenProps) => {
     const [username, setUsername] = useState<string|null>(null);
     const [email, setEmail] = useState<string|null>(null);
     const [password, setPassword] = useState<string|null>(null);
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     mainContainer:{
         alignItems: 'center',
         paddingHorizontal: 20,
+
     },
     titleTextStyle:{
         color: Color.colorDarkPink,

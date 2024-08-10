@@ -56,9 +56,8 @@ const tabBarScreenOption = {
 import BrowseAnimal from '../screens/BrowseAnimalScreen';
 // qr code screen
 import QRCodeScanner from '../screens/QRCodeScannerScreen';
-// temporary
-// view animal screen
-import BasicInfoScreen from '../screens/adoption_form/BasicInfoScreen';
+// user profile
+import UserProfileScreen from '../screens/UserProfileScreen';
 // add Tab.Screen here
 // provide name, component and the icon for the tab bar
 const BottomTabs = () =>{
@@ -89,12 +88,13 @@ const BottomTabs = () =>{
                 }}
             />
             <Tab.Screen
-                name='trial'
-                component={BasicInfoScreen}
+                name='user_profile'
+                component={UserProfileScreen}
                 options={{
                     ...tabBarScreenOption,
+                    headerShown: false,
                     tabBarIcon: ({focused,color, size}) =>{
-                        return <MaterialIcons name='qr-code-scanner' color={color} size={focused? size + 10: size}/>
+                        return <MaterialIcons name='person-outline' color={color} size={focused? size + 10: size}/>
                     }
                 }}
             />
