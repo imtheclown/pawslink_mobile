@@ -8,9 +8,11 @@ import OptionListItem from "../components/OptionListItem";
 import FlexibleButton from "../components/admin/FlexibleButton";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-const UserProfileScreen = () => {
-    const handleButtonPress = () =>{
-        console.log('pressed')
+// navigation
+import { UserProfileScreenProps } from "../navigation/BottomTabs";
+const UserProfileScreen = ({route, navigation}: UserProfileScreenProps) => {
+    const handleEditPress = () =>{
+        navigation.navigate("edit_user_profile");
     }
     const handleContactUs = () => {
 
@@ -36,7 +38,7 @@ const UserProfileScreen = () => {
             </View>
             <FlexibleButton
                 title="edit profile"
-                callback={handleButtonPress}
+                callback={handleEditPress}
                 buttonStyle={{...styles.editButtonStyle, ...generalStyles.containerWithShadow}}
                 fontStyle={{...generalStyles.lightInter, ...styles.editButtonText}}
             />

@@ -62,7 +62,9 @@ export const generalStyles = StyleSheet.create({
     },
     outerTextInputBox:{
         padding: 5,
-        alignSelf: "flex-start"
+        alignSelf: "flex-start",
+        borderRadius: Border.br_5xs,
+        width: '100%',
     },
     innerTextInputBox: {
         borderRadius: Border.br_9xs,
@@ -73,16 +75,17 @@ export const generalStyles = StyleSheet.create({
         height: 'auto',
         color: Color.colorDarkslategray,
         lineHeight: 24,
+        width: '100%',
     },
     onFocusInnnerTextInputBox:{
         borderColor: Color.colorPaleovioletred,
+        backgroundColor: Color.colorWhite,
     },
     normalInnerTextInputBox:{
         borderColor: Color.colorSilver
     },
     onFocusOuterTextInputBox:{
         backgroundColor: Color.colorPalevioletred_200,
-        borderRadius: Border.br_5xs,
     },
     // fonts
     lightInter:{
