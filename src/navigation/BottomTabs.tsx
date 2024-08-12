@@ -1,7 +1,5 @@
 
 import {
-    View,
-    Text,
     StyleSheet
  } from 'react-native';
 
@@ -10,25 +8,31 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import IonIcons from 'react-native-vector-icons/Ionicons'
 import { Color } from '../assets/general/GlobalStyles';
 import TabBarHeader from '../components/TabBarHeader';
-// create the bottom tab navigator
-const Tab = createBottomTabNavigator();
-// trial screen
-import { Image } from 'react-native';
-import ReactNativeBlobUtil from 'react-native-blob-util'
-// placeholder screen
-const SampleTab = () =>{
-    const directory = ReactNativeBlobUtil.fs.dirs.DocumentDir
-    return(
-        <View>
-            <Text>{`sample tab`}</Text>
-            <Image
-            resizeMode='cover'
-            source={{uri:`file:///${directory}/trial/trial.jpeg`}}
-            style = {{width: 200, aspectRatio: 1, backgroundColor: "green"}}
-            />
-        </View>
-    )
+
+// tabs navigation parameter
+import { RootStackParamList } from './AppNavigation';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+type BottomTabNavigationParamsList = {
+    browse_animal: undefined,
+    scan_qr_code: undefined,
+    user_profile: undefined,
 }
+
+export type BrowseAnimalProps = CompositeScreenProps<BottomTabScreenProps<BottomTabNavigationParamsList, "browse_animal">,
+    StackScreenProps<RootStackParamList>
+>
+export type ScanQrCodeProps = CompositeScreenProps<BottomTabScreenProps<BottomTabNavigationParamsList, "scan_qr_code">,
+    StackScreenProps<RootStackParamList>
+>
+
+export type UserProfileScreenProps = CompositeScreenProps<BottomTabScreenProps< BottomTabNavigationParamsList, "user_profile">,
+    StackScreenProps<RootStackParamList>
+>
+
+// create the bottom tab navigator
+const Tab = createBottomTabNavigator<BottomTabNavigationParamsList>();
 // determines the state of the navigation tab icon3
 export const activeTabColor = Color.colorDarkslateblue;
 export const inactiveTabColor= 'black'
@@ -45,7 +49,6 @@ const tabBarScreenOption = {
     header: ({ navigation, route, options}:BottomTabHeaderProps) => 
         // displays the header top of the screen that is in the bottom tabs
         <TabBarHeader 
-    
             navigation={navigation}
     />
 }
@@ -68,7 +71,7 @@ const BottomTabs = () =>{
         }}
         >
             <Tab.Screen 
-                name='Home'
+                name='browse_animal'
                 component={BrowseAnimal}
                 options={{
                     ...tabBarScreenOption,
@@ -78,7 +81,7 @@ const BottomTabs = () =>{
                 }}
             />
             <Tab.Screen
-                name='Scan QR Code'
+                name='scan_qr_code'
                 component={QRCodeScanner}
                 options={{
                     ...tabBarScreenOption,

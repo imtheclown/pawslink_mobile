@@ -14,7 +14,7 @@ import ViewEventListScreen from "../screens/admin/ViewEventListScreen";
 import ThankYouScreen from '../screens/ThankYouScreen';
 // user view
 import BottomTabs from "./BottomTabs";
-import UserProfileScreen from "../screens/UserProfileScreen";
+import EditProfileScreen from '../screens/EditProfileScreen';
 // adoption forms
 import BasicInfoScreen from '../screens/adoption_form/BasicInfoScreen';
 import PetHistoryScreen from "../screens/adoption_form/PetHistoryScreen";
@@ -86,6 +86,7 @@ export type RootStackParamList = {
         adoptionRequestObject?: LazyAdoptionRequest,
     },
     thank_you_screen : {contentText:string},
+    edit_user_profile: undefined,
     // admin view
     // admin view bottom navigator
     admin_nav: undefined,
@@ -118,6 +119,7 @@ export type OtherInfoScreenProps = NativeStackScreenProps<RootStackParamList, "a
 export type IdVerificationScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_5">
 export type DataPrivacyScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_6">
 export type ThankYouScreenProps = NativeStackScreenProps<RootStackParamList, 'thank_you_screen'>
+export type EditProfileScreenProps = NativeStackScreenProps<RootStackParamList, "edit_user_profile">
 // authentication
 export type SignInScreenProps = NativeStackScreenProps<RootStackParamList, "sign_in">
 export type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, "sign_up">
@@ -281,6 +283,14 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="sign_in"
                 component={SignInScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="edit_user_profile"
+                component={EditProfileScreen}
                 options={{
                     ...navScreenOptions,
                     headerShown: false
