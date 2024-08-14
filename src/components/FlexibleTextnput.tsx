@@ -11,7 +11,7 @@ import {
     KeyboardTypeOptions,
     Platform,
     Animated,
-    ViewStyle
+    ViewStyle,
 } from "react-native";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useState, useCallback } from 'react';
@@ -113,13 +113,6 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
         if(innerContainerStyle){
             style = {...style, ...innerContainerStyle}
         }
-        // if number of lines is greater than 1 then apply necessary styling for multiple line text inputs
-        if(numberOfLines){
-            style = {...style, ...styles.multilineStart}
-        // for single line text input
-        }else{
-            style = {...style, ...styles.singleLineStart}
-        }
         // if in error state, apply error border
         if(inError){
             return {...style, ...styles.errorBorder}
@@ -162,6 +155,13 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
         }
         return <TouchableOpacity onPress={handleHide}><Entypo name={name} size={20} color={Color.colorDarkslategray}/></TouchableOpacity>
     }, [hidden, isSensitive]);
+
+    const generateTextInputStyle:TextStyle  = useMemo(() =>{
+        if(numberOfLines && numberOfLines > 1){
+            return styles.textInputMultipleStyle
+        }
+        return styles.textInputSingleStyle
+    }, [numberOfLines])
     return (
         <KeyboardAvoidingView
             style = {[style? style:{width: '100%'}]}
@@ -178,7 +178,7 @@ const FlexibleTextInput: React.FC<FlexibleTextInputProps> = React.memo(({title, 
             >
                 <View style = {[generateInnerStyles, styles.textInputContainer]}>
                     <TextInput
-                        style ={[generalStyles.flexContainer]}
+                        style ={[generalStyles.flexContainer, generateTextInputStyle]}
                         multiline = {numberOfLines? true: false}
                         value={value}
                         numberOfLines={numberOfLines}
@@ -225,5 +225,11 @@ const styles = StyleSheet.create({
     textInputContainer:{
         flexDirection: 'row',
         alignItems: 'center',
+    }, 
+    textInputMultipleStyle: {
+        textAlignVertical: 'top'
+    },
+    textInputSingleStyle:{
+        textAlignVertical: 'center'
     }
 })

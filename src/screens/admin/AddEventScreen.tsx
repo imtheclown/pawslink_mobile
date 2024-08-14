@@ -17,7 +17,7 @@ import FlexibleTextnput from "../../components/FlexibleTextnput";
 import CustomDatePicker from "../../components/admin/CustomDatePicker";
 import CustomTimePicker from "../../components/admin/CustomTimePicker";
 import FlexibleButton from "../../components/admin/FlexibleButton";
-import { AddEventProps } from "../../navigation/admin/AdminNavigationStack";
+import { AddEventProps } from "../../navigation/AppNavigation";
 import { pickImageFromDir } from "../../utils/FileBasedUtilitilityFunctions";
 import { generateTimeFromNumbers } from "../../utils/DateTimeBasedUtilityFunctions";
 // time object followed by the time picker

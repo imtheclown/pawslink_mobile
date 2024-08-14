@@ -6,6 +6,7 @@ import {
 import { createBottomTabNavigator, BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import IonIcons from 'react-native-vector-icons/Ionicons'
+import CommunityMaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Color } from '../assets/general/GlobalStyles';
 import TabBarHeader from '../components/TabBarHeader';
 
@@ -18,6 +19,7 @@ type BottomTabNavigationParamsList = {
     browse_animal: undefined,
     scan_qr_code: undefined,
     user_profile: undefined,
+    event: undefined,
 }
 
 export type BrowseAnimalProps = CompositeScreenProps<BottomTabScreenProps<BottomTabNavigationParamsList, "browse_animal">,
@@ -62,6 +64,9 @@ import QRCodeScanner from '../screens/QRCodeScannerScreen';
 // user profile
 import UserProfileScreen from '../screens/UserProfileScreen';
 // add Tab.Screen here
+// event list screen
+import EventListScreen from '../screens/EventListScreen';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // provide name, component and the icon for the tab bar
 const BottomTabs = () =>{
     return (
@@ -77,6 +82,16 @@ const BottomTabs = () =>{
                     ...tabBarScreenOption,
                     tabBarIcon: ({focused, color, size}) =>{
                         return <IonIcons name='paw-outline' color={color} size={focused? size + 10: size}/>
+                    }
+                }}
+            />
+            <Tab.Screen
+                name='event'
+                component={EventListScreen}
+                options={{
+                    ...tabBarScreenOption,
+                    tabBarIcon: ({focused, color, size}) =>{
+                        return <MaterialCommunityIcons name='calendar-check-outline' color={color} size={focused? size + 10: size}/>
                     }
                 }}
             />
