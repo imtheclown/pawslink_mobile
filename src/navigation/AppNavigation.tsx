@@ -15,6 +15,7 @@ import ThankYouScreen from '../screens/ThankYouScreen';
 // user view
 import BottomTabs from "./BottomTabs";
 import EditProfileScreen from '../screens/EditProfileScreen';
+import NotificationScreen from '../screens/NotificationScreen';
 // adoption forms
 import BasicInfoScreen from '../screens/adoption_form/BasicInfoScreen';
 import PetHistoryScreen from "../screens/adoption_form/PetHistoryScreen";
@@ -87,6 +88,7 @@ export type RootStackParamList = {
     },
     thank_you_screen : {contentText:string},
     edit_user_profile: undefined,
+    notification_screen: undefined,
     // admin view
     // admin view bottom navigator
     admin_nav: undefined,
@@ -120,6 +122,8 @@ export type IdVerificationScreenProps = NativeStackScreenProps<RootStackParamLis
 export type DataPrivacyScreenProps = NativeStackScreenProps<RootStackParamList, "adoption_form_6">
 export type ThankYouScreenProps = NativeStackScreenProps<RootStackParamList, 'thank_you_screen'>
 export type EditProfileScreenProps = NativeStackScreenProps<RootStackParamList, "edit_user_profile">
+export type NotificationScreenProps = NativeStackScreenProps<RootStackParamList, "notification_screen">
+
 // authentication
 export type SignInScreenProps = NativeStackScreenProps<RootStackParamList, "sign_in">
 export type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, "sign_up">
@@ -291,6 +295,14 @@ const AdminStackNavigator = () => {
             <Stack.Screen
                 name="edit_user_profile"
                 component={EditProfileScreen}
+                options={{
+                    ...navScreenOptions,
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen
+                name="notification_screen"
+                component={NotificationScreen}
                 options={{
                     ...navScreenOptions,
                     headerShown: false

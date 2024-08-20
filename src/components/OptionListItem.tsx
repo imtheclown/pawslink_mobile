@@ -8,11 +8,17 @@ import { generalStyles } from "../assets/general/generalStyles";
 interface OptionListItemProps {
     title:string,
     icon: React.ReactNode,
+    callback: () => void,
+
 }
 
-const OptionListItem: React.FC<OptionListItemProps> = ({title, icon}) => {
+const OptionListItem: React.FC<OptionListItemProps> = ({title, icon, callback}) => {
+
+    const handleCallback = () => {
+        callback()
+    }
     return (
-        <TouchableOpacity style = {[styles.mainContainer]}>
+        <TouchableOpacity onPress={handleCallback} style = {[styles.mainContainer]}>
             {icon}
             <Text style ={[styles.textStyle, generalStyles.lightInter]}>{title}</Text>
             <MaterialIcons name="arrow-forward-ios" size={16} color={Color.colorDarkslategray}/>

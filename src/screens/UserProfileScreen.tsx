@@ -10,6 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 // navigation
 import { UserProfileScreenProps } from "../navigation/BottomTabs";
+import { useCallback } from "react";
 const UserProfileScreen = ({route, navigation}: UserProfileScreenProps) => {
     const handleEditPress = () =>{
         navigation.navigate("edit_user_profile");
@@ -21,6 +22,10 @@ const UserProfileScreen = ({route, navigation}: UserProfileScreenProps) => {
     const handleDonatePress = () =>{
 
     }
+
+    const handleGotoNotification = useCallback(() =>{
+        navigation.navigate("notification_screen")
+    }, []);
     return (
         <SafeAreaView style ={[generalStyles.flexContainer, styles.mainContainer]}>
             {/* top container */}
@@ -45,22 +50,27 @@ const UserProfileScreen = ({route, navigation}: UserProfileScreenProps) => {
             <OptionListItem
                 title="Notifications"
                 icon = {<MaterialIcons name="notifications" size={20} color={Color.colorPaleovioletred}/>}
+                callback={handleGotoNotification}
             />
             <OptionListItem
                 title="Verify profile for adoption"
                 icon = {<MaterialCommunityIcons name="shield-check" size={20} color={Color.colorPaleovioletred}/>}
+                callback={handleGotoNotification}
             />
             <OptionListItem
                 title="Terms of service"
                 icon = {<MaterialCommunityIcons name="clipboard-check" size={20} color={Color.colorPaleovioletred}/>}
+                callback={handleGotoNotification}
             />
             <OptionListItem
                 title="About Us"
                 icon = {<MaterialCommunityIcons name="paw" size={20} color={Color.colorPaleovioletred}/>}
+                callback={handleGotoNotification}
             />
             <OptionListItem
                 title="Log Out"
                 icon = {<MaterialIcons name="arrow-forward" size={20} color={Color.colorPaleovioletred}/>}
+                callback={handleGotoNotification}
             />
             <View style ={[generalStyles.flexContainer, styles.bottomButtonContainer]}>
                 <FlexibleButton

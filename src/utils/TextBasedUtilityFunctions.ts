@@ -21,4 +21,10 @@ const isAllNumbers = (text :string|null) =>{
     const numberRegex = /^[0-9]+$/;
     return numberRegex.test(text);
 }
-export {replaceUnderScoreWithSpace, isValidEmail, isAllNumbers}
+
+function capitalizeSentence(input: string): string {
+    if (!input) return input; // Handle empty string
+    return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+}
+
+export {replaceUnderScoreWithSpace, isValidEmail, isAllNumbers, capitalizeSentence}

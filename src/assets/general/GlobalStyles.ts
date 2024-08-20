@@ -34,7 +34,8 @@ export const Color = {
   colorPlum: "#a872b7",
   colorLavender: "#eee4f1",
   errorRed: "#D32F2F",
-  colorRoyalPlum: "#9032AB"
+  colorRoyalPlum: "#9032AB",
+  colorBlack: "#171A1F"
 
 };
 /* border radiuses */
